@@ -1,8 +1,7 @@
 import json
-import pprint
 
-from src.iyzipay.Client.JsonConvertible import JsonConvertible
-from src.iyzipay.Client.RequestFormatter import RequestFormatter
+from src.Iyzipay.IyzipayResource import IyzipayResource
+from src.Iyzipay.RequestFormatter import RequestFormatter
 
 
 class JsonBuilder:
@@ -20,8 +19,8 @@ class JsonBuilder:
 
     def add(self, key, value=None):
         if value:
-            if isinstance(value, JsonConvertible):
-                self.json[key] = value.get_json_object()
+            if isinstance(value, IyzipayResource):
+                self.json[key] = value.get_json_object(value)
             else:
                 self.json[key] = value
         return self
@@ -35,8 +34,8 @@ class JsonBuilder:
         if array:
             self.json[key] = []
             for index, value in enumerate(array):
-                if isinstance(value, JsonConvertible):
-                    self.json[key].append(value.get_json_object())
+                if isinstance(value, IyzipayResource):
+                    self.json[key].append(value.get_json_object(value))
                 else:
                     self.json[key].append(value)
         return self

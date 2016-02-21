@@ -1,5 +1,7 @@
+import pprint
+
+from src.Iyzipay.IyzipayResource import IyzipayResource
 from src.Iyzipay.RequestFormatter import RequestFormatter
-from src.Iyzipay.RequestStringConvertible import RequestStringConvertible
 
 
 class RequestStringBuilder:
@@ -7,7 +9,7 @@ class RequestStringBuilder:
         self.request_string = request_string
 
     @staticmethod
-    def new_instance():
+    def create():
         return RequestStringBuilder("")
 
     def append_super(self, superrequest_string):
@@ -19,8 +21,8 @@ class RequestStringBuilder:
 
     def append(self, key, value=None):
         if value:
-            if isinstance(value, RequestStringConvertible):
-                self.append_key_value(key, value.to_pki_request_string())
+            if isinstance(value, IyzipayResource):
+                self.append_key_value(key, value.to_pki_request_string(value))
             else:
                 self.append_key_value(key, value)
         return self
@@ -34,9 +36,10 @@ class RequestStringBuilder:
         if array:
             appended_value = ""
             for value in array:
-                if isinstance(value, RequestStringConvertible):
-                    appended_value = appended_value + value.to_pki_request_string()
+                if isinstance(value, list):
+                    appended_value = appended_value + value.to_pki_request_string(value)
                 else:
+                    pprint.pprint(appended_value)
                     appended_value = appended_value + value
                 appended_value += ", "
             self.append_key_value_array(key, appended_value)

@@ -10,7 +10,6 @@ class HttpClient:
 
     def get(self, url, header):
         req = requests.get(url, headers=header, verify=True)
-        pprint.pprint(vars(req))
         return req
 
     def post(self, url, header, content):

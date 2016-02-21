@@ -8,15 +8,6 @@ from src.Iyzipay.HashGenerator import HashGenerator
 class IyzipayResource:
     RANDOM_STRING_SIZE = 8
 
-    def __init__(self):
-        self.status = ""
-        self.error_code = ""
-        self.error_message = ""
-        self.error_group = ""
-        self.locale = ""
-        self.system_time = ""
-        self.conversation_id = ""
-
     @staticmethod
     def get_http_header(request, options=None, authorize_request=True):
         header = {'Accept': 'application/json'}
@@ -48,3 +39,21 @@ class IyzipayResource:
         json_result = raw_result.json()
         response.raw_result = raw_result
         response.from_json(json_result)
+
+    @classmethod
+    def get_json_object(cls, request):
+        from src.Iyzipay.JsonBuilder import JsonBuilder
+        return JsonBuilder.create() \
+            .add('locale', request['locale']) \
+            .add('conversationId', request['conversation_id']) \
+            .get_object()
+
+    @classmethod
+    def to_pki_request_string(cls, request):
+        from src.Iyzipay.RequestStringBuilder import RequestStringBuilder
+        return RequestStringBuilder.create() \
+                    .append('locale', request['locale']) \
+                    .append('conversationId', request['conversation_id']) \
+                    .get_request_string()
+
+

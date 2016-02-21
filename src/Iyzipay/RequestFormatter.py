@@ -1,4 +1,4 @@
-class RequestFormatter():
+class RequestFormatter:
     @staticmethod
     def format_price(price):
         if '.' not in price:
