@@ -17,12 +17,12 @@ class Approval(IyzipayResource):
     @classmethod
     def get_json_object(cls, request):
         json_object = JsonBuilder.from_json_object(super(Approval, cls).get_json_object(request)) \
-            .add('paymentTransactionId', request['payment_transaction_id']) \
+            .add('paymentTransactionId', request.get('payment_transaction_id', None)) \
             .get_object()
         return JsonBuilder.json_encode(json_object)
 
     @classmethod
     def to_pki_request_string(cls, request):
         return RequestStringBuilder.create().append_super(super(Approval, cls).to_pki_request_string(request)) \
-            .append('paymentTransactionId', request['payment_transaction_id']) \
+            .append('paymentTransactionId', request.get('payment_transaction_id', None)) \
             .get_request_string()

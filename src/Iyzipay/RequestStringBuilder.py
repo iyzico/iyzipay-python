@@ -1,5 +1,3 @@
-import pprint
-
 from src.Iyzipay.IyzipayResource import IyzipayResource
 from src.Iyzipay.RequestFormatter import RequestFormatter
 
@@ -36,10 +34,9 @@ class RequestStringBuilder:
         if array:
             appended_value = ""
             for value in array:
-                if isinstance(value, list):
-                    appended_value = appended_value + value.to_pki_request_string(value)
+                if isinstance(value, dict):
+                    appended_value = appended_value + value
                 else:
-                    pprint.pprint(appended_value)
                     appended_value = appended_value + value
                 appended_value += ", "
             self.append_key_value_array(key, appended_value)

@@ -2,42 +2,45 @@ import pprint
 import unittest
 
 from samples.BaseSample import BaseSample
+from src.Iyzipay.Model.BKMAuth import BKMAuth
 from src.Iyzipay.Model.BKMInitialize import BKMInitialize
 
 
 class BKMSample(BaseSample, unittest.TestCase):
     def runTest(self):
         self.should_initialize_bkm_express()
+        self.should_retrieve_bkm_auth()
 
     def should_initialize_bkm_express(self):
         request = {'locale' : 'tr',
                    'conversation_id' : '123456789',
                    'price' : '1',
                    'basket_id' : 'B67832',
-                   'payment_group' : 'product',
+                   'payment_group' : 'PRODUCT',
                    }
         buyer = {'id' : '100',
                  'name' : 'Hakan',
-                 'surname' : 'Erdogan',
-                 'identityNumber' : '16045258606',
+                 'surname' : 'Erdoğan',
+                 'identity_number' : '16045258606',
                  'email' : 'email@email.com',
-                 'gsmNumber' : '05553456789',
-                 'registrationDate' : '2011-02-17 12:00:00',
-                 'lastLoginDate' : '2015-04-20 12:00:00',
-                 'registrationAddress' : 'Maltepe',
+                 'gsm_number' : '05553456789',
+                 'registration_date' : '2011-02-17 12:00:00',
+                 'last_login_date' : '2015-04-20 12:00:00',
+                 'registration_address' : 'Maltepe',
                  'city' : 'Istanbul',
-                 'zipCode' : '34840',
+                 'country' : 'Turkiye',
+                 'zip_code' : '34840',
                  'ip' : '192.168.123.102'}
         request['buyer'] = buyer
         shipping_address = {'address' : 'Malte Plaza No:56',
-                            'zipCode' : '34840',
-                            'contactName' : 'Hakan',
+                            'zip_code' : '34840',
+                            'contact_name' : 'Hakan',
                             'city' : 'Istanbul',
                             'country' : 'Turkiye'}
         request['shipping_address'] = shipping_address
         billing_address = {'address' : 'Malte Plaza No:56',
-                            'zipCode' : '34840',
-                            'contactName' : 'Hakan',
+                            'zip_code' : '34840',
+                            'contact_name' : 'Hakan',
                             'city' : 'Istanbul',
                             'country' : 'Turkiye'}
         request['billing_address'] = billing_address
@@ -57,7 +60,7 @@ class BKMSample(BaseSample, unittest.TestCase):
         item2['id'] = "BI102"
         item2['name'] = "XYZ Oyun Kodu"
         item2['category1'] = "Oyun"
-        item2['category2'] = "Online Oyun Kodları"
+        item2['category2'] = "Online Oyun Kodlari"
         item2['item_type'] = 'VIRTUAL'
         item2['price'] = "0.5"
         item2['sub_merchant_price'] = "0.42"
@@ -80,4 +83,13 @@ class BKMSample(BaseSample, unittest.TestCase):
         bkm_initialize = BKMInitialize.create(request, BaseSample.options)
 
         pprint.pprint(bkm_initialize)
+
+    def should_retrieve_bkm_auth(self):
+        request = {'locale' : 'tr',
+                   'conversation_id' : '123456789',
+                   'token' : 'mockToken1453382198111'}
+
+        bkm_auth = BKMAuth.retrieve(request, BaseSample.options)
+
+        pprint.pprint(bkm_auth)
 

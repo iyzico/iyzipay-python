@@ -4,25 +4,26 @@ from src.Iyzipay.JsonBuilder import JsonBuilder
 from src.Iyzipay.RequestStringBuilder import RequestStringBuilder
 
 
-class BinNumber(IyzipayResource):
+class BKMAuth(IyzipayResource):
     @classmethod
     def retrieve(cls, request, options):
         json_encoded_request = cls.get_json_object(request)
         pki_string_request = cls.to_pki_request_string(request)
-        raw_result = HttpClient.create().post(options['base_url'] + "/payment/bin/check",
-                                              IyzipayResource.get_http_header(pki_string_request, options), json_encoded_request)
+        raw_result = HttpClient.create().post(options['base_url'] + "/payment/iyzipos/bkm/auth/ecom/detail",
+                                              IyzipayResource.get_http_header(pki_string_request, options),
+                                              json_encoded_request)
         json_result = raw_result.json()
         return json_result
 
     @classmethod
     def get_json_object(cls, request):
-        json_object = JsonBuilder.from_json_object(super(BinNumber, cls).get_json_object(request)) \
-            .add('binNumber', request.get('bin_number', None)) \
+        json_object = JsonBuilder.from_json_object(super(BKMAuth, cls).get_json_object(request)) \
+            .add("token", request.get('token', None)) \
             .get_object()
         return JsonBuilder.json_encode(json_object)
 
     @classmethod
     def to_pki_request_string(cls, request):
-        return RequestStringBuilder.create().append_super(super(BinNumber, cls).to_pki_request_string(request)) \
-            .append('binNumber', request.get('bin_number', None)) \
+        return RequestStringBuilder.create().append_super(super(BKMAuth, cls).to_pki_request_string(request)) \
+            .append("token", request.get('token', None)) \
             .get_request_string()
