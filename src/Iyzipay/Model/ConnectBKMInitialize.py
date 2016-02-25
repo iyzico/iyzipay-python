@@ -15,7 +15,8 @@ class ConnectBKMInitialize(IyzipayResource):
                                               IyzipayResource.get_http_header(pki_string_request, options),
                                               json_encoded_request)
         json_result = raw_result.json()
-        json_result['htmlContent'] = base64.b64decode(json_result['htmlContent'])
+        if 'htmlContent' in json_result.keys():
+            json_result['htmlContent'] = base64.b64decode(json_result['htmlContent'])
         return json_result
 
     @classmethod

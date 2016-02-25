@@ -2,10 +2,10 @@ import pprint
 import unittest
 
 from samples.BaseSample import BaseSample
-from src.Iyzipay.Model.PaymentAuth import PaymentAuth
+from src.Iyzipay.Model.PaymentPreAuth import PaymentPreAuth
 
 
-class PaymentAuthSample(BaseSample, unittest.TestCase):
+class PaymentPreAuthSample(BaseSample, unittest.TestCase):
     def runTest(self):
         self.should_create_payment_with_physical_and_virtual_item_for_market_place()
         self.should_create_payment_with_physical_and_virtual_item_for_listing_or_subscription()
@@ -74,19 +74,22 @@ class PaymentAuthSample(BaseSample, unittest.TestCase):
         request = {'locale': 'tr',
                    'conversation_id': '123456789',
                    'price': '1',
-                   'basket_id': 'B67832',
-                   'payment_group': 'PRODUCT',
+                   'paid_price': '1.1',
                    'installment': '1',
+                   'basket_id': 'B67832',
                    'payment_channel': 'WEB',
+                   'payment_group': 'PRODUCT',
                    'buyer': buyer,
                    'shipping_address': shipping_address,
                    'billing_address': billing_address,
                    'basket_items': basket_items,
-                   'paid_price': '1.1',
-                   'payment_card': payment_card}
-        payment_auth = PaymentAuth.create(request, BaseSample.options)
 
-        pprint.pprint(payment_auth)
+                   'payment_card': payment_card}
+
+        payment_pre_auth = PaymentPreAuth.create(request, BaseSample.options)
+
+        pprint.pprint(payment_pre_auth)
+
 
     def should_create_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
         buyer = {'id': '100',
@@ -156,7 +159,7 @@ class PaymentAuthSample(BaseSample, unittest.TestCase):
                    'shipping_address': shipping_address,
                    'billing_address': billing_address,
                    'basket_items': basket_items}
-        
-        payment_auth = PaymentAuth.create(request, BaseSample.options)
-        
-        pprint.pprint(payment_auth)
+
+        payment_pre_auth = PaymentPreAuth.create(request, BaseSample.options)
+
+        pprint.pprint(payment_pre_auth)

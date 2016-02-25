@@ -2,21 +2,23 @@ import pprint
 import unittest
 
 from samples.BaseSample import BaseSample
-from src.Iyzipay.Model.PaymentAuth import PaymentAuth
+from src.Iyzipay.Model.ThreeDSAuth import ThreeDSAuth
+from src.Iyzipay.Model.ThreeDSInitialize import ThreeDSInitialize
 
 
-class PaymentAuthSample(BaseSample, unittest.TestCase):
+class ThreeDSSample(BaseSample, unittest.TestCase):
     def runTest(self):
-        self.should_create_payment_with_physical_and_virtual_item_for_market_place()
-        self.should_create_payment_with_physical_and_virtual_item_for_listing_or_subscription()
+        # self.should_initialize_threeds_payment_with_physical_and_virtual_item_for_market_place()
+        # self.should_initialize_threeds_payment_with_physical_and_virtual_item_for_listing_or_subscription()
+        self.should_auth_threeds()
 
-    def should_create_payment_with_physical_and_virtual_item_for_market_place(self):
-        buyer = {'id': '100',
-                 'name': 'Hakan',
-                 'surname': 'Erdoğan',
-                 'identity_number': '16045258606',
+    def should_initialize_threeds_payment_with_physical_and_virtual_item_for_market_place(self):
+        buyer = {'id': 'BY789',
+                 'name': 'John',
+                 'surname': 'Doe',
+                 'gsm_number': '+905350000000',
                  'email': 'email@email.com',
-                 'gsm_number': '05553456789',
+                 'identity_number': '16045258606',
                  'registration_date': '2011-02-17 12:00:00',
                  'last_login_date': '2015-04-20 12:00:00',
                  'registration_address': 'Maltepe',
@@ -74,27 +76,28 @@ class PaymentAuthSample(BaseSample, unittest.TestCase):
         request = {'locale': 'tr',
                    'conversation_id': '123456789',
                    'price': '1',
-                   'basket_id': 'B67832',
-                   'payment_group': 'PRODUCT',
+                   'paid_price': '1.1',
                    'installment': '1',
+                   'basket_id': 'B67832',
                    'payment_channel': 'WEB',
+                   'payment_group': 'PRODUCT',
+                   'callback_url': 'https://www.merchant.com/callback',
+                   'payment_card': payment_card,
                    'buyer': buyer,
                    'shipping_address': shipping_address,
                    'billing_address': billing_address,
-                   'basket_items': basket_items,
-                   'paid_price': '1.1',
-                   'payment_card': payment_card}
-        payment_auth = PaymentAuth.create(request, BaseSample.options)
+                   'basket_items': basket_items}
 
-        pprint.pprint(payment_auth)
+        three_ds_initialize = ThreeDSInitialize.create(request, BaseSample.options)
+        pprint.pprint(three_ds_initialize)
 
-    def should_create_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
-        buyer = {'id': '100',
-                 'name': 'Hakan',
-                 'surname': 'Erdoğan',
-                 'identity_number': '16045258606',
+    def should_initialize_threeds_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
+        buyer = {'id': 'BY789',
+                 'name': 'John',
+                 'surname': 'Doe',
+                 'gsm_number': '+905350000000',
                  'email': 'email@email.com',
-                 'gsm_number': '05553456789',
+                 'identity_number': '16045258606',
                  'registration_date': '2011-02-17 12:00:00',
                  'last_login_date': '2015-04-20 12:00:00',
                  'registration_address': 'Maltepe',
@@ -125,22 +128,22 @@ class PaymentAuthSample(BaseSample, unittest.TestCase):
                  'name': 'Binocular',
                  'category1': 'Collectibles',
                  'category2': 'Accessories',
-                 'item_type': 'PHYSICAL',
-                 'price': '0.3'}
+                 'item_type': 'VIRTUAL',
+                 'price': '0.3',}
         basket_items.append(item1)
         item2 = {'id': 'BI102',
                  'name': 'Game code',
                  'category1': 'Game',
                  'category2': 'Online Game Items',
                  'item_type': 'VIRTUAL',
-                 'price': '0.5'}
+                 'price': '0.5',}
         basket_items.append(item2)
         item3 = {'id': 'BI103',
                  'name': 'Usb',
                  'category1': 'Electronics',
                  'category2': 'Usb / Cable',
                  'item_type': 'PHYSICAL',
-                 'price': '0.2'}
+                 'price': '0.2',}
         basket_items.append(item3)
 
         request = {'locale': 'tr',
@@ -150,13 +153,25 @@ class PaymentAuthSample(BaseSample, unittest.TestCase):
                    'installment': '1',
                    'basket_id': 'B67832',
                    'payment_channel': 'WEB',
-                   'payment_group': 'SUBSCRIPTION',
+                   'payment_group': 'LISTING',
+                   'callback_url': 'https://www.merchant.com/callback',
                    'payment_card': payment_card,
                    'buyer': buyer,
                    'shipping_address': shipping_address,
                    'billing_address': billing_address,
                    'basket_items': basket_items}
-        
-        payment_auth = PaymentAuth.create(request, BaseSample.options)
-        
-        pprint.pprint(payment_auth)
+
+        three_ds_initialize = ThreeDSInitialize.create(request, BaseSample.options)
+        pprint.pprint(three_ds_initialize)
+
+    def should_auth_threeds(self):
+        request = {'locale': 'tr',
+                   'conversation_id': '123456789',
+                   'payment_id': '1',
+                   'conversation_data': 'conversation data'}
+
+        three_ds_auth = ThreeDSAuth.create(request, BaseSample.options)
+
+        pprint.pprint(three_ds_auth)
+
+
