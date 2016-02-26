@@ -6,6 +6,16 @@ from src.Iyzipay.RequestStringBuilder import RequestStringBuilder
 
 class PaymentAuth(IyzipayResource):
     @classmethod
+    def retrieve(cls, request, options):
+        json_encoded_request = cls.retrieve_get_json_object(request)
+        pki_string_request = cls.retrieve_to_pki_request_string(request)
+        raw_result = HttpClient.create().post(options['base_url'] + "/payment/detail",
+                                              IyzipayResource.get_http_header(pki_string_request, options),
+                                              json_encoded_request)
+        json_result = raw_result.json()
+        return json_result
+
+    @classmethod
     def create(cls, request, options):
         json_encoded_request = cls.get_json_object(request)
         pki_string_request = cls.to_pki_request_string(request)
@@ -14,6 +24,22 @@ class PaymentAuth(IyzipayResource):
                                               json_encoded_request)
         json_result = raw_result.json()
         return json_result
+
+    @classmethod
+    def retrieve_get_json_object(cls, request):
+        json_object = JsonBuilder.from_json_object(super(PaymentAuth, cls).get_json_object(request)) \
+            .add("paymentId", request.get('payment_id', None)) \
+            .add("paymentConversationId", request.get('payment_conversation_id', None)) \
+            .get_object()
+        return JsonBuilder.json_encode(json_object)
+
+    @classmethod
+    def retrieve_to_pki_request_string(cls, request):
+        return RequestStringBuilder.create().append_super(
+            super(PaymentAuth, cls).to_pki_request_string(request)) \
+            .append('paymentId', request.get('payment_id', None)) \
+            .append('paymentConversationId', request.get('payment_conversation_id', None))\
+            .get_request_string()
 
     @classmethod
     def get_json_object(cls, request):
@@ -170,3 +196,4 @@ class PaymentAuth(IyzipayResource):
                               .add('subMerchantPrice', basket_item.get('sub_merchant_price', None)) \
                               .get_object())
             return basket
+
