@@ -9,7 +9,7 @@ class ApiTestSample(unittest.TestCase):
 
     def should_test_api(self):
 
-        options = {'base_url': 'stg.iyzipay.com'}
+        options = {'base_url': iyzipay.base_url}
         api_test = iyzipay.ApiTest.retrieve(options)
 
         pprint.pprint(api_test.read().decode())
