@@ -1,15 +1,15 @@
 import pprint
 import unittest
-
-from samples.BaseSample import BaseSample
-from src.Iyzipay.Model.ApiTest import ApiTest
+import iyzipay
 
 
-class ApiTestSample(BaseSample, unittest.TestCase):
+class ApiTestSample(unittest.TestCase):
     def runTest(self):
         self.should_test_api()
 
     def should_test_api(self):
-        api_test = ApiTest.retrieve(BaseSample.options)
 
-        pprint.pprint(api_test)
+        options = {'base_url': 'stg.iyzipay.com'}
+        api_test = iyzipay.ApiTest.retrieve(options)
+
+        pprint.pprint(api_test.read().decode())
