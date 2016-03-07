@@ -6,7 +6,7 @@
 
 # Configuration variables
 api_key = None
-base_url = 'https://stg.iyzipay.com'
+base_url = 'stg.iyzipay.com'
 
 # Resource
 from iyzipay.iyzipay_resource import (  # noqa
