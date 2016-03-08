@@ -3,11 +3,11 @@ import unittest
 import iyzipay
 
 
-class BinNumberSample(unittest.TestCase):
+class ApprovalSample(unittest.TestCase):
     def runTest(self):
-        self.should_retrieve_bin_number()
+        self.should_approve_payment_item()
 
-    def should_retrieve_bin_number(self):
+    def should_approve_payment_item(self):
 
         options = {'base_url': iyzipay.base_url}
         options.update({'api_key': iyzipay.api_key})
@@ -15,10 +15,10 @@ class BinNumberSample(unittest.TestCase):
 
         request = {'locale': 'TR'}
         request.update({'conversationId': '123456'})
-        request.update({'binNumber': '454671'})
+        request.update({'paymentTransactionId': '139'})
 
-        bin_number = iyzipay.BinNumber()
+        approval = iyzipay.Approval()
 
-        bin_number = bin_number.retrieve(request, options)
+        approval = approval.create(request, options)
 
-        pprint.pprint(bin_number.read().decode())
+        pprint.pprint(approval.read().decode())
