@@ -15,7 +15,7 @@ class IyzipayResource:
 
     def connect(self, method, url, options, request=None, pki=None):
         connection = http.client.HTTPConnection(options['base_url'])
-        request_json = json.dumps(request, ensure_ascii=False)
+        request_json = json.dumps(request)
         connection.request(method, url, request_json, self.get_http_header(options, pki))
         return connection.getresponse()
 
