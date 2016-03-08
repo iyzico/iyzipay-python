@@ -13,8 +13,8 @@ class BinNumberSample(unittest.TestCase):
         options.update({'api_key': iyzipay.api_key})
         options.update({'secret_key': iyzipay.secret_key})
 
-        request = {'locale': 'TR'}
-        request.update({'conversationId': '123456'})
+        request = {'locale': 'tr'}
+        request.update({'conversationId': '123456789'})
         request.update({'binNumber': '454671'})
 
         bin_number = iyzipay.BinNumber()
