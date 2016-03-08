@@ -79,3 +79,6 @@ celerybeat-schedule
 
 # Spyder project settings
 .spyderproject
+
+# ide
+.idea
