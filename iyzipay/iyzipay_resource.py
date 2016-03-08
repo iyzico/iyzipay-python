@@ -3,6 +3,7 @@ import string
 import base64
 import hashlib
 import http.client
+import json
 
 
 class IyzipayResource:
@@ -20,7 +21,7 @@ class IyzipayResource:
                 random.SystemRandom().choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in
                 range(IyzipayResource.RANDOM_STRING_SIZE))
             header.update(
-                {'Authorization': IyzipayResource.prepare_authorization_string(options, random_header_value, pki_string)})
+                {'Authorization': IyzipayResource.prepare_auth_string(options, random_header_value, pki_string)})
             header.update({'x-iyzi-rnd': random_header_value})
         return header
 
@@ -29,8 +30,8 @@ class IyzipayResource:
         return IyzipayResource.get_http_header(None, options)
 
     @staticmethod
-    def prepare_authorization_string(options, random_header_value, pki_string):
-        hashed = IyzipayResource.generate_hash(options['api_key'], options['secret_key'], random_header_value, pki_string)
+    def prepare_auth_string(options, random_str, pki_string):
+        hashed = IyzipayResource.generate_hash(options['api_key'], options['secret_key'], random_str, pki_string)
         return IyzipayResource.format_header_string(options['api_key'], hashed)
 
     @staticmethod
@@ -54,3 +55,17 @@ class ApiTest(IyzipayResource):
         return connection.getresponse()
 
 
+class BinNumber(IyzipayResource):
+
+    @staticmethod
+    def retrieve(request, options):
+        connection = http.client.HTTPSConnection(options['base_url'])
+        pki = BinNumber.to_pki_string(request)
+        request_json = json.dumps(request, ensure_ascii=False)
+        connection.request('POST', '/payment/bin/check', request_json, IyzipayResource.get_http_header(options, pki))
+        return connection.getresponse()
+
+    @staticmethod
+    def to_pki_string(request):
+        return '[locale='+request['locale']+',conversationId='+request['conversationId'] + \
+               ',binNumber='+request['binNumber']+']'
