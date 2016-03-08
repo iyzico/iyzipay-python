@@ -14,7 +14,7 @@ class IyzipayResource:
     RANDOM_STRING_SIZE = 8
 
     def connect(self, method, url, options, request=None, pki=None):
-        connection = http.client.HTTPConnection(options['base_url'])
+        connection = http.client.HTTPSConnection(options['base_url'])
         request_json = json.dumps(request)
         connection.request(method, url, request_json, self.get_http_header(options, pki))
         return connection.getresponse()
@@ -50,7 +50,7 @@ class IyzipayResource:
 
     @staticmethod
     def resource_pki(request):
-        return '[locale=' + request['locale'] + ',conversationId=' + request['conversationId'] + ','
+        return 'locale=' + request['locale'] + ',conversationId=' + request['conversationId'] + ','
 
     @staticmethod
     def round(price):
@@ -95,7 +95,7 @@ class BKMInitialize(IyzipayResource):
         return self.connect('POST', '/payment/iyzipos/bkm/initialize/ecom', options, request, pki)
 
     def to_pki_string(self, request):
-        pki_builder = iyzipay.PKIBuilder('')
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
         pki_builder.append_price('price', request['price'])
         pki_builder.append('basketId', request['basketId'])
         pki_builder.append('paymentGroup', request['paymentGroup'])
@@ -132,6 +132,7 @@ class BKMInitialize(IyzipayResource):
         pki_builder.append('contactName', address['contactName'])
         pki_builder.append('city', address['city'])
         pki_builder.append('country', address['country'])
+        return pki_builder.get_request_string()
 
     @staticmethod
     def basket_pki(basket_items):

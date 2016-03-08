@@ -15,33 +15,33 @@ class BKMSample(unittest.TestCase):
         options.update({'api_key': iyzipay.api_key})
         options.update({'secret_key': iyzipay.secret_key})
 
-        request = {'locale': 'TR'}
-        request.update({'conversationId': '123456'})
-        request.update({'price': '1.0'})
+        request = {'locale': 'tr'}
+        request.update({'conversationId': '123456789'})
+        request.update({'price': '1'})
         request.update({'basketId': 'B67832'})
         request.update({'paymentGroup': 'PRODUCT'})
-        request.update({'callbackUrl': 'https://www.merchant.com/callbackUrl'})
+        request.update({'callbackUrl': 'https://www.merchant.com/callback'})
 
-        buyer = {'id': '100'}
+        buyer = {'id': 'BY789'}
         buyer.update({'name': 'John'})
         buyer.update({'surname': 'Doe'})
-        buyer.update({'identityNumber': '16045258606'})
-        buyer.update({'email': 'doe@doe.com'})
-        buyer.update({'gsmNumber': '05553456789'})
-        buyer.update({'registrationDate': '2011-02-17 12:00:00'})
+        buyer.update({'gsmNumber': '+905350000000'})
+        buyer.update({'email': 'email@email.com'})
+        buyer.update({'identityNumber': '74300864791'})
         buyer.update({'lastLoginDate': '2015-04-20 12:00:00'})
+        buyer.update({'registrationDate': '2011-02-17 12:00:00'})
         buyer.update({'registrationAddress': 'Maltepe'})
-        buyer.update({'city': 'Istanbul'})
-        buyer.update({'country': 'Türkiye'})
-        buyer.update({'zipCode': '34840'})
         buyer.update({'ip': '192.168.123.102'})
+        buyer.update({'city': 'Istanbul'})
+        buyer.update({'country': 'Turkey'})
+        buyer.update({'zipCode': '34840'})
         request['buyer'] = buyer
 
         address = {'address': 'Maltepe Plaza No:56'}
         address.update({'zipCode': '34840'})
         address.update({'contactName': 'Hakan'})
         address.update({'city': 'Istanbul'})
-        address.update({'country': 'Türkiye'})
+        address.update({'country': 'Turkey'})
         request['shippingAddress'] = address
         request['billingAddress'] = address
 
@@ -50,10 +50,10 @@ class BKMSample(unittest.TestCase):
         basket_item.update({'name': 'XYZ Oyun Kodu'})
         basket_item.update({'category1': 'Oyun'})
         basket_item.update({'category2': 'Online Oyun Kodlari'})
-        basket_item.update({'itemType': 'VIRTUAL'})
-        basket_item.update({'price': '1.0'})
+        basket_item.update({'itemType': 'PHYSICAL'})
+        basket_item.update({'price': '1'})
         basket_item.update({'subMerchantKey': 'subMerchantKey'})
-        basket_item.update({'subMerchantPrice': '0.9'})
+        basket_item.update({'subMerchantPrice': '0.27'})
         basket_items.append(basket_item)
 
         request['basketItems'] = basket_items
