@@ -28,33 +28,53 @@ class BKMSample(unittest.TestCase):
         buyer.update({'gsmNumber': '+905350000000'})
         buyer.update({'email': 'email@email.com'})
         buyer.update({'identityNumber': '74300864791'})
-        buyer.update({'lastLoginDate': '2015-04-20 12:00:00'})
-        buyer.update({'registrationDate': '2011-02-17 12:00:00'})
-        buyer.update({'registrationAddress': 'Maltepe'})
-        buyer.update({'ip': '192.168.123.102'})
+        buyer.update({'lastLoginDate': '2015-10-05 12:43:35'})
+        buyer.update({'registrationDate': '2013-04-21 15:12:09'})
+        buyer.update({'registrationAddress': 'Address'})
+        buyer.update({'ip': '85.34.78.112'})
         buyer.update({'city': 'Istanbul'})
         buyer.update({'country': 'Turkey'})
-        buyer.update({'zipCode': '34840'})
+        buyer.update({'zipCode': '34732'})
         request['buyer'] = buyer
 
-        address = {'address': 'Maltepe Plaza No:56'}
-        address.update({'zipCode': '34840'})
-        address.update({'contactName': 'Hakan'})
+        address = {'address': 'Address'}
+        address.update({'zipCode': '34732'})
+        address.update({'contactName': 'Jane Doe'})
         address.update({'city': 'Istanbul'})
         address.update({'country': 'Turkey'})
         request['shippingAddress'] = address
         request['billingAddress'] = address
 
         basket_items = []
-        basket_item = {'id': 'BI101'}
-        basket_item.update({'name': 'XYZ Oyun Kodu'})
-        basket_item.update({'category1': 'Oyun'})
-        basket_item.update({'category2': 'Online Oyun Kodlari'})
-        basket_item.update({'itemType': 'PHYSICAL'})
-        basket_item.update({'price': '1'})
-        basket_item.update({'subMerchantKey': 'subMerchantKey'})
-        basket_item.update({'subMerchantPrice': '0.27'})
-        basket_items.append(basket_item)
+        basket_item_first = {'id': 'BI101'}
+        basket_item_first.update({'name': 'Binocular'})
+        basket_item_first.update({'category1': 'Collectibles'})
+        basket_item_first.update({'category2': 'Accessories'})
+        basket_item_first.update({'itemType': 'PHYSICAL'})
+        basket_item_first.update({'price': '0.3'})
+        basket_item_first.update({'subMerchantKey': 'sub merchant key'})
+        basket_item_first.update({'subMerchantPrice': '0.27'})
+        basket_items.append(basket_item_first)
+
+        basket_item_second = {'id': 'BI102'}
+        basket_item_second.update({'name': 'Game code'})
+        basket_item_second.update({'category1': 'Game'})
+        basket_item_second.update({'category2': 'Online Game Items'})
+        basket_item_second.update({'itemType': 'VIRTUAL'})
+        basket_item_second.update({'price': '0.5'})
+        basket_item_second.update({'subMerchantKey': 'sub merchant key'})
+        basket_item_second.update({'subMerchantPrice': '0.42'})
+        basket_items.append(basket_item_second)
+
+        basket_item_third = {'id': 'BI103'}
+        basket_item_third.update({'name': 'Usb'})
+        basket_item_third.update({'category1': 'Electronics'})
+        basket_item_third.update({'category2': 'Usb / Cable'})
+        basket_item_third.update({'itemType': 'PHYSICAL'})
+        basket_item_third.update({'price': '0.2'})
+        basket_item_third.update({'subMerchantKey': 'sub merchant key'})
+        basket_item_third.update({'subMerchantPrice': '0.18'})
+        basket_items.append(basket_item_third)
 
         request['basketItems'] = basket_items
 
