@@ -9,16 +9,17 @@ class ApprovalSample(unittest.TestCase):
 
     def should_approve_payment_item(self):
 
-        options = {'base_url': iyzipay.base_url}
-        options.update({'api_key': iyzipay.api_key})
-        options.update({'secret_key': iyzipay.secret_key})
+        options = dict([('base_url', iyzipay.base_url)])
+        options['api_key'] = iyzipay.api_key
+        options['secret_key'] = iyzipay.secret_key
 
-        request = {'locale': 'TR'}
-        request.update({'conversationId': '123456'})
-        request.update({'paymentTransactionId': '139'})
+        request = dict([('locale', 'tr')])
+        request['conversationId'] = '123456'
+        request['paymentTransactionId'] = '139'
 
+        # make request
         approval = iyzipay.Approval()
+        approval_response = approval.create(request, options)
 
-        approval = approval.create(request, options)
-
-        pprint.pprint(approval.read().decode())
+        # print response
+        pprint.pprint(approval_response.read().decode())

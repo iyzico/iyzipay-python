@@ -9,16 +9,17 @@ class BinNumberSample(unittest.TestCase):
 
     def should_retrieve_bin_number(self):
 
-        options = {'base_url': iyzipay.base_url}
-        options.update({'api_key': iyzipay.api_key})
-        options.update({'secret_key': iyzipay.secret_key})
+        options = dict([('base_url', iyzipay.base_url)])
+        options['api_key'] = iyzipay.api_key
+        options['secret_key'] = iyzipay.secret_key
 
-        request = {'locale': 'tr'}
-        request.update({'conversationId': '123456789'})
-        request.update({'binNumber': '454671'})
+        request = dict([('locale', 'tr')])
+        request['conversationId'] = '123456789'
+        request['binNumber'] = '454671'
 
+        # make request
         bin_number = iyzipay.BinNumber()
+        bin_number_response = bin_number.retrieve(request, options)
 
-        bin_number = bin_number.retrieve(request, options)
-
-        pprint.pprint(bin_number.read().decode())
+        # print response
+        pprint.pprint(bin_number_response.read().decode())
