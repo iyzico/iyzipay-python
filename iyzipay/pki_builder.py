@@ -9,7 +9,7 @@ class PKIBuilder:
 
     def append_price(self, key, value=None):
         if value is not None and value is not "":
-            self.append_key_value(key, str(round(float(value), 1)))
+            self.append_key_value(key, str(round(float(value), 2)))
         return self
 
     def append_array(self, key, array=None):
