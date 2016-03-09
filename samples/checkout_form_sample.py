@@ -5,12 +5,12 @@ import ast
 import base64
 
 
-class BKMSample(unittest.TestCase):
+class CheckoutFormSample(unittest.TestCase):
     def runTest(self):
-        self.should_initialize_bkm()
-        self.should_retrieve_bkm_auth()
+        self.should_initialize_checkout_form()
+        self.should_retrieve_checkout_form_auth()
 
-    def should_initialize_bkm(self):
+    def should_initialize_checkout_form(self):
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -18,6 +18,7 @@ class BKMSample(unittest.TestCase):
         request = dict([('locale', 'tr')])
         request['conversationId'] = '123456789'
         request['price'] = '1'
+        request['paidPrice'] = '1.2'
         request['basketId'] = 'B67832'
         request['paymentGroup'] = 'PRODUCT'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
@@ -79,19 +80,14 @@ class BKMSample(unittest.TestCase):
         request['basketItems'] = basket_items
 
         # make request
-        bkm_initialize = iyzipay.BKMInitialize()
-        bkm_initialize_response = bkm_initialize.create(request, options)
+        checkout_form_initialize = iyzipay.CheckoutFormInitialize()
+        checkout_form_initialize_response = checkout_form_initialize.create(request, options)
 
         # get and print response
-        response = bkm_initialize_response.read().decode()
+        response = checkout_form_initialize_response.read().decode()
         pprint.pprint(response)
 
-        # generate html code to redirect to BKM
-        response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['htmlContent'])
-        pprint.pprint(html_response)
-
-    def should_retrieve_bkm_auth(self):
+    def should_retrieve_checkout_form_auth(self):
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -101,8 +97,8 @@ class BKMSample(unittest.TestCase):
         request['token'] = 'token'
 
         # make request
-        bkm_auth = iyzipay.BKMAuth()
-        bkm_auth_response = bkm_auth.retrieve(request, options)
+        checkout_form_auth = iyzipay.CheckoutFormAuth()
+        checkout_form_auth_response = checkout_form_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(bkm_auth_response.read().decode())
+        pprint.pprint(checkout_form_auth_response.read().decode())
