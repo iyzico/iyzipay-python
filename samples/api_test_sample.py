@@ -9,8 +9,11 @@ class ApiTestSample(unittest.TestCase):
 
     def should_test_api(self):
 
-        options = {'base_url': iyzipay.base_url}
-        api_test = iyzipay.ApiTest()
-        api_test = api_test.retrieve(options)
+        options = dict([('base_url', iyzipay.base_url)])
 
-        pprint.pprint(api_test.read().decode())
+        # make request
+        api_test = iyzipay.ApiTest()
+        api_test_response = api_test.retrieve(options)
+
+        # print response
+        pprint.pprint(api_test_response.read().decode())

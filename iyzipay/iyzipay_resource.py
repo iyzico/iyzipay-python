@@ -52,10 +52,6 @@ class IyzipayResource:
     def resource_pki(request):
         return 'locale=' + request['locale'] + ',conversationId=' + request['conversationId'] + ','
 
-    @staticmethod
-    def round(price):
-        return str(round(float(price), 1))
-
 
 class ApiTest(IyzipayResource):
     def retrieve(self, options):
@@ -68,7 +64,9 @@ class BinNumber(IyzipayResource):
         return self.connect('POST', '/payment/bin/check', options, request, pki)
 
     def to_pki_string(self, request):
-        return self.resource_pki(request) + 'binNumber=' + request['binNumber'] + ']'
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('binNumber', request['binNumber'])
+        return pki_builder.get_request_string()
 
 
 class Approval(IyzipayResource):
@@ -77,7 +75,9 @@ class Approval(IyzipayResource):
         return self.connect('POST', '/payment/iyzipos/item/approve', options, request, pki)
 
     def to_pki_string(self, request):
-        return self.resource_pki(request) + 'paymentTransactionId=' + request['paymentTransactionId'] + ']'
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('paymentTransactionId', request['paymentTransactionId'])
+        return pki_builder.get_request_string()
 
 
 class BKMAuth(IyzipayResource):
@@ -86,7 +86,9 @@ class BKMAuth(IyzipayResource):
         return self.connect('POST', '/payment/iyzipos/bkm/auth/ecom/detail', options, request, pki)
 
     def to_pki_string(self, request):
-        return self.resource_pki(request) + 'token=' + request['token'] + ']'
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('token', request['token'])
+        return pki_builder.get_request_string()
 
 
 class BKMInitialize(IyzipayResource):
@@ -149,4 +151,3 @@ class BKMInitialize(IyzipayResource):
             pki_builder.append_price('subMerchantPrice', item['subMerchantPrice'])
             basket_items_pki.append(pki_builder.get_request_string())
         return basket_items_pki
-
