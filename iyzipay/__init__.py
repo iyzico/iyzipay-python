@@ -15,7 +15,11 @@ from iyzipay.iyzipay_resource import (  # noqa
     BinNumber,
     Approval,
     BKMAuth,
-    BKMInitialize)
+    BKMInitialize,
+    Cancel,
+    CheckoutFormInitialize,
+    CheckoutFormAuth,
+    InstallmentInfo)
 
 from iyzipay.pki_builder import (  # noqa
     PKIBuilder
