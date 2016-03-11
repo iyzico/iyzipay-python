@@ -6,6 +6,7 @@ import iyzipay
 class RefundSample(unittest.TestCase):
     def runTest(self):
         self.should_refund()
+        self.should_refund_charged_from_merchant()
 
     def should_refund(self):
         options = dict([('base_url', iyzipay.base_url)])

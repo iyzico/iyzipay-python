@@ -444,3 +444,105 @@ class ThreeDSAuth(IyzipayResource):
         pki_builder.append('paymentId', request.get('paymentId'))
         pki_builder.append('paymentConversationId', request.get('paymentConversationId'))
         return pki_builder.get_request_string()
+
+
+class ConnectCancel(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyziconnect/cancel', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('paymentId', request.get('paymentId'))
+        pki_builder.append('ip', request.get('ip'))
+        return pki_builder.get_request_string()
+
+
+class ConnectRefund(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyziconnect/refund', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('paymentTransactionId', request.get('paymentTransactionId'))
+        pki_builder.append_price('price', request.get('price'))
+        pki_builder.append('ip', request.get('ip'))
+        return pki_builder.get_request_string()
+
+
+class ConnectPaymentAuth(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyziconnect/auth', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append_price('price', request.get('price'))
+        pki_builder.append_price('paidPrice', request.get('paidPrice'))
+        pki_builder.append('installment', request.get('installment'))
+        pki_builder.append('buyerEmail', request.get('buyerEmail'))
+        pki_builder.append('buyerId', request.get('buyerId'))
+        pki_builder.append('buyerIp', request.get('buyerIp'))
+        pki_builder.append('posOrderId', request.get('posOrderId'))
+        pki_builder.append('paymentCard', self.payment_card_pki(request.get('paymentCard')))
+        pki_builder.append('connectorName', request.get('connectorName'))
+        return pki_builder.get_request_string()
+
+
+class ConnectThreeDSInitialize(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyziconnect/initialize3ds', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append_price('price', request.get('price'))
+        pki_builder.append_price('paidPrice', request.get('paidPrice'))
+        pki_builder.append('installment', request.get('installment'))
+        pki_builder.append('buyerEmail', request.get('buyerEmail'))
+        pki_builder.append('buyerId', request.get('buyerId'))
+        pki_builder.append('buyerIp', request.get('buyerIp'))
+        pki_builder.append('posOrderId', request.get('posOrderId'))
+        pki_builder.append('paymentCard', self.payment_card_pki(request.get('paymentCard')))
+        pki_builder.append('connectorName', request.get('connectorName'))
+        pki_builder.append('callbackUrl', request.get('callbackUrl'))
+        return pki_builder.get_request_string()
+
+
+class ConnectThreeDSAuth(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyziconnect/auth3ds', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('paymentId', request.get('paymentId'))
+        pki_builder.append('conversationData', request.get('conversationData'))
+        return pki_builder.get_request_string()
+
+
+class CrossBookingToSubMerchant(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/crossbooking/send', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('subMerchantKey', request.get('subMerchantKey'))
+        pki_builder.append_price('price', request.get('price'))
+        pki_builder.append('reason', request.get('reason'))
+        return pki_builder.get_request_string()
+
+
+class CrossBookingFromSubMerchant(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/crossbooking/receive', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('subMerchantKey', request.get('subMerchantKey'))
+        pki_builder.append_price('price', request.get('price'))
+        pki_builder.append('reason', request.get('reason'))
+        return pki_builder.get_request_string()

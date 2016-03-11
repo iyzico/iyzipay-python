@@ -29,7 +29,14 @@ from iyzipay.iyzipay_resource import (  # noqa
     BouncedBankTransferList,
     SubMerchant,
     ThreeDSInitialize,
-    ThreeDSAuth)
+    ThreeDSAuth,
+    ConnectCancel,
+    ConnectRefund,
+    ConnectPaymentAuth,
+    ConnectThreeDSInitialize,
+    ConnectThreeDSAuth,
+    CrossBookingToSubMerchant,
+    CrossBookingFromSubMerchant)
 
 from iyzipay.pki_builder import (  # noqa
     PKIBuilder

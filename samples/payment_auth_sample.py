@@ -1,8 +1,6 @@
 import pprint
 import unittest
 import iyzipay
-import ast
-import base64
 
 
 class PaymentAuthSample(unittest.TestCase):
