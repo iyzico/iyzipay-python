@@ -12,7 +12,7 @@ setup(
     version='1.0.0',
     description='iyzipay api python client',
     long_description=readme,
-    author='Iyzicp',
+    author='Iyzico',
     author_email='iyzico-ci@iyzico.com',
     url='https://github.com/iyzico/iyzipay-python',
     license=licenseFile,

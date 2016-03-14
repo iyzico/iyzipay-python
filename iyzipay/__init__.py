@@ -36,7 +36,9 @@ from iyzipay.iyzipay_resource import (  # noqa
     ConnectThreeDSInitialize,
     ConnectThreeDSAuth,
     CrossBookingToSubMerchant,
-    CrossBookingFromSubMerchant)
+    CrossBookingFromSubMerchant,
+    ConnectBKMAuth,
+    ConnectBKMInitialize)
 
 from iyzipay.pki_builder import (  # noqa
     PKIBuilder

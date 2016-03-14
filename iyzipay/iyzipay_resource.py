@@ -110,6 +110,27 @@ class IyzipayResource:
         pki_builder.append('cardUserKey', payment_card.get('cardUserKey'))
         return pki_builder.get_request_string()
 
+    @staticmethod
+    def installment_details_pki(installment_details):
+        installments_pki = []
+        for item in installment_details:
+            pki_builder = iyzipay.PKIBuilder('')
+            pki_builder.append('bankId', item.get('bankId'))
+            pki_builder.append_array('installmentPrices',
+                                     IyzipayResource.installment_prices_pki(item.get('installmentPrices')))
+            installments_pki.append(pki_builder.get_request_string())
+        return installments_pki
+
+    @staticmethod
+    def installment_prices_pki(installment_prices):
+        installments_pki = []
+        for item in installment_prices:
+            pki_builder = iyzipay.PKIBuilder('')
+            pki_builder.append('installmentNumber', item.get('installmentNumber'))
+            pki_builder.append_price('totalPrice', item.get('totalPrice'))
+            installments_pki.append(pki_builder.get_request_string())
+        return installments_pki
+
 
 class ApiTest(IyzipayResource):
     def retrieve(self, options):
@@ -545,4 +566,33 @@ class CrossBookingFromSubMerchant(IyzipayResource):
         pki_builder.append('subMerchantKey', request.get('subMerchantKey'))
         pki_builder.append_price('price', request.get('price'))
         pki_builder.append('reason', request.get('reason'))
+        return pki_builder.get_request_string()
+
+
+class ConnectBKMAuth(IyzipayResource):
+    def retrieve(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyziconnect/bkm/auth/detail', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('token', request.get('token'))
+        return pki_builder.get_request_string()
+
+
+class ConnectBKMInitialize(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyziconnect/bkm/initialize', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('connectorName', request.get('connectorName'))
+        pki_builder.append_price('price', request.get('price'))
+        pki_builder.append('callbackUrl', request.get('callbackUrl'))
+        pki_builder.append('buyerEmail', request.get('buyerEmail'))
+        pki_builder.append('buyerId', request.get('buyerId'))
+        pki_builder.append('buyerIp', request.get('buyerIp'))
+        pki_builder.append('posOrderId', request.get('posOrderId'))
+        pki_builder.append_array('installmentDetails', self.installment_details_pki(request.get('installmentDetails')))
         return pki_builder.get_request_string()
