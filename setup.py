@@ -1,20 +1,36 @@
+import os
 from setuptools import setup, find_packages
 
-
 with open('README.md') as f:
-    readme = f.read()
+    README = f.read()
 
 with open('LICENSE') as f:
-    licenseFile = f.read()
+    LICENCE = f.read()
+
+# allow setup.py to be run from any path
+os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='iyzipay',
     version='1.0.0',
     description='iyzipay api python client',
-    long_description=readme,
+    long_description=README,
     author='Iyzico',
     author_email='iyzico-ci@iyzico.com',
     url='https://github.com/iyzico/iyzipay-python',
-    license=licenseFile,
-    packages=find_packages(exclude=('tests', 'docs'))
+    license=LICENCE,
+    packages=find_packages(exclude=('tests', 'docs')),
+    classifiers=[
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
 )
