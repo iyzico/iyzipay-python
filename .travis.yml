@@ -1,26 +1,20 @@
 language: python
-
 python:
-  - "pypy"
-  - "3.0"
-  - "3.1"
-  - "3.2"
-  - "3.3"
-  - "3.4"
-  - "3.5"
-
+- pypy
+- '3.0'
+- '3.1'
+- '3.2'
+- '3.3'
+- '3.4'
+- '3.5'
 cache:
   apt: true
   pip: false
-
-script:
-  - touch foo
-
 deploy:
   provider: pypi
   user: iyzico
   password:
-    secure: my_secure_password
+    secure: OecDwmrof8C7gu5ZvEd0BiG8uiSvVkAKXQgqcIZYTahE927TdY5EX0FXkIWV7fB0Kr7VkH/tEFIrV5QmC4wjHBAHJujju/jd/16Gcp69F/MjeP9sMl4lsbW0+TDh3e2ROYBCz3eQlfmBCDZkl1j0iPPtRfXOjw7uDfj0PjtP2O4TDsGdH+dAzcoYmCxOzS1Mm8SGeQ5FqAz49MOa/TjdgI8IVR37un/7MslKlA/r0RzKKiNbPiqEgDFo3G9WDKunO2GwJ7KqpchQwx5fDjqLDlyFH/8/pemIHtlDTMShOAoj8wSVcW89u9AgFyrt1G74+a7DtHicPOSs6UJ8q6sRaJNvkpPuq59mbSn3qtiuW6y7VL/AQzU5dDEypwtmLDa96yfguhMDa19Xo6PCNmzeRDhXnCU0zhXeYitjAGr4+07EYr+urWa2mrSQ4s5e3PcwsXyPfuufnHvHDAz7DWcxo8BnfEXUZkeAy5KEBBlBHkCh2VdzUVe8jxH1XspTqBVKrECVfKCzATFfw/igPI9FIuic7T51RuogD7qF2G+nzkIRuBfcUE50CMIHwYRrOE2wClSvDab1h40V0JjMEFUjAKZnXvsh0rZap/tWSHNAQMjy9HfjDKetJiFeCPtbWqTnhm4o1lB92EYId13+BW8+ik2ay9gS06uOrfGQCZPMgS4=
   on:
     tags: true
     branch: master
