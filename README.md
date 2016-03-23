@@ -7,7 +7,7 @@ You can sign up for an iyzico account at https://iyzico.com
 
 # Requirements
 
-Python 3.0 and later.
+Python 3.2 and later.
 
 # Installation
 
