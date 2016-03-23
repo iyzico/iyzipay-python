@@ -14,3 +14,4 @@ deploy:
   on:
     tags: true
     branch: master
+sudo: required
