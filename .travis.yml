@@ -15,6 +15,4 @@ deploy:
     tags: true
     branch: master
 install:
-  - make build
-script:
-    - echo "building"
+  - pip install unittest2
