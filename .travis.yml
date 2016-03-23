@@ -16,3 +16,5 @@ deploy:
     branch: master
 install:
   - pip install unittest2
+script:
+    - echo "TODO"
