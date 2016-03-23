@@ -118,11 +118,3 @@ payment_auth = iyzipay.PaymentAuth()
 payment_auth_response = payment_auth.create(request, options)
 ```
 See other samples under samples directory.
-
-## Development
-
-Install dependencies:
-
-``` bash
-pip install
-```
