@@ -1,12 +1,10 @@
 language: python
 python:
-- pypy3
 - '3.2'
 - '3.3'
 - '3.4'
 - '3.5'
 cache:
-  apt: true
   pip: false
 deploy:
   provider: pypi
