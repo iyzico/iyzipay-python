@@ -14,4 +14,7 @@ deploy:
   on:
     tags: true
     branch: master
-sudo: required
+install:
+  - pip install unittest2
+script:
+    - echo "TODO"
