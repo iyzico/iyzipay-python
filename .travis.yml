@@ -15,4 +15,4 @@ deploy:
     tags: true
     branch: master
 install:
-  - python setup.py make build
+  - make build
