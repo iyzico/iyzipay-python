@@ -127,5 +127,3 @@ Install dependencies:
 ``` bash
 pip install
 ```
-
-## Testing
