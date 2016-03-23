@@ -16,3 +16,5 @@ deploy:
     branch: master
 install:
   - make build
+script:
+    - echo "building"
