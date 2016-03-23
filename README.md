@@ -1,7 +1,6 @@
 # iyzipay-python
 
 [![Build Status](https://travis-ci.org/iyzico/iyzipay-python.svg?branch=master)](https://travis-ci.org/iyzico/iyzipay-python)
-[![Latest Stable Version](https://poser.pugx.org/iyzico/iyzipay-python/version)](https://packagist.org/packages/iyzico/iyzipay-python)
 
 You can sign up for an iyzico account at https://iyzico.com
 
