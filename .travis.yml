@@ -14,6 +14,7 @@ deploy:
   on:
     tags: true
     branch: master
+  skip_cleanup: true
 install:
   - pip install unittest2
 script:
