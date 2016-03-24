@@ -35,5 +35,7 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    keywords='iyzipay api client iyzico payment'
+    keywords='iyzipay api client iyzico payment',
+    package_dir={'iyzipay': 'iyzipay'},
+    include_package_data=True,
 )

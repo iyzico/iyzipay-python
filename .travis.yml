@@ -1,17 +1,17 @@
 language: python
 python:
-- "3.2"
-- "3.3"
-- "3.4"
-- "3.5"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
 install:
   - "pip install ."
 script: nosetests
 deploy:
-  provider: pypi
-  user: "iyzico"
-  password:
-    secure: "WvwLjz27XiPZvOe0sE/EcCERAewHYmirqY8jbmtrI4NzjRQXV5MCM8bMmFzUlepaj8Z4MdqPEgA1OwGW00b1u5UgE9tiKvlV9AQ0MdNwNqkGMrlt4E6/p4+XkcP3K2+gJwgy9n18wbDoIEwxjDTr9u7JZcGN1mLNBjv4OhXMhN10dip6wvnE9j1DGcyY2Ln37tXrGS7bt5wPPgBKEFZzr8xQNk0l44stk+Ryeeb6R8VKeOUsjjwgn/2uTdCcngy0sdzeT6fIRsRpAtL3Gtr9/ZTtORLVs5oFRBItdk0nKmrMcIbUQCG5tgzT7Q0Hz2TUkOWmv1QbFopguBTU8W0oEpW2KsRTmCP2rwRTgugRTArN7t1cnQjz2fi3RVqYV2bzowomubLnDuhLuvQ3VtVa55Xu/WH0rvKlQO0y/yGb0foQLGTkhCNsf+ebD4B/i9LEjVPtYcrZiIJ7At7OHFZkc5EkZKbI9N1OslLX+Lo6AYRDE+Gs3HzWtEOWtH9TjZm121Q2zetXWOLAzGyUTL/Gw4jEXfdxdOWDKJZEv8fdT9LewBsATCEIWm2/w7Rmz7s4JuM1r9HkSSu/6lFSX2dDmGikiYh74mGomiElh5J5HIlreDebVeJybl+EoHf06UdJkeS5Iqd5h/yjxXLgOXUOXZ95uzY5LTJZ6XOPkyt89DQ="
-  on:
-    tags: true
-    branch: master
+  - provider: pypi
+    user: "iyzico"
+    password:
+      secure: "WvwLjz27XiPZvOe0sE/EcCERAewHYmirqY8jbmtrI4NzjRQXV5MCM8bMmFzUlepaj8Z4MdqPEgA1OwGW00b1u5UgE9tiKvlV9AQ0MdNwNqkGMrlt4E6/p4+XkcP3K2+gJwgy9n18wbDoIEwxjDTr9u7JZcGN1mLNBjv4OhXMhN10dip6wvnE9j1DGcyY2Ln37tXrGS7bt5wPPgBKEFZzr8xQNk0l44stk+Ryeeb6R8VKeOUsjjwgn/2uTdCcngy0sdzeT6fIRsRpAtL3Gtr9/ZTtORLVs5oFRBItdk0nKmrMcIbUQCG5tgzT7Q0Hz2TUkOWmv1QbFopguBTU8W0oEpW2KsRTmCP2rwRTgugRTArN7t1cnQjz2fi3RVqYV2bzowomubLnDuhLuvQ3VtVa55Xu/WH0rvKlQO0y/yGb0foQLGTkhCNsf+ebD4B/i9LEjVPtYcrZiIJ7At7OHFZkc5EkZKbI9N1OslLX+Lo6AYRDE+Gs3HzWtEOWtH9TjZm121Q2zetXWOLAzGyUTL/Gw4jEXfdxdOWDKJZEv8fdT9LewBsATCEIWm2/w7Rmz7s4JuM1r9HkSSu/6lFSX2dDmGikiYh74mGomiElh5J5HIlreDebVeJybl+EoHf06UdJkeS5Iqd5h/yjxXLgOXUOXZ95uzY5LTJZ6XOPkyt89DQ="
+    on:
+      tags: true
+      branch: master
