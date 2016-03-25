@@ -35,9 +35,9 @@ import iyzipay;
 # Usage
 
 ```python
-options = dict([('base_url', iyzipay.base_url)])
-options['api_key'] = iyzipay.api_key
-options['secret_key'] = iyzipay.secret_key
+options = dict([('base_url', 'https://api.iyzipay.com')])
+options['api_key'] = 'your api key'
+options['secret_key'] = 'your secret key'
 
 request = dict([('locale', 'tr')])
 request['conversationId'] = '123456789'
