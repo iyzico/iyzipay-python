@@ -21,7 +21,7 @@ pip install iyzipay
 Or:
 
 ```bash
-easy_install install iyzipay
+easy_install iyzipay
 ```
 
 ### Manual Installation
