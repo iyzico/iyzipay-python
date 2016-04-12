@@ -5,11 +5,11 @@ import ast
 import base64
 
 
-class ConnectThreeDSSample(unittest.TestCase):
+class ConnectThreeDSPreAuthSample(unittest.TestCase):
     def runTest(self):
         self.should_initialize_threeds_with_card()
-        # self.should_initialize_threeds_with_card_token()
-        # self.should_auth_threeds()
+        self.should_initialize_threeds_with_card_token()
+        self.should_auth_threeds()
 
     def should_initialize_threeds_with_card(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -36,8 +36,8 @@ class ConnectThreeDSSample(unittest.TestCase):
         request['paymentCard'] = payment_card
 
         # make request
-        three_d_s_initialize = iyzipay.ConnectThreeDSInitialize()
-        three_d_s_initialize_response = three_d_s_initialize.create(request, options)
+        three_d_s_init_pre_auth = iyzipay.ConnectThreeDSInitializePreAuth()
+        three_d_s_initialize_response = three_d_s_init_pre_auth.create(request, options)
 
         # get and print response
         response = three_d_s_initialize_response.read().decode()
@@ -68,8 +68,8 @@ class ConnectThreeDSSample(unittest.TestCase):
         request['paymentCard'] = payment_card
 
         # make request
-        three_d_s_initialize = iyzipay.ConnectThreeDSInitialize()
-        three_d_s_initialize_response = three_d_s_initialize.create(request, options)
+        three_d_s_init_pre_auth = iyzipay.ConnectThreeDSInitializePreAuth()
+        three_d_s_initialize_response = three_d_s_init_pre_auth.create(request, options)
 
         # get and print response
         response = three_d_s_initialize_response.read().decode()

@@ -35,6 +35,7 @@ from iyzipay.iyzipay_resource import (  # noqa
     ConnectRefund,
     ConnectPaymentAuth,
     ConnectThreeDSInitialize,
+    ConnectThreeDSInitializePreAuth,
     ConnectThreeDSAuth,
     CrossBookingToSubMerchant,
     CrossBookingFromSubMerchant,
