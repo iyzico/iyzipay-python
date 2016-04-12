@@ -5,9 +5,9 @@
 # Nurettin Bakkal <nurettin.bakkal@iyzico.com>
 
 # Configuration variables
-api_key = '1'
-secret_key = '1'
-base_url = 'localhost'
+api_key = 'your api key'
+secret_key = 'your secret key'
+base_url = 'api.iyzipay.com'
 
 # Resource
 from iyzipay.iyzipay_resource import (  # noqa
@@ -30,10 +30,12 @@ from iyzipay.iyzipay_resource import (  # noqa
     SubMerchant,
     ThreeDSInitialize,
     ThreeDSAuth,
+    ThreeDSInitializePreAuth,
     ConnectCancel,
     ConnectRefund,
     ConnectPaymentAuth,
     ConnectThreeDSInitialize,
+    ConnectThreeDSInitializePreAuth,
     ConnectThreeDSAuth,
     CrossBookingToSubMerchant,
     CrossBookingFromSubMerchant,

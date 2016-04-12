@@ -445,6 +445,29 @@ class ThreeDSInitialize(IyzipayResource):
         return pki_builder.get_request_string()
 
 
+class ThreeDSInitializePreAuth(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyzipos/initialize3ds/preauth/ecom', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append_price('price', request.get('price'))
+        pki_builder.append_price('paidPrice', request.get('paidPrice'))
+        pki_builder.append('installment', request.get('installment'))
+        pki_builder.append('paymentChannel', request.get('paymentChannel'))
+        pki_builder.append('basketId', request.get('basketId'))
+        pki_builder.append('paymentGroup', request.get('paymentGroup'))
+        pki_builder.append('paymentCard', self.payment_card_pki(request.get('paymentCard')))
+        pki_builder.append('buyer', self.buyer_pki(request.get('buyer')))
+        pki_builder.append('shippingAddress', self.address_pki(request.get('shippingAddress')))
+        pki_builder.append('billingAddress', self.address_pki(request.get('billingAddress')))
+        pki_builder.append_array('basketItems', self.basket_pki(request.get('basketItems')))
+        pki_builder.append('paymentSource', request.get('paymentSource'))
+        pki_builder.append('callbackUrl', request.get('callbackUrl'))
+        return pki_builder.get_request_string()
+
+
 class ThreeDSAuth(IyzipayResource):
     def create(self, request, options):
         pki = self.to_pki_string_create(request)
@@ -515,6 +538,26 @@ class ConnectThreeDSInitialize(IyzipayResource):
     def create(self, request, options):
         pki = self.to_pki_string(request)
         return self.connect('POST', '/payment/iyziconnect/initialize3ds', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append_price('price', request.get('price'))
+        pki_builder.append_price('paidPrice', request.get('paidPrice'))
+        pki_builder.append('installment', request.get('installment'))
+        pki_builder.append('buyerEmail', request.get('buyerEmail'))
+        pki_builder.append('buyerId', request.get('buyerId'))
+        pki_builder.append('buyerIp', request.get('buyerIp'))
+        pki_builder.append('posOrderId', request.get('posOrderId'))
+        pki_builder.append('paymentCard', self.payment_card_pki(request.get('paymentCard')))
+        pki_builder.append('connectorName', request.get('connectorName'))
+        pki_builder.append('callbackUrl', request.get('callbackUrl'))
+        return pki_builder.get_request_string()
+
+
+class ConnectThreeDSInitializePreAuth(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyziconnect/initialize3ds/preauth', options, request, pki)
 
     def to_pki_string(self, request):
         pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
