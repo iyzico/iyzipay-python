@@ -23,3 +23,20 @@ class ApprovalSample(unittest.TestCase):
 
         # print response
         pprint.pprint(approval_response.read().decode())
+        
+    def should_disapprove_payment_item(self):
+
+        options = dict([('base_url', iyzipay.base_url)])
+        options['api_key'] = iyzipay.api_key
+        options['secret_key'] = iyzipay.secret_key
+
+        request = dict([('locale', 'tr')])
+        request['conversationId'] = '123456'
+        request['paymentTransactionId'] = '139'
+
+        # make request
+        disapproval = iyzipay.Disapproval()
+        disapproval_response = disapproval.create(request, options)
+
+        # print response
+        pprint.pprint(disapproval_response.read().decode())
