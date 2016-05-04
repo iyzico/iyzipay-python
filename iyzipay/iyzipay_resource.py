@@ -157,6 +157,16 @@ class Approval(IyzipayResource):
         pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
         pki_builder.append('paymentTransactionId', request.get('paymentTransactionId'))
         return pki_builder.get_request_string()
+        
+class Disapproval(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/payment/iyzipos/item/disapprove', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('paymentTransactionId', request.get('paymentTransactionId'))
+        return pki_builder.get_request_string()
 
 
 class BKMAuth(IyzipayResource):
