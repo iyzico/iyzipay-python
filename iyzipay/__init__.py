@@ -14,6 +14,7 @@ from iyzipay.iyzipay_resource import (  # noqa
     ApiTest,
     BinNumber,
     Approval,
+    Disapproval,
     BKMAuth,
     BKMInitialize,
     Cancel,
