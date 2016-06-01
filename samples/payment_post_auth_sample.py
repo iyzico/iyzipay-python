@@ -17,6 +17,7 @@ class PaymentPostAuthSample(unittest.TestCase):
         request['conversationId'] = '123456'
         request['paymentId'] = '1'
         request['ip'] = '85.34.78.112'
+        request['currency'] = 'TRY'
 
         # make request
         payment_post_auth = iyzipay.PaymentPostAuth()

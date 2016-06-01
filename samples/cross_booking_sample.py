@@ -18,6 +18,7 @@ class CrossBookingSample(unittest.TestCase):
         request['subMerchantKey'] = 'sub merchant key'
         request['price'] = '1'
         request['reason'] = 'reason text'
+        request['currency'] = 'TRY'
 
         # make request
         cross_booking_to_sub_merchant = iyzipay.CrossBookingToSubMerchant()
@@ -36,6 +37,7 @@ class CrossBookingSample(unittest.TestCase):
         request['subMerchantKey'] = 'sub merchant key'
         request['price'] = '1'
         request['reason'] = 'reason text'
+        request['currency'] = 'TRY'
 
         # make request
         cross_booking_from_sub_merchant = iyzipay.CrossBookingFromSubMerchant()

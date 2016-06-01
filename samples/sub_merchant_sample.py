@@ -30,6 +30,7 @@ class SubMerchantSample(unittest.TestCase):
         request['name'] = 'John\'s market'
         request['iban'] = 'TR180006200119000006672315'
         request['identityNumber'] = '1234567890'
+        request['currency'] = 'TRY'
 
         # make request
         sub_merchant = iyzipay.SubMerchant()
@@ -55,6 +56,7 @@ class SubMerchantSample(unittest.TestCase):
         request['name'] = 'John\'s market'
         request['iban'] = 'TR180006200119000006672315'
         request['identityNumber'] = '31300864726'
+        request['currency'] = 'TRY'
 
         # make request
         sub_merchant = iyzipay.SubMerchant()
@@ -80,6 +82,7 @@ class SubMerchantSample(unittest.TestCase):
         request['gsmNumber'] = '+905350000000'
         request['name'] = 'John\'s market'
         request['iban'] = 'TR180006200119000006672315'
+        request['currency'] = 'TRY'
 
         # make request
         sub_merchant = iyzipay.SubMerchant()
@@ -104,6 +107,7 @@ class SubMerchantSample(unittest.TestCase):
         request['gsmNumber'] = '+905350000000'
         request['name'] = 'Jane\'s market'
         request['identityNumber'] = '31300864726'
+        request['currency'] = 'TRY'
 
         # make request
         sub_merchant = iyzipay.SubMerchant()
@@ -128,6 +132,7 @@ class SubMerchantSample(unittest.TestCase):
         request['name'] = 'John\'s market'
         request['iban'] = 'TR180006200119000006672315'
         request['identityNumber'] = '31300864726'
+        request['currency'] = 'TRY'
 
         # make request
         sub_merchant = iyzipay.SubMerchant()
@@ -152,6 +157,7 @@ class SubMerchantSample(unittest.TestCase):
         request['gsmNumber'] = '+905350000000'
         request['name'] = 'John\'s market'
         request['iban'] = 'TR180006200119000006672315'
+        request['currency'] = 'TRY'
 
         # make request
         sub_merchant = iyzipay.SubMerchant()

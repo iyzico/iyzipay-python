@@ -35,7 +35,7 @@ import iyzipay;
 # Usage
 
 ```python
-options = dict([('base_url', 'api.iyzipay.com')])
+options = dict([('base_url', 'sandbox-api.iyzipay.com')])
 options['api_key'] = 'your api key'
 options['secret_key'] = 'your secret key'
 
