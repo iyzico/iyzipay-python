@@ -7,7 +7,7 @@
 # Configuration variables
 api_key = 'your api key'
 secret_key = 'your secret key'
-base_url = 'api.iyzipay.com'
+base_url = 'sandbox-api.iyzipay.com'
 
 # Resource
 from iyzipay.iyzipay_resource import (  # noqa

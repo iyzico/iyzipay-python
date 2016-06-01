@@ -26,6 +26,7 @@ class ConnectThreeDSPreAuthSample(unittest.TestCase):
         request['buyerIp'] = '85.34.78.112'
         request['connectorName'] = 'connector name'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
+        request['currency'] = 'TRY'
 
         payment_card = dict([('cardHolderName', 'John Doe')])
         payment_card['cardNumber'] = '5528790000000008'
@@ -62,6 +63,7 @@ class ConnectThreeDSPreAuthSample(unittest.TestCase):
         request['buyerId'] = 'B2323'
         request['buyerIp'] = '85.34.78.112'
         request['connectorName'] = 'connector name'
+        request['currency'] = 'TRY'
 
         payment_card = dict([('cardToken', 'card token')])
         payment_card['cardUserKey'] = 'card user key'
