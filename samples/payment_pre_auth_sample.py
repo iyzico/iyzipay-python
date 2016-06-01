@@ -26,6 +26,7 @@ class PaymentPreAuthSample(unittest.TestCase):
         request['paymentChannel'] = 'WEB'
         request['paymentGroup'] = 'PRODUCT'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
+        request['currency'] = 'TRY'
 
         payment_card = dict([('cardHolderName', 'John Doe')])
         payment_card['cardNumber'] = '5528790000000008'
@@ -107,6 +108,7 @@ class PaymentPreAuthSample(unittest.TestCase):
         request['paymentChannel'] = 'WEB'
         request['paymentGroup'] = 'PRODUCT'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
+        request['currency'] = 'TRY'
 
         payment_card = dict([('cardHolderName', 'John Doe')])
         payment_card['cardNumber'] = '5528790000000008'
@@ -194,6 +196,7 @@ class PaymentPreAuthSample(unittest.TestCase):
         request['paymentChannel'] = 'WEB'
         request['paymentGroup'] = 'SUBSCRIPTION'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
+        request['currency'] = 'TRY'
 
         payment_card = dict([('cardHolderName', 'John Doe')])
         payment_card['cardNumber'] = '5528790000000008'
