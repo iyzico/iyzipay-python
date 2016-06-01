@@ -48,6 +48,7 @@ request['basketId'] = 'B67832'
 request['paymentChannel'] = 'WEB'
 request['paymentGroup'] = 'PRODUCT'
 request['callbackUrl'] = 'https://www.merchant.com/callback'
+request['currency'] = 'TRY'
 
 payment_card = dict([('cardHolderName', 'John Doe')])
 payment_card['cardNumber'] = '5528790000000008'
