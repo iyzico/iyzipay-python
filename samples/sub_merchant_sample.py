@@ -37,7 +37,7 @@ class SubMerchantSample(unittest.TestCase):
         sub_merchant_response = sub_merchant.create(request, options)
 
         # print response
-        pprint.pprint(sub_merchant_response.read().decode())
+        pprint.pprint(sub_merchant_response.read().decode('utf-8'))
 
     def should_create_private_sub_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -63,7 +63,7 @@ class SubMerchantSample(unittest.TestCase):
         sub_merchant_response = sub_merchant.create(request, options)
 
         # print response
-        pprint.pprint(sub_merchant_response.read().decode())
+        pprint.pprint(sub_merchant_response.read().decode('utf-8'))
 
     def should_create_limited_company_sub_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -89,7 +89,7 @@ class SubMerchantSample(unittest.TestCase):
         sub_merchant_response = sub_merchant.create(request, options)
 
         # print response
-        pprint.pprint(sub_merchant_response.read().decode())
+        pprint.pprint(sub_merchant_response.read().decode('utf-8'))
 
     def should_update_personal_sub_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -114,7 +114,7 @@ class SubMerchantSample(unittest.TestCase):
         sub_merchant_response = sub_merchant.update(request, options)
 
         # print response
-        pprint.pprint(sub_merchant_response.read().decode())
+        pprint.pprint(sub_merchant_response.read().decode('utf-8'))
 
     def should_update_private_sub_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -139,7 +139,7 @@ class SubMerchantSample(unittest.TestCase):
         sub_merchant_response = sub_merchant.update(request, options)
 
         # print response
-        pprint.pprint(sub_merchant_response.read().decode())
+        pprint.pprint(sub_merchant_response.read().decode('utf-8'))
 
     def should_update_limited_company_sub_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -164,7 +164,7 @@ class SubMerchantSample(unittest.TestCase):
         sub_merchant_response = sub_merchant.update(request, options)
 
         # print response
-        pprint.pprint(sub_merchant_response.read().decode())
+        pprint.pprint(sub_merchant_response.read().decode('utf-8'))
 
     def should_retrieve_sub_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -180,4 +180,4 @@ class SubMerchantSample(unittest.TestCase):
         sub_merchant_response = sub_merchant.retrieve(request, options)
 
         # print response
-        pprint.pprint(sub_merchant_response.read().decode())
+        pprint.pprint(sub_merchant_response.read().decode('utf-8'))

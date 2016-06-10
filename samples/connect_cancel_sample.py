@@ -23,4 +23,4 @@ class ConnectCancelSample(unittest.TestCase):
         cancel_response = cancel.create(request, options)
 
         # print response
-        pprint.pprint(cancel_response.read().decode())
+        pprint.pprint(cancel_response.read().decode('utf-8'))

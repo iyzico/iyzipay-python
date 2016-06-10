@@ -16,4 +16,4 @@ class ApiTestSample(unittest.TestCase):
         api_test_response = api_test.retrieve(options)
 
         # print response
-        pprint.pprint(api_test_response.read().decode())
+        pprint.pprint(api_test_response.read().decode('utf-8'))

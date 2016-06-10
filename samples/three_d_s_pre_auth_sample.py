@@ -97,7 +97,7 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_initialize_response = three_d_s_init_pre_auth.create(request, options)
 
         # get and print response
-        response = three_d_s_initialize_response.read().decode()
+        response = three_d_s_initialize_response.read().decode('utf-8')
         pprint.pprint(response)
 
         # generate html code to redirect to BKM
@@ -184,7 +184,7 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_initialize_response = three_d_s_init_pre_auth.create(request, options)
 
         # get and print response
-        response = three_d_s_initialize_response.read().decode()
+        response = three_d_s_initialize_response.read().decode('utf-8')
         pprint.pprint(response)
 
         # generate html code to redirect to BKM
@@ -208,7 +208,7 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.create(request, options)
 
         # print response
-        pprint.pprint(three_d_s_auth_response.read().decode())
+        pprint.pprint(three_d_s_auth_response.read().decode('utf-8'))
 
     def should_retrieve_payment(self):
 
@@ -226,4 +226,4 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(three_d_s_auth_response.read().decode())
+        pprint.pprint(three_d_s_auth_response.read().decode('utf-8'))

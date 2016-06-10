@@ -25,7 +25,7 @@ class RefundSample(unittest.TestCase):
         refund_response = refund.create(request, options)
 
         # print response
-        pprint.pprint(refund_response.read().decode())
+        pprint.pprint(refund_response.read().decode('utf-8'))
 
     def should_refund_charged_from_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -43,4 +43,4 @@ class RefundSample(unittest.TestCase):
         refund_charged_from_merchant_response = refund_charged_from_merchant.create(request, options)
 
         # print response
-        pprint.pprint(refund_charged_from_merchant_response.read().decode())
+        pprint.pprint(refund_charged_from_merchant_response.read().decode('utf-8'))

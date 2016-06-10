@@ -1,14 +1,14 @@
+# coding=utf-8
 import pprint
 import unittest
 import iyzipay
 import ast
 import base64
 
-
 class BKMSample(unittest.TestCase):
     def runTest(self):
         self.should_initialize_bkm()
-        self.should_retrieve_bkm_auth()
+        # self.should_retrieve_bkm_auth()
 
     def should_initialize_bkm(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -30,14 +30,14 @@ class BKMSample(unittest.TestCase):
         buyer['identityNumber'] = '74300864791'
         buyer['lastLoginDate'] = '2015-10-05 12:43:35'
         buyer['registrationDate'] = '2013-04-21 15:12:09'
-        buyer['registrationAddress'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
+        buyer['registrationAddress'] = u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
         buyer['ip'] = '85.34.78.112'
         buyer['city'] = 'Istanbul'
         buyer['country'] = 'Turkey'
         buyer['zipCode'] = '34732'
         request['buyer'] = buyer
 
-        address = dict([('address', 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
+        address = dict([('address', u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
         address['zipCode'] = '34732'
         address['contactName'] = 'Jane Doe'
         address['city'] = 'Istanbul'
@@ -83,7 +83,7 @@ class BKMSample(unittest.TestCase):
         bkm_initialize_response = bkm_initialize.create(request, options)
 
         # get and print response
-        response = bkm_initialize_response.read().decode()
+        response = bkm_initialize_response.read().decode('utf-8')
         pprint.pprint(response)
 
         # generate html code to redirect to BKM
@@ -105,4 +105,4 @@ class BKMSample(unittest.TestCase):
         bkm_auth_response = bkm_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(bkm_auth_response.read().decode())
+        pprint.pprint(bkm_auth_response.read().decode('utf-8'))

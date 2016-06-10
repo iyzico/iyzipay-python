@@ -37,7 +37,7 @@ class ConnectPaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.create(request, options)
 
         # get and print response
-        response = payment_auth_response.read().decode()
+        response = payment_auth_response.read().decode('utf-8')
         pprint.pprint(response)
 
     def should_pay_with_card_token(self):
@@ -65,5 +65,5 @@ class ConnectPaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.create(request, options)
 
         # get and print response
-        response = payment_auth_response.read().decode()
+        response = payment_auth_response.read().decode('utf-8')
         pprint.pprint(response)

@@ -84,7 +84,7 @@ class CheckoutFormSample(unittest.TestCase):
         checkout_form_initialize_response = checkout_form_initialize.create(request, options)
 
         # get and print response
-        response = checkout_form_initialize_response.read().decode()
+        response = checkout_form_initialize_response.read().decode('utf-8')
         pprint.pprint(response)
 
     def should_retrieve_checkout_form_auth(self):
@@ -101,4 +101,4 @@ class CheckoutFormSample(unittest.TestCase):
         checkout_form_auth_response = checkout_form_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(checkout_form_auth_response.read().decode())
+        pprint.pprint(checkout_form_auth_response.read().decode('utf-8'))

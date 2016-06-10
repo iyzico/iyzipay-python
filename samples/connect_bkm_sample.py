@@ -33,7 +33,7 @@ class ConnectBKMSample(unittest.TestCase):
         bkm_initialize_response = bkm_initialize.create(request, options)
 
         # get and print response
-        response = bkm_initialize_response.read().decode()
+        response = bkm_initialize_response.read().decode('utf-8')
         pprint.pprint(response)
 
         # generate html code to redirect to BKM
@@ -55,7 +55,7 @@ class ConnectBKMSample(unittest.TestCase):
         bkm_auth_response = bkm_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(bkm_auth_response.read().decode())
+        pprint.pprint(bkm_auth_response.read().decode('utf-8'))
 
     def prepare_installment_details(self):
         installment_details = list()

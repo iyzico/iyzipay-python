@@ -89,7 +89,7 @@ class PaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.create(request, options)
 
         # get and print response
-        response = payment_auth_response.read().decode()
+        response = payment_auth_response.read().decode('utf-8')
         pprint.pprint(response)
 
     def should_create_payment_with_physical_and_virtual_item_for_market_place(self):
@@ -177,7 +177,7 @@ class PaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.create(request, options)
 
         # get and print response
-        response = payment_auth_response.read().decode()
+        response = payment_auth_response.read().decode('utf-8')
         pprint.pprint(response)
 
     def should_create_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
@@ -259,7 +259,7 @@ class PaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.create(request, options)
 
         # get and print response
-        response = payment_auth_response.read().decode()
+        response = payment_auth_response.read().decode('utf-8')
         pprint.pprint(response)
 
     def should_retrieve_payment(self):
@@ -277,4 +277,4 @@ class PaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(payment_auth_response.read().decode())
+        pprint.pprint(payment_auth_response.read().decode('utf-8'))
