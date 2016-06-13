@@ -135,6 +135,15 @@ class IyzipayResource:
             installments_pki.append(pki_builder.get_request_string())
         return installments_pki
 
+    @staticmethod
+    def card_pki(card):
+        pki_builder = iyzipay.PKIBuilder('')
+        pki_builder.append('cardAlias', card.get('cardAlias'))
+        pki_builder.append('cardNumber', card.get('cardNumber'))
+        pki_builder.append('expireYear', card.get('expireYear'))
+        pki_builder.append('expireMonth', card.get('expireMonth'))
+        pki_builder.append('cardHolderName', card.get('cardHolderName'))
+        return pki_builder.get_request_string()
 
 class ApiTest(IyzipayResource):
     def retrieve(self, options):
@@ -212,6 +221,41 @@ class Cancel(IyzipayResource):
         pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
         pki_builder.append('paymentId', request.get('paymentId'))
         pki_builder.append('ip', request.get('ip'))
+        return pki_builder.get_request_string()
+
+
+class Card(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string_create(request)
+        return self.connect('POST', '/cardstorage/card', options, request, pki)
+
+    def delete(self, request, options):
+        pki = self.to_pki_string_delete(request)
+        return self.connect('DELETE', '/cardstorage/card', options, request, pki)
+
+    def to_pki_string_create(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('externalId', request.get('externalId'))
+        pki_builder.append('email', request.get('email'))
+        pki_builder.append('cardUserKey', request.get('cardUserKey'))
+        pki_builder.append('card', self.card_pki(request.get('card')))
+        return pki_builder.get_request_string()
+
+    def to_pki_string_delete(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('cardUserKey', request.get('cardUserKey'))
+        pki_builder.append('cardToken', request.get('cardToken'))
+        return pki_builder.get_request_string()
+
+
+class CardList(IyzipayResource):
+    def retrieve(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/cardstorage/cards', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('cardUserKey', request.get('cardUserKey'))
         return pki_builder.get_request_string()
 
 
