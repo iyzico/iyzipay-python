@@ -83,8 +83,8 @@ class BKMSample(unittest.TestCase):
         bkm_initialize_response = bkm_initialize.create(request, options)
 
         # get and print response
-        response = bkm_initialize_response.read().decode('utf-8')
-        pprint.pprint(response)
+        print(bkm_initialize_response.read())
+
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
@@ -105,4 +105,4 @@ class BKMSample(unittest.TestCase):
         bkm_auth_response = bkm_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(bkm_auth_response.read().decode('utf-8'))
+        print(bkm_auth_response.read())

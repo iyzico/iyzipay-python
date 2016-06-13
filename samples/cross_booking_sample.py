@@ -25,7 +25,8 @@ class CrossBookingSample(unittest.TestCase):
         cross_booking_to_sub_merchant_response = cross_booking_to_sub_merchant.create(request, options)
 
         # print response
-        pprint.pprint(cross_booking_to_sub_merchant_response.read().decode('utf-8'))
+        print(cross_booking_to_sub_merchant_response.read())
+
 
     def should_receive_money_from_sub_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -44,4 +45,4 @@ class CrossBookingSample(unittest.TestCase):
         cross_booking_from_sub_merchant_response = cross_booking_from_sub_merchant.create(request, options)
 
         # print response
-        pprint.pprint(cross_booking_from_sub_merchant_response.read().decode('utf-8'))
+        print(cross_booking_from_sub_merchant_response.read())

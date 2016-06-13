@@ -1,3 +1,4 @@
+# coding=utf-8
 import pprint
 import unittest
 import iyzipay
@@ -31,14 +32,14 @@ class CheckoutFormSample(unittest.TestCase):
         buyer['identityNumber'] = '74300864791'
         buyer['lastLoginDate'] = '2015-10-05 12:43:35'
         buyer['registrationDate'] = '2013-04-21 15:12:09'
-        buyer['registrationAddress'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
+        buyer['registrationAddress'] = u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
         buyer['ip'] = '85.34.78.112'
         buyer['city'] = 'Istanbul'
         buyer['country'] = 'Turkey'
         buyer['zipCode'] = '34732'
         request['buyer'] = buyer
 
-        address = dict([('address', 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
+        address = dict([('address', u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
         address['zipCode'] = '34732'
         address['contactName'] = 'Jane Doe'
         address['city'] = 'Istanbul'
@@ -84,8 +85,7 @@ class CheckoutFormSample(unittest.TestCase):
         checkout_form_initialize_response = checkout_form_initialize.create(request, options)
 
         # get and print response
-        response = checkout_form_initialize_response.read().decode('utf-8')
-        pprint.pprint(response)
+        print(checkout_form_initialize_response.read())
 
     def should_retrieve_checkout_form_auth(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -101,4 +101,5 @@ class CheckoutFormSample(unittest.TestCase):
         checkout_form_auth_response = checkout_form_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(checkout_form_auth_response.read().decode('utf-8'))
+        print(checkout_form_auth_response.read())
+

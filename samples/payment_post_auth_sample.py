@@ -24,4 +24,5 @@ class PaymentPostAuthSample(unittest.TestCase):
         payment_post_auth_response = payment_post_auth.create(request, options)
 
         # print response
-        pprint.pprint(payment_post_auth_response.read().decode('utf-8'))
+        print(payment_post_auth_response.read())
+

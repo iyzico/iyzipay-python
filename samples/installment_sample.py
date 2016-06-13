@@ -24,7 +24,7 @@ class InstallmentSample(unittest.TestCase):
         installment_info_response = installment_info.retrieve(request, options)
 
         # print response
-        pprint.pprint(installment_info_response.read().decode('utf-8'))
+        print(installment_info_response.read())
 
     def should_retrieve_installment_info_for_all_banks(self):
 
@@ -41,4 +41,4 @@ class InstallmentSample(unittest.TestCase):
         installment_info_response = installment_info.retrieve(request, options)
 
         # print response
-        pprint.pprint(installment_info_response.read().decode('utf-8'))
+        print(installment_info_response.read())

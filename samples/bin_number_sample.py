@@ -22,6 +22,4 @@ class BinNumberSample(unittest.TestCase):
         bin_number = iyzipay.BinNumber()
         bin_number_response = bin_number.retrieve(request, options)
 
-        # print response
-        # pprint.pprint(bin_number_response.read().decode('utf-8'))
         print(bin_number_response.read())

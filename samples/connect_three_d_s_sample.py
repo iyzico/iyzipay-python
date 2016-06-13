@@ -99,5 +99,6 @@ class ConnectThreeDSSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.create(request, options)
 
         # print response
-        pprint.pprint(three_d_s_auth_response.read().decode('utf-8'))
+        print(three_d_s_auth_response.read())
+
 

@@ -24,5 +24,6 @@ class ConnectRefundSample(unittest.TestCase):
         refund_response = refund.create(request, options)
 
         # print response
-        pprint.pprint(refund_response.read().decode('utf-8'))
+        print(refund_response.read())
+
 

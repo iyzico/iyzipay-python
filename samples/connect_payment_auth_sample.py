@@ -37,8 +37,8 @@ class ConnectPaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.create(request, options)
 
         # get and print response
-        response = payment_auth_response.read().decode('utf-8')
-        pprint.pprint(response)
+        print(payment_auth_response.read())
+
 
     def should_pay_with_card_token(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -65,5 +65,4 @@ class ConnectPaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.create(request, options)
 
         # get and print response
-        response = payment_auth_response.read().decode('utf-8')
-        pprint.pprint(response)
+        print(payment_auth_response.read())

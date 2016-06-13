@@ -1,3 +1,4 @@
+# coding=utf-8
 import pprint
 import unittest
 import iyzipay
@@ -44,14 +45,14 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         buyer['identityNumber'] = '74300864791'
         buyer['lastLoginDate'] = '2015-10-05 12:43:35'
         buyer['registrationDate'] = '2013-04-21 15:12:09'
-        buyer['registrationAddress'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
+        buyer['registrationAddress'] = u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
         buyer['ip'] = '85.34.78.112'
         buyer['city'] = 'Istanbul'
         buyer['country'] = 'Turkey'
         buyer['zipCode'] = '34732'
         request['buyer'] = buyer
 
-        address = dict([('address', 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
+        address = dict([('address', u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
         address['zipCode'] = '34732'
         address['contactName'] = 'Jane Doe'
         address['city'] = 'Istanbul'
@@ -137,14 +138,14 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         buyer['identityNumber'] = '74300864791'
         buyer['lastLoginDate'] = '2015-10-05 12:43:35'
         buyer['registrationDate'] = '2013-04-21 15:12:09'
-        buyer['registrationAddress'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
+        buyer['registrationAddress'] = u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
         buyer['ip'] = '85.34.78.112'
         buyer['city'] = 'Istanbul'
         buyer['country'] = 'Turkey'
         buyer['zipCode'] = '34732'
         request['buyer'] = buyer
 
-        address = dict([('address', 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
+        address = dict([('address', u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
         address['zipCode'] = '34732'
         address['contactName'] = 'Jane Doe'
         address['city'] = 'Istanbul'
@@ -208,7 +209,8 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.create(request, options)
 
         # print response
-        pprint.pprint(three_d_s_auth_response.read().decode('utf-8'))
+        print(three_d_s_auth_response.read())
+
 
     def should_retrieve_payment(self):
 
@@ -226,4 +228,5 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(three_d_s_auth_response.read().decode('utf-8'))
+        print(three_d_s_auth_response.read())
+

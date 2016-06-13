@@ -1,3 +1,4 @@
+# coding=utf-8
 import pprint
 import unittest
 import iyzipay
@@ -55,7 +56,7 @@ class ConnectBKMSample(unittest.TestCase):
         bkm_auth_response = bkm_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(bkm_auth_response.read().decode('utf-8'))
+        print(bkm_auth_response.read())
 
     def prepare_installment_details(self):
         installment_details = list()
