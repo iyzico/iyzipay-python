@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -32,7 +32,7 @@ class CardStorageSample(unittest.TestCase):
         card_response = card.create(request, options)
 
         # print response
-        pprint.pprint(card_response.read().decode())
+        print(card_response.read().decode('utf-8'))
 
     def should_create_card(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -55,7 +55,7 @@ class CardStorageSample(unittest.TestCase):
         card_response = card.create(request, options)
 
         # print response
-        pprint.pprint(card_response.read().decode())
+        print(card_response.read().decode('utf-8'))
 
     def should_delete_card(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -72,7 +72,7 @@ class CardStorageSample(unittest.TestCase):
         card_response = card.delete(request, options)
 
         # print response
-        pprint.pprint(card_response.read().decode())
+        print(card_response.read().decode('utf-8'))
 
     def should_retrieve_cards(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -88,4 +88,4 @@ class CardStorageSample(unittest.TestCase):
         card_list_response = card_list.retrieve(request, options)
 
         # print response
-        pprint.pprint(card_list_response.read().decode())
+        print(card_list_response.read().decode('utf-8'))
