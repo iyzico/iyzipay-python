@@ -8,8 +8,8 @@ import base64
 class ConnectThreeDSSample(unittest.TestCase):
     def runTest(self):
         self.should_initialize_threeds_with_card()
-        # self.should_initialize_threeds_with_card_token()
-        # self.should_auth_threeds()
+        self.should_initialize_threeds_with_card_token()
+        self.should_auth_threeds()
 
     def should_initialize_threeds_with_card(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -27,7 +27,7 @@ class ConnectThreeDSSample(unittest.TestCase):
         request['connectorName'] = 'connector name'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
         request['currency'] = 'TRY'
-        request['connectorName'] = '517-isbank'
+        request['connectorName'] = 'connector name'
 
         payment_card = dict([('cardHolderName', 'John Doe')])
         payment_card['cardNumber'] = '5528790000000008'
@@ -66,7 +66,7 @@ class ConnectThreeDSSample(unittest.TestCase):
         request['connectorName'] = 'connector name'
         request['currency'] = 'TRY'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
-        request['connectorName'] = '517-isbank'
+        request['connectorName'] = 'connector name'
 
         payment_card = dict([('cardToken', 'card token')])
         payment_card['cardUserKey'] = 'card user key'
