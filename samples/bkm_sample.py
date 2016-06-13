@@ -52,7 +52,7 @@ class BKMSample(unittest.TestCase):
         basket_item_first['category2'] = 'Accessories'
         basket_item_first['itemType'] = 'PHYSICAL'
         basket_item_first['price'] = '0.3'
-        basket_item_first['subMerchantKey'] = 'ha3us4v5mk2652kkjk5728cc4407an'
+        basket_item_first['subMerchantKey'] = 'sub merchant key'
         basket_item_first['subMerchantPrice'] = '0.27'
         basket_items.append(basket_item_first)
 
@@ -62,7 +62,7 @@ class BKMSample(unittest.TestCase):
         basket_item_second['category2'] = 'Online Game Items'
         basket_item_second['itemType'] = 'VIRTUAL'
         basket_item_second['price'] = '0.5'
-        basket_item_second['subMerchantKey'] = 'ha3us4v5mk2652kkjk5728cc4407an'
+        basket_item_second['subMerchantKey'] = 'sub merchant key'
         basket_item_second['subMerchantPrice'] = '0.42'
         basket_items.append(basket_item_second)
 
@@ -72,7 +72,7 @@ class BKMSample(unittest.TestCase):
         basket_item_third['category2'] = 'Usb / Cable'
         basket_item_third['itemType'] = 'PHYSICAL'
         basket_item_third['price'] = '0.2'
-        basket_item_third['subMerchantKey'] = 'ha3us4v5mk2652kkjk5728cc4407an'
+        basket_item_third['subMerchantKey'] = 'sub merchant key'
         basket_item_third['subMerchantPrice'] = '0.18'
         basket_items.append(basket_item_third)
 
