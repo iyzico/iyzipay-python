@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -24,6 +24,6 @@ class ConnectRefundSample(unittest.TestCase):
         refund_response = refund.create(request, options)
 
         # print response
-        print(refund_response.read())
+        print(refund_response.read().decode('utf-8'))
 
 

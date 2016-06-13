@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -24,5 +24,5 @@ class PaymentPostAuthSample(unittest.TestCase):
         payment_post_auth_response = payment_post_auth.create(request, options)
 
         # print response
-        print(payment_post_auth_response.read())
+        print(payment_post_auth_response.read().decode('utf-8'))
 

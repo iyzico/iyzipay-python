@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -25,8 +25,7 @@ class CrossBookingSample(unittest.TestCase):
         cross_booking_to_sub_merchant_response = cross_booking_to_sub_merchant.create(request, options)
 
         # print response
-        print(cross_booking_to_sub_merchant_response.read())
-
+        print(cross_booking_to_sub_merchant_response.read().decode('utf-8'))
 
     def should_receive_money_from_sub_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -45,4 +44,4 @@ class CrossBookingSample(unittest.TestCase):
         cross_booking_from_sub_merchant_response = cross_booking_from_sub_merchant.create(request, options)
 
         # print response
-        print(cross_booking_from_sub_merchant_response.read())
+        print(cross_booking_from_sub_merchant_response.read().decode('utf-8'))

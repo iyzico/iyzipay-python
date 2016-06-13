@@ -4,6 +4,7 @@ import base64
 import hashlib
 import http.client
 import json
+import sys
 import iyzipay
 
 
@@ -40,7 +41,10 @@ class IyzipayResource:
     @staticmethod
     def generate_hash(api_key, secret_key, random_string, pki_string):
         hash_str = api_key + random_string + secret_key + pki_string
-        hex_dig = hashlib.sha1(hash_str).digest()
+        if sys.version_info < (3, 0):
+            hex_dig = hashlib.sha1(hash_str).digest()
+        else:
+            hex_dig = hashlib.sha1(hash_str.encode()).digest()
         return base64.b64encode(hex_dig)
 
     @staticmethod
@@ -63,7 +67,7 @@ class IyzipayResource:
         pki_builder.append('gsmNumber', buyer.get('gsmNumber'))
         pki_builder.append('registrationDate', buyer.get('registrationDate'))
         pki_builder.append('lastLoginDate', buyer.get('lastLoginDate'))
-        pki_builder.append('registrationAddress', buyer.get('registrationAddress').encode('utf-8'))
+        pki_builder.append('registrationAddress', buyer.get('registrationAddress'))
         pki_builder.append('city', buyer.get('city'))
         pki_builder.append('country', buyer.get('country'))
         pki_builder.append('zipCode', buyer.get('zipCode'))
@@ -73,7 +77,7 @@ class IyzipayResource:
     @staticmethod
     def address_pki(address):
         pki_builder = iyzipay.PKIBuilder('')
-        pki_builder.append('address', address.get('address').encode('utf-8'))
+        pki_builder.append('address', address.get('address'))
         pki_builder.append('zipCode', address.get('zipCode'))
         pki_builder.append('contactName', address.get('contactName'))
         pki_builder.append('city', address.get('city'))

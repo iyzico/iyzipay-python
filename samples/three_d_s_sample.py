@@ -1,5 +1,4 @@
 # coding=utf-8
-import pprint
 import unittest
 import iyzipay
 import ast
@@ -45,14 +44,14 @@ class ThreeDSSample(unittest.TestCase):
         buyer['identityNumber'] = '74300864791'
         buyer['lastLoginDate'] = '2015-10-05 12:43:35'
         buyer['registrationDate'] = '2013-04-21 15:12:09'
-        buyer['registrationAddress'] = u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
+        buyer['registrationAddress'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
         buyer['ip'] = '85.34.78.112'
         buyer['city'] = 'Istanbul'
         buyer['country'] = 'Turkey'
         buyer['zipCode'] = '34732'
         request['buyer'] = buyer
 
-        address = dict([('address', u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
+        address = dict([('address', 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
         address['zipCode'] = '34732'
         address['contactName'] = 'Jane Doe'
         address['city'] = 'Istanbul'
@@ -99,12 +98,12 @@ class ThreeDSSample(unittest.TestCase):
 
         # get and print response
         response = three_d_s_initialize_response.read().decode('utf-8')
-        pprint.pprint(response)
+        print(response)
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent'])
-        pprint.pprint(html_response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
 
     def should_initialize_threeds_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -138,14 +137,14 @@ class ThreeDSSample(unittest.TestCase):
         buyer['identityNumber'] = '74300864791'
         buyer['lastLoginDate'] = '2015-10-05 12:43:35'
         buyer['registrationDate'] = '2013-04-21 15:12:09'
-        buyer['registrationAddress'] = u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
+        buyer['registrationAddress'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
         buyer['ip'] = '85.34.78.112'
         buyer['city'] = 'Istanbul'
         buyer['country'] = 'Turkey'
         buyer['zipCode'] = '34732'
         request['buyer'] = buyer
 
-        address = dict([('address', u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
+        address = dict([('address', 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
         address['zipCode'] = '34732'
         address['contactName'] = 'Jane Doe'
         address['city'] = 'Istanbul'
@@ -186,12 +185,12 @@ class ThreeDSSample(unittest.TestCase):
 
         # get and print response
         response = three_d_s_initialize_response.read().decode('utf-8')
-        pprint.pprint(response)
+        print(response)
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent'])
-        pprint.pprint(html_response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
 
     def should_auth_threeds(self):
 
@@ -209,8 +208,7 @@ class ThreeDSSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.create(request, options)
 
         # print response
-        print(three_d_s_auth_response.read())
-
+        print(three_d_s_auth_response.read().decode('utf-8'))
 
     def should_retrieve_payment(self):
 
@@ -228,4 +226,4 @@ class ThreeDSSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.retrieve(request, options)
 
         # print response
-        print(three_d_s_auth_response.read())
+        print(three_d_s_auth_response.read().decode('utf-8'))

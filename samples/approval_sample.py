@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -23,7 +23,7 @@ class ApprovalSample(unittest.TestCase):
         approval_response = approval.create(request, options)
 
         # print response
-        pprint.pprint(approval_response.read().decode('utf-8'))
+        print(approval_response.read().decode('utf-8'))
 
     def should_disapprove_payment_item(self):
 
@@ -40,4 +40,4 @@ class ApprovalSample(unittest.TestCase):
         disapproval_response = disapproval.create(request, options)
 
         # print response
-        pprint.pprint(disapproval_response.read().decode('utf-8'))
+        print(disapproval_response.read().decode('utf-8'))

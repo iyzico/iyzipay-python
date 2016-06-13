@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -22,8 +22,7 @@ class RetrieveTransactionsSample(unittest.TestCase):
         payout_completed_transactions_list_response = payout_completed_transactions_list.retrieve(request, options)
 
         # print response
-        print(payout_completed_transactions_list_response.read())
-
+        print(payout_completed_transactions_list_response.read().decode('utf-8'))
 
     def should_retrieve_bounced_bank_transfers(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -39,4 +38,4 @@ class RetrieveTransactionsSample(unittest.TestCase):
         bounced_bank_transfer_list_response = bounced_bank_transfer_list.retrieve(request, options)
 
         # print response
-        print(bounced_bank_transfer_list_response.read())
+        print(bounced_bank_transfer_list_response.read().decode('utf-8'))

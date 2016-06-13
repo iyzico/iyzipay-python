@@ -1,5 +1,4 @@
 # coding=utf-8
-import pprint
 import unittest
 import iyzipay
 import ast
@@ -45,14 +44,14 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         buyer['identityNumber'] = '74300864791'
         buyer['lastLoginDate'] = '2015-10-05 12:43:35'
         buyer['registrationDate'] = '2013-04-21 15:12:09'
-        buyer['registrationAddress'] = u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
+        buyer['registrationAddress'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
         buyer['ip'] = '85.34.78.112'
         buyer['city'] = 'Istanbul'
         buyer['country'] = 'Turkey'
         buyer['zipCode'] = '34732'
         request['buyer'] = buyer
 
-        address = dict([('address', u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
+        address = dict([('address', 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
         address['zipCode'] = '34732'
         address['contactName'] = 'Jane Doe'
         address['city'] = 'Istanbul'
@@ -67,7 +66,7 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         basket_item_first['category2'] = 'Accessories'
         basket_item_first['itemType'] = 'PHYSICAL'
         basket_item_first['price'] = '0.3'
-        basket_item_first['subMerchantKey'] = 'ha3us4v5mk2652kkjk5728cc4407an'
+        basket_item_first['subMerchantKey'] = 'sub merchant key'
         basket_item_first['subMerchantPrice'] = '0.27'
         basket_items.append(basket_item_first)
 
@@ -77,7 +76,7 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         basket_item_second['category2'] = 'Online Game Items'
         basket_item_second['itemType'] = 'VIRTUAL'
         basket_item_second['price'] = '0.5'
-        basket_item_second['subMerchantKey'] = 'ha3us4v5mk2652kkjk5728cc4407an'
+        basket_item_second['subMerchantKey'] = 'sub merchant key'
         basket_item_second['subMerchantPrice'] = '0.42'
         basket_items.append(basket_item_second)
 
@@ -87,7 +86,7 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         basket_item_third['category2'] = 'Usb / Cable'
         basket_item_third['itemType'] = 'PHYSICAL'
         basket_item_third['price'] = '0.2'
-        basket_item_third['subMerchantKey'] = 'ha3us4v5mk2652kkjk5728cc4407an'
+        basket_item_third['subMerchantKey'] = 'sub merchant key'
         basket_item_third['subMerchantPrice'] = '0.18'
         basket_items.append(basket_item_third)
 
@@ -99,12 +98,12 @@ class ThreeDSPreAuthSample(unittest.TestCase):
 
         # get and print response
         response = three_d_s_initialize_response.read().decode('utf-8')
-        pprint.pprint(response)
+        print(response)
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent'])
-        pprint.pprint(html_response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
 
     def should_initialize_threeds_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -138,14 +137,14 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         buyer['identityNumber'] = '74300864791'
         buyer['lastLoginDate'] = '2015-10-05 12:43:35'
         buyer['registrationDate'] = '2013-04-21 15:12:09'
-        buyer['registrationAddress'] = u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
+        buyer['registrationAddress'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
         buyer['ip'] = '85.34.78.112'
         buyer['city'] = 'Istanbul'
         buyer['country'] = 'Turkey'
         buyer['zipCode'] = '34732'
         request['buyer'] = buyer
 
-        address = dict([('address', u'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
+        address = dict([('address', 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
         address['zipCode'] = '34732'
         address['contactName'] = 'Jane Doe'
         address['city'] = 'Istanbul'
@@ -186,12 +185,12 @@ class ThreeDSPreAuthSample(unittest.TestCase):
 
         # get and print response
         response = three_d_s_initialize_response.read().decode('utf-8')
-        pprint.pprint(response)
+        print(response)
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent'])
-        pprint.pprint(html_response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
 
     def should_auth_threeds(self):
 
@@ -209,8 +208,7 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.create(request, options)
 
         # print response
-        print(three_d_s_auth_response.read())
-
+        print(three_d_s_auth_response.read().decode('utf-8'))
 
     def should_retrieve_payment(self):
 
@@ -228,5 +226,5 @@ class ThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.retrieve(request, options)
 
         # print response
-        print(three_d_s_auth_response.read())
+        print(three_d_s_auth_response.read().decode('utf-8'))
 
