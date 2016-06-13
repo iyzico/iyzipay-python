@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -24,7 +24,7 @@ class InstallmentSample(unittest.TestCase):
         installment_info_response = installment_info.retrieve(request, options)
 
         # print response
-        pprint.pprint(installment_info_response.read().decode())
+        print(installment_info_response.read().decode('utf-8'))
 
     def should_retrieve_installment_info_for_all_banks(self):
 
@@ -41,4 +41,4 @@ class InstallmentSample(unittest.TestCase):
         installment_info_response = installment_info.retrieve(request, options)
 
         # print response
-        pprint.pprint(installment_info_response.read().decode())
+        print(installment_info_response.read().decode('utf-8'))

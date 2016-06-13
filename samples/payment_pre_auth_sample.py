@@ -1,8 +1,6 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
-import ast
-import base64
 
 
 class PaymentPreAuthSample(unittest.TestCase):
@@ -91,8 +89,7 @@ class PaymentPreAuthSample(unittest.TestCase):
         payment_pre_auth_response = payment_pre_auth.create(request, options)
 
         # get and print response
-        response = payment_pre_auth_response.read().decode()
-        pprint.pprint(response)
+        print(payment_pre_auth_response.read().decode('utf-8'))
 
     def should_create_payment_with_physical_and_virtual_item_for_market_place(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -179,8 +176,7 @@ class PaymentPreAuthSample(unittest.TestCase):
         payment_pre_auth_response = payment_pre_auth.create(request, options)
 
         # get and print response
-        response = payment_pre_auth_response.read().decode()
-        pprint.pprint(response)
+        print(payment_pre_auth_response.read().decode('utf-8'))
 
     def should_create_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -261,8 +257,7 @@ class PaymentPreAuthSample(unittest.TestCase):
         payment_pre_auth_response = payment_pre_auth.create(request, options)
 
         # get and print response
-        response = payment_pre_auth_response.read().decode()
-        pprint.pprint(response)
+        print(payment_pre_auth_response.read().decode('utf-8'))
 
     def should_retrieve_payment(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -279,4 +274,4 @@ class PaymentPreAuthSample(unittest.TestCase):
         payment_pre_auth_response = payment_pre_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(payment_pre_auth_response.read().decode())
+        print(payment_pre_auth_response.read().decode('utf-8'))

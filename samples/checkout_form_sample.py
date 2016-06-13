@@ -1,8 +1,6 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
-import ast
-import base64
 
 
 class CheckoutFormSample(unittest.TestCase):
@@ -84,8 +82,7 @@ class CheckoutFormSample(unittest.TestCase):
         checkout_form_initialize_response = checkout_form_initialize.create(request, options)
 
         # get and print response
-        response = checkout_form_initialize_response.read().decode()
-        pprint.pprint(response)
+        print(checkout_form_initialize_response.read().decode('utf-8'))
 
     def should_retrieve_checkout_form_auth(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -101,4 +98,5 @@ class CheckoutFormSample(unittest.TestCase):
         checkout_form_auth_response = checkout_form_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(checkout_form_auth_response.read().decode())
+        print(checkout_form_auth_response.read().decode('utf-8'))
+

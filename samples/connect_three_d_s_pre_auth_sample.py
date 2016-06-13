@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 import ast
@@ -27,6 +27,7 @@ class ConnectThreeDSPreAuthSample(unittest.TestCase):
         request['connectorName'] = 'connector name'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
         request['currency'] = 'TRY'
+        request['connectorName'] = 'connector name'
 
         payment_card = dict([('cardHolderName', 'John Doe')])
         payment_card['cardNumber'] = '5528790000000008'
@@ -41,13 +42,13 @@ class ConnectThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_initialize_response = three_d_s_init_pre_auth.create(request, options)
 
         # get and print response
-        response = three_d_s_initialize_response.read().decode()
-        pprint.pprint(response)
+        response = three_d_s_initialize_response.read().decode('utf-8')
+        print(response)
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent'])
-        pprint.pprint(html_response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
 
     def should_initialize_threeds_with_card_token(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -65,6 +66,7 @@ class ConnectThreeDSPreAuthSample(unittest.TestCase):
         request['connectorName'] = 'connector name'
         request['currency'] = 'TRY'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
+        request['connectorName'] = 'connector name'
 
         payment_card = dict([('cardToken', 'card token')])
         payment_card['cardUserKey'] = 'card user key'
@@ -75,13 +77,13 @@ class ConnectThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_initialize_response = three_d_s_init_pre_auth.create(request, options)
 
         # get and print response
-        response = three_d_s_initialize_response.read().decode()
-        pprint.pprint(response)
+        response = three_d_s_initialize_response.read().decode('utf-8')
+        print(response)
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent'])
-        pprint.pprint(html_response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
 
     def should_auth_threeds(self):
 
@@ -99,5 +101,6 @@ class ConnectThreeDSPreAuthSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.create(request, options)
 
         # print response
-        pprint.pprint(three_d_s_auth_response.read().decode())
+        print(three_d_s_auth_response.read().decode('utf-8'))
+
 

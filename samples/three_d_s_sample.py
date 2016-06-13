@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 import ast
@@ -97,13 +97,13 @@ class ThreeDSSample(unittest.TestCase):
         three_d_s_initialize_response = three_d_s_initialize.create(request, options)
 
         # get and print response
-        response = three_d_s_initialize_response.read().decode()
-        pprint.pprint(response)
+        response = three_d_s_initialize_response.read().decode('utf-8')
+        print(response)
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent'])
-        pprint.pprint(html_response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
 
     def should_initialize_threeds_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -184,13 +184,13 @@ class ThreeDSSample(unittest.TestCase):
         three_d_s_initialize_response = three_d_s_initialize.create(request, options)
 
         # get and print response
-        response = three_d_s_initialize_response.read().decode()
-        pprint.pprint(response)
+        response = three_d_s_initialize_response.read().decode('utf-8')
+        print(response)
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent'])
-        pprint.pprint(html_response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
 
     def should_auth_threeds(self):
 
@@ -208,7 +208,7 @@ class ThreeDSSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.create(request, options)
 
         # print response
-        pprint.pprint(three_d_s_auth_response.read().decode())
+        print(three_d_s_auth_response.read().decode('utf-8'))
 
     def should_retrieve_payment(self):
 
@@ -226,4 +226,4 @@ class ThreeDSSample(unittest.TestCase):
         three_d_s_auth_response = three_d_s_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(three_d_s_auth_response.read().decode())
+        print(three_d_s_auth_response.read().decode('utf-8'))

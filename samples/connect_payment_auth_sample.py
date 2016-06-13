@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -37,8 +37,7 @@ class ConnectPaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.create(request, options)
 
         # get and print response
-        response = payment_auth_response.read().decode()
-        pprint.pprint(response)
+        print(payment_auth_response.read().decode('utf-8'))
 
     def should_pay_with_card_token(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -65,5 +64,4 @@ class ConnectPaymentAuthSample(unittest.TestCase):
         payment_auth_response = payment_auth.create(request, options)
 
         # get and print response
-        response = payment_auth_response.read().decode()
-        pprint.pprint(response)
+        print(payment_auth_response.read().decode('utf-8'))

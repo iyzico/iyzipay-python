@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -22,4 +22,4 @@ class BinNumberSample(unittest.TestCase):
         bin_number_response = bin_number.retrieve(request, options)
 
         # print response
-        pprint.pprint(bin_number_response.read().decode())
+        print(bin_number_response.read().decode('utf-8'))

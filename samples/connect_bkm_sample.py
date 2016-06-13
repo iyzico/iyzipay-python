@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 import ast
@@ -33,13 +33,13 @@ class ConnectBKMSample(unittest.TestCase):
         bkm_initialize_response = bkm_initialize.create(request, options)
 
         # get and print response
-        response = bkm_initialize_response.read().decode()
-        pprint.pprint(response)
+        response = bkm_initialize_response.read().decode('utf-8')
+        print(response)
 
         # generate html code to redirect to BKM
         response_data_dict = ast.literal_eval(response)
-        html_response = base64.b64decode(response_data_dict['htmlContent'])
-        pprint.pprint(html_response)
+        html_response = base64.b64decode(response_data_dict['htmlContent']).decode('utf-8')
+        print(html_response)
 
     def should_retrieve_bkm_auth(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -55,7 +55,7 @@ class ConnectBKMSample(unittest.TestCase):
         bkm_auth_response = bkm_auth.retrieve(request, options)
 
         # print response
-        pprint.pprint(bkm_auth_response.read().decode())
+        print(bkm_auth_response.read().decode('utf-8'))
 
     def prepare_installment_details(self):
         installment_details = list()

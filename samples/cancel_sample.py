@@ -1,4 +1,4 @@
-import pprint
+# coding=utf-8
 import unittest
 import iyzipay
 
@@ -23,4 +23,5 @@ class CancelSample(unittest.TestCase):
         cancel_response = cancel.create(request, options)
 
         # print response
-        pprint.pprint(cancel_response.read().decode())
+        print(cancel_response.read().decode('utf-8'))
+

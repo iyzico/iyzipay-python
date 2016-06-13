@@ -4,6 +4,7 @@ import base64
 import hashlib
 import http.client
 import json
+import sys
 import iyzipay
 
 
@@ -40,7 +41,10 @@ class IyzipayResource:
     @staticmethod
     def generate_hash(api_key, secret_key, random_string, pki_string):
         hash_str = api_key + random_string + secret_key + pki_string
-        hex_dig = hashlib.sha1(hash_str.encode()).digest()
+        if sys.version_info < (3, 0):
+            hex_dig = hashlib.sha1(hash_str).digest()
+        else:
+            hex_dig = hashlib.sha1(hash_str.encode()).digest()
         return base64.b64encode(hex_dig)
 
     @staticmethod
