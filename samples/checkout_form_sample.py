@@ -76,6 +76,7 @@ class CheckoutFormSample(unittest.TestCase):
         basket_items.append(basket_item_third)
 
         request['basketItems'] = basket_items
+        request['enabledInstallments'] = ['2', '3', '6', '9']
 
         # make request
         checkout_form_initialize = iyzipay.CheckoutFormInitialize()
