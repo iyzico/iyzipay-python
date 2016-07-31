@@ -17,8 +17,8 @@ class RefundSample(unittest.TestCase):
         request['conversationId'] = '123456789'
         request['paymentTransactionId'] = '1'
         request['price'] = '0.1'
-        request['ip'] = '85.34.78.112'
         request['currency'] = 'TRY'
+        request['ip'] = '85.34.78.112'
 
         # make request
         refund = iyzipay.Refund()
@@ -36,6 +36,7 @@ class RefundSample(unittest.TestCase):
         request['conversationId'] = '123456789'
         request['paymentTransactionId'] = '1'
         request['price'] = '0.1'
+        request['currency'] = 'TRY'
         request['ip'] = '85.34.78.112'
 
         # make request

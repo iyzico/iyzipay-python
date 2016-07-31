@@ -20,7 +20,7 @@ class SubMerchantSample(unittest.TestCase):
 
         request = dict([('locale', 'tr')])
         request['conversationId'] = '123456789'
-        request['subMerchantExternalId'] = 'B49224'
+        request['subMerchantExternalId'] = 'B49224x'
         request['subMerchantType'] = 'PERSONAL'
         request['address'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
         request['contactName'] = 'John'

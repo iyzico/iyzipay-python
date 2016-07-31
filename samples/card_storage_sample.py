@@ -89,3 +89,4 @@ class CardStorageSample(unittest.TestCase):
 
         # print response
         print(card_list_response.read().decode('utf-8'))
+        

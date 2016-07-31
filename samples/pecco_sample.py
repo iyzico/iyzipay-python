@@ -3,12 +3,12 @@ import unittest
 import iyzipay
 
 
-class CheckoutFormSample(unittest.TestCase):
+class PeccoSample(unittest.TestCase):
     def runTest(self):
-        self.should_initialize_checkout_form()
-        self.should_retrieve_checkout_form_auth()
+        self.should_initialize_pecco()
+        self.should_auth_pecco_payment()
 
-    def should_initialize_checkout_form(self):
+    def should_initialize_pecco(self):
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -20,7 +20,6 @@ class CheckoutFormSample(unittest.TestCase):
         request['basketId'] = 'B67832'
         request['paymentGroup'] = 'PRODUCT'
         request['callbackUrl'] = 'https://www.merchant.com/callback'
-        request['enabledInstallments'] = ['2', '3', '6', '9']
 
         buyer = dict([('id', 'BY789')])
         buyer['name'] = 'John'
@@ -77,16 +76,15 @@ class CheckoutFormSample(unittest.TestCase):
         basket_items.append(basket_item_third)
 
         request['basketItems'] = basket_items
-        
 
         # make request
-        checkout_form_initialize = iyzipay.CheckoutFormInitialize()
-        checkout_form_initialize_response = checkout_form_initialize.create(request, options)
+        pecco_initialize = iyzipay.PeccoInitialize()
+        pecco_initialize_response = pecco_initialize.create(request, options)
 
         # get and print response
-        print(checkout_form_initialize_response.read().decode('utf-8'))
+        print(pecco_initialize_response.read().decode('utf-8'))
 
-    def should_retrieve_checkout_form_auth(self):
+    def should_auth_pecco_payment(self):
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -96,8 +94,9 @@ class CheckoutFormSample(unittest.TestCase):
         request['token'] = 'token'
 
         # make request
-        checkout_form = iyzipay.CheckoutForm()
-        checkout_form_response = checkout_form.retrieve(request, options)
+        pecco_payment = iyzipay.PeccoPayment()
+        pecco_payment_response = pecco_payment.create(request, options)
 
         # print response
-        print(checkout_form_response.read().decode('utf-8'))
+        print(pecco_payment_response.read().decode('utf-8'))
+

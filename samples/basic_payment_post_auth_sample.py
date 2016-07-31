@@ -3,11 +3,11 @@ import unittest
 import iyzipay
 
 
-class ConnectCancelSample(unittest.TestCase):
+class BasicPaymentPostAuthSample(unittest.TestCase):
     def runTest(self):
-        self.should_cancel_payment()
+        self.should_post_auth()
 
-    def should_cancel_payment(self):
+    def should_post_auth(self):
 
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
@@ -17,11 +17,12 @@ class ConnectCancelSample(unittest.TestCase):
         request['conversationId'] = '123456'
         request['paymentId'] = '1'
         request['ip'] = '85.34.78.112'
+        request['currency'] = 'TRY'
 
         # make request
-        cancel = iyzipay.ConnectCancel()
-        cancel_response = cancel.create(request, options)
+        basic_payment_post_auth = iyzipay.BasicPaymentPostAuth()
+        basic_payment_post_auth_response = basic_payment_post_auth.create(request, options)
 
         # print response
-        print(cancel_response.read().decode('utf-8'))
+        print(basic_payment_post_auth_response.read().decode('utf-8'))
 

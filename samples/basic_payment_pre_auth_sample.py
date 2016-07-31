@@ -3,7 +3,7 @@ import unittest
 import iyzipay
 
 
-class ConnectPaymentAuthSample(unittest.TestCase):
+class BasicPaymentPreAuthSample(unittest.TestCase):
     def runTest(self):
         self.should_pay_with_card()
         self.should_pay_with_card_token()
@@ -33,11 +33,11 @@ class ConnectPaymentAuthSample(unittest.TestCase):
         request['paymentCard'] = payment_card
 
         # make request
-        payment_auth = iyzipay.ConnectPaymentAuth()
-        payment_auth_response = payment_auth.create(request, options)
+        basic_payment_pre_auth = iyzipay.BasicPaymentPreAuth()
+        basic_payment_pre_auth_response = basic_payment_pre_auth.create(request, options)
 
         # get and print response
-        print(payment_auth_response.read().decode('utf-8'))
+        print(basic_payment_pre_auth_response.read().decode('utf-8'))
 
     def should_pay_with_card_token(self):
         options = dict([('base_url', iyzipay.base_url)])
@@ -60,8 +60,8 @@ class ConnectPaymentAuthSample(unittest.TestCase):
         request['paymentCard'] = payment_card
 
         # make request
-        payment_auth = iyzipay.ConnectPaymentAuth()
-        payment_auth_response = payment_auth.create(request, options)
+        basic_payment_pre_auth = iyzipay.BasicPaymentPreAuth()
+        basic_payment_pre_auth_response = basic_payment_pre_auth.create(request, options)
 
         # get and print response
-        print(payment_auth_response.read().decode('utf-8'))
+        print(basic_payment_pre_auth_response.read().decode('utf-8'))

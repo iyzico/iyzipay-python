@@ -3,7 +3,7 @@ import unittest
 import iyzipay
 
 
-class CheckoutFormSample(unittest.TestCase):
+class CheckoutFormPreAuthSample(unittest.TestCase):
     def runTest(self):
         self.should_initialize_checkout_form()
         self.should_retrieve_checkout_form_auth()
@@ -77,14 +77,13 @@ class CheckoutFormSample(unittest.TestCase):
         basket_items.append(basket_item_third)
 
         request['basketItems'] = basket_items
-        
 
         # make request
-        checkout_form_initialize = iyzipay.CheckoutFormInitialize()
-        checkout_form_initialize_response = checkout_form_initialize.create(request, options)
+        checkout_form_initialize_pre_auth = iyzipay.CheckoutFormInitializePreAuth()
+        checkout_form_initialize_pre_auth_response = checkout_form_initialize_pre_auth.create(request, options)
 
         # get and print response
-        print(checkout_form_initialize_response.read().decode('utf-8'))
+        print(checkout_form_initialize_pre_auth_response.read().decode('utf-8'))
 
     def should_retrieve_checkout_form_auth(self):
         options = dict([('base_url', iyzipay.base_url)])
