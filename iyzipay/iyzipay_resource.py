@@ -2,7 +2,7 @@ import random
 import string
 import base64
 import hashlib
-import httplib
+import http.client
 import json
 import sys
 import iyzipay
@@ -15,7 +15,7 @@ class IyzipayResource:
     RANDOM_STRING_SIZE = 8
 
     def connect(self, method, url, options, request=None, pki=None):
-        connection = httplib.HTTPSConnection(options['base_url'])
+        connection = http.client.HTTPSConnection(options['base_url'])
         request_json = json.dumps(request)
         connection.request(method, url, request_json, self.get_http_header(options, pki))
         return connection.getresponse()
