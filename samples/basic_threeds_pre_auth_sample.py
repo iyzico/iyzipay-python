@@ -5,7 +5,7 @@ import ast
 import base64
 
 
-class ConnectThreeDSSample(unittest.TestCase):
+class BasicThreedsPreAuthSample(unittest.TestCase):
     def runTest(self):
         self.should_initialize_threeds_with_card()
         self.should_initialize_threeds_with_card_token()
@@ -38,11 +38,11 @@ class ConnectThreeDSSample(unittest.TestCase):
         request['paymentCard'] = payment_card
 
         # make request
-        three_d_s_initialize = iyzipay.ConnectThreeDSInitialize()
-        three_d_s_initialize_response = three_d_s_initialize.create(request, options)
+        basic_threeds_initialize_pre_auth = iyzipay.BasicThreedsInitializePreAuth()
+        basic_threeds_initialize_pre_auth_response = basic_threeds_initialize_pre_auth.create(request, options)
 
         # get and print response
-        response = three_d_s_initialize_response.read().decode('utf-8')
+        response = basic_threeds_initialize_pre_auth_response.read().decode('utf-8')
         print(response)
 
         # generate html code to redirect to BKM
@@ -73,11 +73,11 @@ class ConnectThreeDSSample(unittest.TestCase):
         request['paymentCard'] = payment_card
 
         # make request
-        three_d_s_initialize = iyzipay.ConnectThreeDSInitialize()
-        three_d_s_initialize_response = three_d_s_initialize.create(request, options)
+        basic_threeds_initialize_pre_auth = iyzipay.BasicThreedsInitializePreAuth()
+        basic_threeds_initialize_pre_auth_response = basic_threeds_initialize_pre_auth.create(request, options)
 
         # get and print response
-        response = three_d_s_initialize_response.read().decode('utf-8')
+        response = basic_threeds_initialize_pre_auth_response.read().decode('utf-8')
         print(response)
 
         # generate html code to redirect to BKM
@@ -97,10 +97,10 @@ class ConnectThreeDSSample(unittest.TestCase):
         request['conversationData'] = 'conversation data'
 
         # make request
-        three_d_s_auth = iyzipay.ConnectThreeDSAuth()
-        three_d_s_auth_response = three_d_s_auth.create(request, options)
+        basic_threeds_payment = iyzipay.BasicThreedsPayment()
+        basic_threeds_payment_response = basic_threeds_payment.create(request, options)
 
         # print response
-        print(three_d_s_auth_response.read().decode('utf-8'))
+        print(basic_threeds_payment_response.read().decode('utf-8'))
 
 

@@ -5,12 +5,12 @@ import ast
 import base64
 
 
-class ConnectBKMSample(unittest.TestCase):
+class BasicBkmSample(unittest.TestCase):
     def runTest(self):
-        self.should_initialize_bkm()
+        self.should_initialize_bkm_express()
         self.should_retrieve_bkm_auth()
 
-    def should_initialize_bkm(self):
+    def should_initialize_bkm_express(self):
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -29,11 +29,11 @@ class ConnectBKMSample(unittest.TestCase):
         request['installmentDetails'] = self.prepare_installment_details()
 
         # make request
-        bkm_initialize = iyzipay.ConnectBKMInitialize()
-        bkm_initialize_response = bkm_initialize.create(request, options)
+        basic_bkm_initialize = iyzipay.BasicBkmInitialize()
+        basic_bkm_initialize_response = basic_bkm_initialize.create(request, options)
 
         # get and print response
-        response = bkm_initialize_response.read().decode('utf-8')
+        response = basic_bkm_initialize_response.read().decode('utf-8')
         print(response)
 
         # generate html code to redirect to BKM
@@ -51,11 +51,11 @@ class ConnectBKMSample(unittest.TestCase):
         request['token'] = 'token'
 
         # make request
-        bkm_auth = iyzipay.ConnectBKMAuth()
-        bkm_auth_response = bkm_auth.retrieve(request, options)
+        basic_bkm = iyzipay.BasicBkm()
+        basic_bkm_response = basic_bkm.retrieve(request, options)
 
         # print response
-        print(bkm_auth_response.read().decode('utf-8'))
+        print(basic_bkm_response.read().decode('utf-8'))
 
     def prepare_installment_details(self):
         installment_details = list()
@@ -186,5 +186,3 @@ class ConnectBKMSample(unittest.TestCase):
         installment_detail['installmentPrices'] = installment_prices
 
         return installment_detail
-
-

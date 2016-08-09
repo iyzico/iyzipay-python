@@ -1,16 +1,19 @@
 # coding=utf-8
 import unittest
 import iyzipay
+import ast
+import base64
 
 
-class PaymentAuthSample(unittest.TestCase):
+class ThreedsPreAuthSample(unittest.TestCase):
     def runTest(self):
-        self.should_create_payment_with_physical_and_virtual_item_for_standard_merchant()
-        self.should_create_payment_with_physical_and_virtual_item_for_market_place()
-        self.should_create_payment_with_physical_and_virtual_item_for_listing_or_subscription()
+        self.should_initialize_threeds_payment_with_physical_and_virtual_item_for_standard_merchant()
+        self.should_initialize_threeds_payment_with_physical_and_virtual_item_for_market_place()
+        self.should_initialize_threeds_payment_with_physical_and_virtual_item_for_listing_or_subscription()
+        self.should_auth_threeds()
         self.should_retrieve_payment()
-
-    def should_create_payment_with_physical_and_virtual_item_for_standard_merchant(self):
+        
+    def should_initialize_threeds_payment_with_physical_and_virtual_item_for_standard_merchant(self):
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -85,13 +88,19 @@ class PaymentAuthSample(unittest.TestCase):
         request['basketItems'] = basket_items
 
         # make request
-        payment_auth = iyzipay.PaymentAuth()
-        payment_auth_response = payment_auth.create(request, options)
+        threeds_initialize_pre_auth = iyzipay.ThreedsInitializePreAuth()
+        threeds_initialize_pre_auth_response = threeds_initialize_pre_auth.create(request, options)
 
         # get and print response
-        print(payment_auth_response.read().decode('utf-8'))
+        response = threeds_initialize_pre_auth_response.read().decode('utf-8')
+        print(response)
 
-    def should_create_payment_with_physical_and_virtual_item_for_market_place(self):
+        # generate html code to redirect to BKM
+        response_data_dict = ast.literal_eval(response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
+
+    def should_initialize_threeds_payment_with_physical_and_virtual_item_for_market_place(self):
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -172,13 +181,19 @@ class PaymentAuthSample(unittest.TestCase):
         request['basketItems'] = basket_items
 
         # make request
-        payment_auth = iyzipay.PaymentAuth()
-        payment_auth_response = payment_auth.create(request, options)
+        threeds_initialize_pre_auth = iyzipay.ThreedsInitializePreAuth()
+        threeds_initialize_pre_auth_response = threeds_initialize_pre_auth.create(request, options)
 
         # get and print response
-        print(payment_auth_response.read().decode('utf-8'))
+        response = threeds_initialize_pre_auth_response.read().decode('utf-8')
+        print(response)
 
-    def should_create_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
+        # generate html code to redirect to BKM
+        response_data_dict = ast.literal_eval(response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
+
+    def should_initialize_threeds_payment_with_physical_and_virtual_item_for_listing_or_subscription(self):
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -253,13 +268,20 @@ class PaymentAuthSample(unittest.TestCase):
         request['basketItems'] = basket_items
 
         # make request
-        payment_auth = iyzipay.PaymentAuth()
-        payment_auth_response = payment_auth.create(request, options)
+        threeds_initialize_pre_auth = iyzipay.ThreedsInitializePreAuth()
+        threeds_initialize_pre_auth_response = threeds_initialize_pre_auth.create(request, options)
 
         # get and print response
-        print(payment_auth_response.read().decode('utf-8'))
+        response = threeds_initialize_pre_auth_response.read().decode('utf-8')
+        print(response)
 
-    def should_retrieve_payment(self):
+        # generate html code to redirect to BKM
+        response_data_dict = ast.literal_eval(response)
+        html_response = base64.b64decode(response_data_dict['threeDSHtmlContent']).decode('utf-8')
+        print(html_response)
+
+    def should_auth_threeds(self):
+
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -267,12 +289,30 @@ class PaymentAuthSample(unittest.TestCase):
         request = dict([('locale', 'tr')])
         request['conversationId'] = '123456789'
         request['paymentId'] = '1'
-        request['paymentConversationId'] = '123456789'
+        request['conversationData'] = 'conversation data'
 
         # make request
-        payment_auth = iyzipay.PaymentAuth()
-        payment_auth_response = payment_auth.retrieve(request, options)
+        threeds_payment = iyzipay.ThreedsPayment()
+        threeds_payment_response = threeds_payment.create(request, options)
 
         # print response
-        print(payment_auth_response.read().decode('utf-8'))
+        print(threeds_payment_response.read().decode('utf-8'))
+
+    def should_retrieve_payment(self):
+
+        options = dict([('base_url', iyzipay.base_url)])
+        options['api_key'] = iyzipay.api_key
+        options['secret_key'] = iyzipay.secret_key
+
+        request = dict([('locale', 'tr')])
+        request['conversationId'] = '123456789'
+        request['paymentId'] = '1'
+        request['conversationId'] = '123456789'
+
+        # make request
+        threeds_payment = iyzipay.ThreedsPayment()
+        threeds_payment_response = threeds_payment.retrieve(request, options)
+
+        # print response
+        print(threeds_payment_response.read().decode('utf-8'))
 

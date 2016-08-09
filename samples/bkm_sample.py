@@ -5,12 +5,12 @@ import ast
 import base64
 
 
-class BKMSample(unittest.TestCase):
+class BkmSample(unittest.TestCase):
     def runTest(self):
-        self.should_initialize_bkm()
+        self.should_initialize_bkm_express()
         self.should_retrieve_bkm_auth()
 
-    def should_initialize_bkm(self):
+    def should_initialize_bkm_express(self):
         options = dict([('base_url', iyzipay.base_url)])
         options['api_key'] = iyzipay.api_key
         options['secret_key'] = iyzipay.secret_key
@@ -79,7 +79,7 @@ class BKMSample(unittest.TestCase):
         request['basketItems'] = basket_items
 
         # make request
-        bkm_initialize = iyzipay.BKMInitialize()
+        bkm_initialize = iyzipay.BkmInitialize()
         bkm_initialize_response = bkm_initialize.create(request, options)
 
         # get and print response
@@ -101,8 +101,8 @@ class BKMSample(unittest.TestCase):
         request['token'] = 'token'
 
         # make request
-        bkm_auth = iyzipay.BKMAuth()
-        bkm_auth_response = bkm_auth.retrieve(request, options)
+        bkm = iyzipay.Bkm()
+        bkm_response = bkm.retrieve(request, options)
 
         # print response
-        print(bkm_auth_response.read().decode('utf-8'))
+        print(bkm_response.read().decode('utf-8'))
