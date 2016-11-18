@@ -247,13 +247,6 @@ class Payment(IyzipayResource):
         return self.connect('POST', '/payment/detail', options, request, pki)
 
     def to_pki_string_create(self, request):
-        test = {
-            'name': 'test',
-            'value': 'test2'
-        }
-
-        print(test)
-
         pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
         pki_builder.append_price('price', request.get('price'))
         pki_builder.append_price('paidPrice', request.get('paidPrice'))
