@@ -8,15 +8,6 @@ options = {
     'base_url': iyzipay.base_url
 }
 
-payment_card = {
-    'cardHolderName': 'John Doe',
-    'cardNumber': '5528790000000008',
-    'expireMonth': '12',
-    'expireYear': '2030',
-    'cvc': '123',
-    'registerCard': '0'
-}
-
 buyer = {
     'id': 'BY789',
     'name': 'John',
@@ -72,13 +63,9 @@ request = {
     'locale': 'tr',
     'conversationId': '123456789',
     'price': '1',
-    'paidPrice': '1.2',
-    'currency': 'TRY',
-    'installment': '1',
     'basketId': 'B67832',
-    'paymentChannel': 'WEB',
     'paymentGroup': 'PRODUCT',
-    'paymentCard': payment_card,
+    "callbackUrl": "https://www.merchant.com/callback",
     'buyer': buyer,
     'shippingAddress': address,
     'billingAddress': address,
