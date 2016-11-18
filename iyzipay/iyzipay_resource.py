@@ -4,6 +4,7 @@ import base64
 import hashlib
 import json
 import sys
+
 import iyzipay
 
 
@@ -14,7 +15,7 @@ class IyzipayResource:
     RANDOM_STRING_SIZE = 8
 
     def connect(self, method, url, options, request=None, pki=None):
-        if (2,6) <= sys.version_info < (3,0):
+        if (2, 6) <= sys.version_info < (3, 0):
             import httplib
             connection = httplib.HTTPSConnection(options['base_url'])
         else:
@@ -149,6 +150,7 @@ class IyzipayResource:
         pki_builder.append('cardHolderName', card.get('cardHolderName'))
         return pki_builder.get_request_string()
 
+
 class ApiTest(IyzipayResource):
     def retrieve(self, options):
         return self.connect('GET', '/payment/test', options)
@@ -222,8 +224,8 @@ class CheckoutFormInitialize(IyzipayResource):
         pki_builder.append('cardUserKey', request.get('cardUserKey'))
         pki_builder.append_array('enabledInstallments', request.get('enabledInstallments'))
         return pki_builder.get_request_string()
-    
-    
+
+
 class CheckoutForm(IyzipayResource):
     def retrieve(self, request, options):
         pki = self.to_pki_string(request)
@@ -424,8 +426,8 @@ class PeccoInitialize(IyzipayResource):
         pki_builder.append('currency', request.get('currency'))
         pki_builder.append_price('paidPrice', request.get('paidPrice'))
         return pki_builder.get_request_string()
-    
-    
+
+
 class PeccoPayment(IyzipayResource):
     def create(self, request, options):
         pki = self.to_pki_string(request)
@@ -435,7 +437,7 @@ class PeccoPayment(IyzipayResource):
         pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
         pki_builder.append('token', request.get('token'))
         return pki_builder.get_request_string()
-    
+
 
 class CheckoutFormInitializePreAuth(IyzipayResource):
     def create(self, request, options):
@@ -691,7 +693,7 @@ class BasicPaymentPreAuth(IyzipayResource):
         pki_builder.append('connectorName', request.get('connectorName'))
         return pki_builder.get_request_string()
 
-    
+
 class BasicPaymentPostAuth(IyzipayResource):
     def create(self, request, options):
         pki = self.to_pki_string_create(request)
@@ -704,7 +706,7 @@ class BasicPaymentPostAuth(IyzipayResource):
         pki_builder.append('paidPrice', request.get('paidPrice'))
         pki_builder.append('currency', request.get('currency'))
         return pki_builder.get_request_string()
-    
+
 
 class BasicThreedsInitialize(IyzipayResource):
     def create(self, request, options):

@@ -2,7 +2,6 @@
 # API docs at https://iyzico.com
 # Authors:
 # Yalcin Yenigun <yalcin.yenigun@iyzico.com>
-# Nurettin Bakkal <nurettin.bakkal@iyzico.com>
 
 # Configuration variables
 api_key = 'your api key'
@@ -49,5 +48,4 @@ from iyzipay.iyzipay_resource import (  # noqa
     BasicBkmInitialize)
 
 from iyzipay.pki_builder import (  # noqa
-    PKIBuilder
-)
+    PKIBuilder)
