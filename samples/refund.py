@@ -15,7 +15,6 @@ request = {
     'price': '0.5',
     'currency': 'TRY',
     'ip': '85.34.78.112'
-}
 
 refund = iyzipay.Refund().create(request, options)
 

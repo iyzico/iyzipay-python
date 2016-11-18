@@ -1,8 +1,5 @@
 # Iyzipay API python client
 # API docs at https://iyzico.com
-# Authors:
-# Yalcin Yenigun <yalcin.yenigun@iyzico.com>
-
 # Configuration variables
 api_key = 'your api key'
 secret_key = 'your secret key'
