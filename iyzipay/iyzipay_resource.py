@@ -262,6 +262,9 @@ class Payment(IyzipayResource):
         pki_builder.append_array('basketItems', self.basket_pki(request.get('basketItems')))
         pki_builder.append('paymentSource', request.get('paymentSource'))
         pki_builder.append('currency', request.get('currency'))
+        pki_builder.append('posOrderId', request.get('posOrderId'))
+        pki_builder.append('connectorName', request.get('connectorName'))
+        pki_builder.append('callbackUrl', request.get('callbackUrl'))
         return pki_builder.get_request_string()
 
     def to_pki_string_retrieve(self, request):
@@ -507,6 +510,7 @@ class PaymentPostAuth(IyzipayResource):
         pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
         pki_builder.append('paymentId', request.get('paymentId'))
         pki_builder.append('ip', request.get('ip'))
+        pki_builder.append_price('paidPrice', request.get('paidPrice'))
         pki_builder.append('currency', request.get('currency'))
         return pki_builder.get_request_string()
 
@@ -672,6 +676,7 @@ class BasicPayment(IyzipayResource):
         pki_builder.append('paymentCard', self.payment_card_pki(request.get('paymentCard')))
         pki_builder.append('currency', request.get('currency'))
         pki_builder.append('connectorName', request.get('connectorName'))
+        pki_builder.append('callbackUrl', request.get('callbackUrl'))
         return pki_builder.get_request_string()
 
 
