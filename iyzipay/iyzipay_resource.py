@@ -709,7 +709,7 @@ class BasicPaymentPostAuth(IyzipayResource):
         pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
         pki_builder.append('paymentId', request.get('paymentId'))
         pki_builder.append('ip', request.get('ip'))
-        pki_builder.append('paidPrice', request.get('paidPrice'))
+        pki_builder.append_price('paidPrice', request.get('paidPrice'))
         pki_builder.append('currency', request.get('currency'))
         return pki_builder.get_request_string()
 
