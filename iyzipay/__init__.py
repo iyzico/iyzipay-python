@@ -2,6 +2,7 @@
 # API docs at https://iyzico.com
 # Authors:
 # Yalcin Yenigun <yalcin.yenigun@iyzico.com>
+# Nurettin Bakkal <nurettin.bakkal@iyzico.com>
 
 # Configuration variables
 api_key = 'your api key'
