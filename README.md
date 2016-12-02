@@ -29,93 +29,153 @@ easy_install iyzipay
 If you do not wish to use pip, you can download the [latest release](https://github.com/iyzico/iyzipay-python/releases). Then, to use the bindings, import iyzipay package.
 
 ```python
-import iyzipay;
+import iyzipay
 ```
 
 # Usage
 
 ```python
-options = dict([('base_url', 'sandbox-api.iyzipay.com')])
-options['api_key'] = 'your api key'
-options['secret_key'] = 'your secret key'
+options = {
+    'api_key': 'your api key',
+    'secret_key': 'your secret key',
+    'base_url': 'sandbox-api.iyzipay.com'
+}
 
-request = dict([('locale', 'tr')])
-request['conversationId'] = '123456789'
-request['price'] = '1'
-request['paidPrice'] = '1.1'
-request['installment'] = '1'
-request['basketId'] = 'B67832'
-request['paymentChannel'] = 'WEB'
-request['paymentGroup'] = 'PRODUCT'
-request['callbackUrl'] = 'https://www.merchant.com/callback'
-request['currency'] = 'TRY'
+payment_card = {
+    'cardHolderName': 'John Doe',
+    'cardNumber': '5528790000000008',
+    'expireMonth': '12',
+    'expireYear': '2030',
+    'cvc': '123',
+    'registerCard': '0'
+}
 
-payment_card = dict([('cardHolderName', 'John Doe')])
-payment_card['cardNumber'] = '5528790000000008'
-payment_card['expireMonth'] = '12'
-payment_card['expireYear'] = '2030'
-payment_card['cvc'] = '123'
-payment_card['registerCard'] = '0'
-request['paymentCard'] = payment_card
+buyer = {
+    'id': 'BY789',
+    'name': 'John',
+    'surname': 'Doe',
+    'gsmNumber': '+905350000000',
+    'email': 'email@email.com',
+    'identityNumber': '74300864791',
+    'lastLoginDate': '2015-10-05 12:43:35',
+    'registrationDate': '2013-04-21 15:12:09',
+    'registrationAddress': 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1',
+    'ip': '85.34.78.112',
+    'city': 'Istanbul',
+    'country': 'Turkey',
+    'zipCode': '34732'
+}
 
-buyer = dict([('id', 'BY789')])
-buyer['name'] = 'John'
-buyer['surname'] = 'Doe'
-buyer['gsmNumber'] = '+905350000000'
-buyer['email'] = 'email@email.com'
-buyer['identityNumber'] = '74300864791'
-buyer['lastLoginDate'] = '2015-10-05 12:43:35'
-buyer['registrationDate'] = '2013-04-21 15:12:09'
-buyer['registrationAddress'] = 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1'
-buyer['ip'] = '85.34.78.112'
-buyer['city'] = 'Istanbul'
-buyer['country'] = 'Turkey'
-buyer['zipCode'] = '34732'
-request['buyer'] = buyer
+address = {
+    'contactName': 'Jane Doe',
+    'city': 'Istanbul',
+    'country': 'Turkey',
+    'address': 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1',
+    'zipCode': '34732'
+}
 
-address = dict([('address', 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1')])
-address['zipCode'] = '34732'
-address['contactName'] = 'Jane Doe'
-address['city'] = 'Istanbul'
-address['country'] = 'Turkey'
-request['shippingAddress'] = address
-request['billingAddress'] = address
+basket_item_first = {
+    'id': 'BI101',
+    'name': 'Binocular',
+    'category1': 'Collectibles',
+    'category2': 'Accessories',
+    'itemType': 'PHYSICAL',
+    'price': '0.3'
+}
 
-basket_items = []
-basket_item_first = dict([('id', 'BI101')])
-basket_item_first['name'] = 'Binocular'
-basket_item_first['category1'] = 'Collectibles'
-basket_item_first['category2'] = 'Accessories'
-basket_item_first['itemType'] = 'PHYSICAL'
-basket_item_first['price'] = '0.3'
-basket_item_first['subMerchantKey'] = 'sub merchant key'
-basket_item_first['subMerchantPrice'] = '0.27'
-basket_items.append(basket_item_first)
+basket_item_second = {
+    'id': 'BI102',
+    'name': 'Game code',
+    'category1': 'Game',
+    'category2': 'Online Game Items',
+    'itemType': 'VIRTUAL',
+    'price': '0.5'
+}
 
-basket_item_second = dict([('id', 'BI102')])
-basket_item_second['name'] = 'Game code'
-basket_item_second['category1'] = 'Game'
-basket_item_second['category2'] = 'Online Game Items'
-basket_item_second['itemType'] = 'VIRTUAL'
-basket_item_second['price'] = '0.5'
-basket_item_second['subMerchantKey'] = 'sub merchant key'
-basket_item_second['subMerchantPrice'] = '0.42'
-basket_items.append(basket_item_second)
+basket_item_third = {
+    'id': 'BI103',
+    'name': 'Usb',
+    'category1': 'Electronics',
+    'category2': 'Usb / Cable',
+    'itemType': 'PHYSICAL',
+    'price': '0.2'
+}
 
-basket_item_third = dict([('id', 'BI103')])
-basket_item_third['name'] = 'Usb'
-basket_item_third['category1'] = 'Electronics'
-basket_item_third['category2'] = 'Usb / Cable'
-basket_item_third['itemType'] = 'PHYSICAL'
-basket_item_third['price'] = '0.2'
-basket_item_third['subMerchantKey'] = 'sub merchant key'
-basket_item_third['subMerchantPrice'] = '0.18'
-basket_items.append(basket_item_third)
+request = {
+    'locale': 'tr',
+    'conversationId': '123456789',
+    'price': '1',
+    'paidPrice': '1.2',
+    'currency': 'TRY',
+    'installment': '1',
+    'basketId': 'B67832',
+    'paymentChannel': 'WEB',
+    'paymentGroup': 'PRODUCT',
+    'paymentCard': payment_card,
+    'buyer': buyer,
+    'shippingAddress': address,
+    'billingAddress': address,
+    'basketItems': [basket_item_first, basket_item_second, basket_item_third]
+}
 
-request['basketItems'] = basket_items
-
-# make request
-payment_auth = iyzipay.PaymentAuth()
-payment_auth_response = payment_auth.create(request, options)
+payment = iyzipay.Payment().create(request, options)
 ```
 See other samples under samples directory.
+
+### Mock test cards
+
+Test cards that can be used to simulate a *successful* payment:
+
+Card Number      | Bank                       | Card Type
+-----------      | ----                       | ---------
+5890040000000016 | Akbank                     | Master Card (Debit)  
+5526080000000006 | Akbank                     | Master Card (Credit)  
+4766620000000001 | Denizbank                  | Visa (Debit)  
+4603450000000000 | Denizbank                  | Visa (Credit)
+4729150000000005 | Denizbank Bonus            | Visa (Credit)  
+4987490000000002 | Finansbank                 | Visa (Debit)  
+5311570000000005 | Finansbank                 | Master Card (Credit)  
+9792020000000001 | Finansbank                 | Troy (Debit)  
+9792030000000000 | Finansbank                 | Troy (Credit)  
+5170410000000004 | Garanti Bankası            | Master Card (Debit)  
+5400360000000003 | Garanti Bankası            | Master Card (Credit)  
+374427000000003  | Garanti Bankası            | American Express  
+4475050000000003 | Halkbank                   | Visa (Debit)  
+5528790000000008 | Halkbank                   | Master Card (Credit)  
+4059030000000009 | HSBC Bank                  | Visa (Debit)  
+5504720000000003 | HSBC Bank                  | Master Card (Credit)  
+5892830000000000 | Türkiye İş Bankası         | Master Card (Debit)  
+4543590000000006 | Türkiye İş Bankası         | Visa (Credit)  
+4910050000000006 | Vakıfbank                  | Visa (Debit)  
+4157920000000002 | Vakıfbank                  | Visa (Credit)  
+5168880000000002 | Yapı ve Kredi Bankası      | Master Card (Debit)  
+5451030000000000 | Yapı ve Kredi Bankası      | Master Card (Credit)  
+
+*Cross border* test cards:
+
+Card Number      | Country
+-----------      | -------
+4054180000000007 | Non-Turkish (Debit)
+5400010000000004 | Non-Turkish (Credit)  
+6221060000000004 | Iran  
+
+Test cards to get specific *error* codes:
+
+Card Number       | Description
+-----------       | -----------
+5406670000000009  | Success but cannot be cancelled, refund or post auth
+4111111111111129  | Not sufficient funds
+4129111111111111  | Do not honour
+4128111111111112  | Invalid transaction
+4127111111111113  | Lost card
+4126111111111114  | Stolen card
+4125111111111115  | Expired card
+4124111111111116  | Invalid cvc2
+4123111111111117  | Not permitted to card holder
+4122111111111118  | Not permitted to terminal
+4121111111111119  | Fraud suspect
+4120111111111110  | Pickup card
+4130111111111118  | General error
+4131111111111117  | Success but mdStatus is 0
+4141111111111115  | Success but mdStatus is 4
+4151111111111112  | 3dsecure initialize failed
