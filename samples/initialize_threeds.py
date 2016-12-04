@@ -41,32 +41,32 @@ address = {
     'zipCode': '34732'
 }
 
-basket_item_first = {
-    'id': 'BI101',
-    'name': 'Binocular',
-    'category1': 'Collectibles',
-    'category2': 'Accessories',
-    'itemType': 'PHYSICAL',
-    'price': '0.3'
-}
-
-basket_item_second = {
-    'id': 'BI102',
-    'name': 'Game code',
-    'category1': 'Game',
-    'category2': 'Online Game Items',
-    'itemType': 'VIRTUAL',
-    'price': '0.5'
-}
-
-basket_item_third = {
-    'id': 'BI103',
-    'name': 'Usb',
-    'category1': 'Electronics',
-    'category2': 'Usb / Cable',
-    'itemType': 'PHYSICAL',
-    'price': '0.2'
-}
+basket_items = [
+    {
+        'id': 'BI101',
+        'name': 'Binocular',
+        'category1': 'Collectibles',
+        'category2': 'Accessories',
+        'itemType': 'PHYSICAL',
+        'price': '0.3'
+    },
+    {
+        'id': 'BI102',
+        'name': 'Game code',
+        'category1': 'Game',
+        'category2': 'Online Game Items',
+        'itemType': 'VIRTUAL',
+        'price': '0.5'
+    },
+    {
+        'id': 'BI103',
+        'name': 'Usb',
+        'category1': 'Electronics',
+        'category2': 'Usb / Cable',
+        'itemType': 'PHYSICAL',
+        'price': '0.2'
+    }
+]
 
 request = {
     'locale': 'tr',
@@ -83,7 +83,7 @@ request = {
     'buyer': buyer,
     'shippingAddress': address,
     'billingAddress': address,
-    'basketItems': [basket_item_first, basket_item_second, basket_item_third]
+    'basketItems': basket_items
 }
 
 threeds_initialize = iyzipay.ThreedsInitialize().create(request, options)
