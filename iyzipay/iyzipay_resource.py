@@ -34,7 +34,7 @@ class IyzipayResource:
             header.update(
                 {'Authorization': self.prepare_auth_string(options, random_header_value, pki_string)})
             header.update({'x-iyzi-rnd': random_header_value})
-            header.update({'x-iyzi-client-version': 'iyzipay-python-1.0.21'})
+            header.update({'x-iyzi-client-version': 'iyzipay-python-1.0.24'})
         return header
 
     def get_plain_http_header(self, options):
