@@ -408,6 +408,7 @@ class BkmInitialize(IyzipayResource):
         pki_builder.append_array('basketItems', self.basket_pki(request.get('basketItems')))
         pki_builder.append('callbackUrl', request.get('callbackUrl'))
         pki_builder.append('paymentSource', request.get('paymentSource'))
+        pki_builder.append_array('enabledInstallments', request.get('enabledInstallments'))
         return pki_builder.get_request_string()
 
 
