@@ -66,6 +66,7 @@ request = {
     'basketId': 'B67832',
     'paymentGroup': 'PRODUCT',
     "callbackUrl": "https://www.merchant.com/callback",
+    "enabledInstallments": ['2', '3', '6', '9'],
     'buyer': buyer,
     'shippingAddress': address,
     'billingAddress': address,
