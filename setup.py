@@ -13,7 +13,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='iyzipay',
-    version='1.0.24',
+    version='1.0.25',
     use_scm_version=True,
     setup_requires=['setuptools_scm', 'future'],
     description='iyzipay api python client',
