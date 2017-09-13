@@ -4,6 +4,7 @@ import base64
 import hashlib
 import json
 import sys
+import warnings
 
 import iyzipay
 
@@ -15,6 +16,13 @@ class IyzipayResource:
     RANDOM_STRING_SIZE = 8
 
     def connect(self, method, url, options, request=None, pki=None):
+        if (2, 6) <= sys.version_info < (2, 7, 9):
+            warnings.warn(
+                'Python 2.6 will not be supported in March 2018 for TLS 1.2 migration. '
+                'Please upgrade your Python version to minimum 2.7.9. '
+                'If you have any questions, please open an issue on Github or '
+                'contact us at integration@iyzico.com.',
+                DeprecationWarning)
         if (2, 6) <= sys.version_info < (3, 0):
             import httplib
             connection = httplib.HTTPSConnection(options['base_url'])

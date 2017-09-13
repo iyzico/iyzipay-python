@@ -8,6 +8,10 @@ You can sign up for an iyzico account at https://iyzico.com
 
 Python 2.6 and later.
 
+### Note
+
+Python 2.6 will not be supported in March 2018 for TLS 1.2 migration. Please upgrade your Python version to minimum 2.7.9. If you have any questions, please open an issue on Github or contact us at integration@iyzico.com.
+
 # Installation
 
 ### PyPI

@@ -1,4 +1,6 @@
 import os
+import sys
+import warnings
 
 from setuptools import setup, find_packages
 
@@ -10,6 +12,19 @@ with open('LICENSE') as f:
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+
+install_requires = []
+
+if sys.version_info < (2, 6):
+    warnings.warn(
+        'Python 2.5 is not officially supported by iyzico. '
+        'If you have any questions, please open an issue on Github or '
+        'contact us at integration@iyzico.com.',
+        DeprecationWarning)
+    install_requires.append('requests >= 0.8.8, < 0.10.1')
+    install_requires.append('ssl')
+else:
+    install_requires.append('requests >= 0.8.8')
 
 setup(
     name='iyzipay',
