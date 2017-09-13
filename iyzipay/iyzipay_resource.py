@@ -18,7 +18,7 @@ class IyzipayResource:
     def connect(self, method, url, options, request=None, pki=None):
         if (2, 6) <= sys.version_info < (2, 7, 9):
             warnings.warn(
-                'Python 2.6 will not be supported in April 2018 for TLS 1.2 migration. '
+                'Python 2.6 will not be supported in March 2018 for TLS 1.2 migration. '
                 'Please upgrade your Python version to minimum 2.7.9. '
                 'If you have any questions, please open an issue on Github or '
                 'contact us at integration@iyzico.com.',
