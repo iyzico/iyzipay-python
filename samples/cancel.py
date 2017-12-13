@@ -12,7 +12,9 @@ request = {
     'locale': 'tr',
     'conversationId': '123456789',
     'paymentId': '1',
-    'ip': '85.34.78.112'
+    'ip': '85.34.78.112',
+    'reason': 'other',
+    'description': 'customer requested for iyzico.'
 }
 
 cancel = iyzipay.Cancel().create(request, options)
