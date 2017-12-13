@@ -337,6 +337,8 @@ class Cancel(IyzipayResource):
         pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
         pki_builder.append('paymentId', request.get('paymentId'))
         pki_builder.append('ip', request.get('ip'))
+        pki_builder.append('reason', request.get('reason'))
+        pki_builder.append('description', request.get('description'))
         return pki_builder.get_request_string()
 
 

@@ -11,12 +11,12 @@ options = {
 request = {
     'locale': 'tr',
     'conversationId': '123456789',
-    'paymentTransactionId': '1',
-    'price': '0.5',
+    'paymentTransactionId': '19',
+    'price': '0.2',
     'currency': 'TRY',
     'ip': '85.34.78.112',
     'reason': 'other',
-    'description': 'customer requested for iyzico.'
+    'description': 'customer requested for default sample'
 }
 
 refund = iyzipay.Refund().create(request, options)
