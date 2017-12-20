@@ -11,8 +11,8 @@ options = {
 request = {
     'locale': 'tr',
     'conversationId': '123456789',
-    'paymentTransactionId': '19',
-    'price': '0.2',
+    'paymentTransactionId': '1',
+    'price': '0.5',
     'currency': 'TRY',
     'ip': '85.34.78.112',
     'reason': 'other',
