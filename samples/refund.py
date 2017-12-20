@@ -14,7 +14,9 @@ request = {
     'paymentTransactionId': '1',
     'price': '0.5',
     'currency': 'TRY',
-    'ip': '85.34.78.112'
+    'ip': '85.34.78.112',
+    'reason': 'other',
+    'description': 'customer requested for default sample'
 }
 
 refund = iyzipay.Refund().create(request, options)
