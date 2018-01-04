@@ -68,7 +68,7 @@ class IyzipayResource:
 
     @staticmethod
     def resource_pki(request):
-        return 'locale=' + request.get('locale') + ',conversationId=' + request.get('conversationId') + ','
+        return 'locale=' + request.get('locale') + (',conversationId=' + request.get('conversationId') + ',' if request.get('conversationId') else ',')
 
     @staticmethod
     def buyer_pki(buyer):
