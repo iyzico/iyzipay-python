@@ -17,3 +17,18 @@ class PKIBuilderTest(unittest.TestCase):
         pki_builder = iyzipay.PKIBuilder('')
         pki_builder.append('key', '')
         self.assertEqual(pki_builder.get_request_string(), '[]')
+
+    def test_append_price_when_value_available(self):
+        pki_builder = iyzipay.PKIBuilder('')
+        pki_builder.append_price('price', 100)
+        self.assertEqual(pki_builder.get_request_string(), '[price=100.0]')
+
+    def test_append_price_when_value_not_available(self):
+        pki_builder = iyzipay.PKIBuilder('')
+        pki_builder.append_price('price')
+        self.assertEqual(pki_builder.get_request_string(), '[]')
+
+    def test_append_price_when_value_empty(self):
+        pki_builder = iyzipay.PKIBuilder('')
+        pki_builder.append_price('price', '')
+        self.assertEqual(pki_builder.get_request_string(), '[]')
