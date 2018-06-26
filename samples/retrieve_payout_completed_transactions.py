@@ -14,4 +14,4 @@ request = {
 
 payout_completed_transaction_list = iyzipay.PayoutCompletedTransactionList().retrieve(request, options)
 
-print(payout_completed_transaction_list.read().decode('utf-8'))
+print(payout_completed_transaction_list.body)

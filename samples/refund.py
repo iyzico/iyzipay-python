@@ -19,4 +19,4 @@ request = {
 
 refund = iyzipay.Refund().create(request, options)
 
-print(refund.read().decode('utf-8'))
+print(refund.body)

@@ -15,4 +15,4 @@ request = {
 
 card = iyzipay.Card().delete(request, options)
 
-print(card.read().decode('utf-8'))
+print(card.body)

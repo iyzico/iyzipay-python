@@ -81,4 +81,4 @@ request = {
 
 payment = iyzipay.Payment().create(request, options)
 
-print(payment.read().decode('utf-8'))
+print(payment.body)

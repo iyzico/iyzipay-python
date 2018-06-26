@@ -74,4 +74,4 @@ request = {
 
 pecco_initialize = iyzipay.PeccoInitialize().create(request, options)
 
-print(pecco_initialize.read().decode('utf-8'))
+print(pecco_initialize.body)

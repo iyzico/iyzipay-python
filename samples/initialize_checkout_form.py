@@ -76,4 +76,4 @@ request = {
 
 checkout_form_initialize = iyzipay.CheckoutFormInitialize().create(request, options)
 
-print(checkout_form_initialize.read().decode('utf-8'))
+print(checkout_form_initialize.body)

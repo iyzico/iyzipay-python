@@ -8,13 +8,13 @@ import re
 import string
 
 import iyzipay
-
+from iyzipay.iyzipay_response import IyzipayResponse
 
 class IyzipayResource:
     RANDOM_STRING_SIZE = 8
     RE_SEARCH_V2 = r'/v2/'
     header = {
-        "Accept": "application/json", 
+        "Accept": "application/json",
         "Content-type": "application/json",
         'x-iyzi-client-version': 'iyzipay-python-1.0.40'
     }
@@ -27,7 +27,11 @@ class IyzipayResource:
         body_str = json.dumps(request_body_dict)
         header = self.get_http_header(url, options, body_str, pki)
         connection.request(method, url, body_str, header)
-        return connection.getresponse()
+        response = connection.getresponse()
+        return IyzipayResponse(
+            response.status,
+            json.loads(response.read().decode('utf-8')),
+        )
 
     def get_http_header(self, url, options=None, body_str=None, pki_string=None):
         random_str = self.generate_random_string(self.RANDOM_STRING_SIZE)
@@ -866,7 +870,7 @@ class IyziFileBase64Encoder:
 class IyziLinkProduct(IyzipayResource):
     def create(self, request, options):
         return self.connect('POST', '/v2/iyzilink/products/', options, request)
-    
+
     def retrieve(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')
@@ -883,7 +887,7 @@ class IyziLinkProduct(IyzipayResource):
             raise Exception('token must be in request')
         token = str(request.get('token'))
         return self.connect('PUT', '/v2/iyzilink/products/' + token, options, request)
-    
+
     def delete(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')

@@ -15,4 +15,4 @@ request = {
 
 installment_info = iyzipay.InstallmentInfo().retrieve(request, options)
 
-print(installment_info.read().decode('utf-8'))
+print(installment_info.body)

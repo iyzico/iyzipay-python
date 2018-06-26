@@ -24,4 +24,4 @@ request = {
 
 sub_merchant = iyzipay.SubMerchant().create(request, options)
 
-print(sub_merchant.read().decode('utf-8'))
+print(sub_merchant.body)
