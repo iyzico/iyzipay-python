@@ -232,6 +232,7 @@ class CheckoutFormInitialize(IyzipayResource):
         pki_builder.append('forceThreeDS', request.get('forceThreeDS'))
         pki_builder.append('cardUserKey', request.get('cardUserKey'))
         pki_builder.append_array('enabledInstallments', request.get('enabledInstallments'))
+        pki_builder.append('debitCardAllowed', request.get('debitCardAllowed'))
         return pki_builder.get_request_string()
 
 
