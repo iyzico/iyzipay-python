@@ -73,7 +73,7 @@ request = {
     'shippingAddress': address,
     'billingAddress': address,
     'basketItems': basket_items,
-    'debitCardAllowed': true
+    'debitCardAllowed': True
 }
 
 checkout_form_initialize = iyzipay.CheckoutFormInitialize().create(request, options)
