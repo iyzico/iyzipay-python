@@ -10,9 +10,6 @@ import iyzipay
 
 
 class IyzipayResource:
-    def __init__(self):
-        pass
-
     RANDOM_STRING_SIZE = 8
 
     def connect(self, method, url, options, request=None, pki=None):
