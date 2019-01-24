@@ -16,4 +16,4 @@ request = {
 
 disapproval = iyzipay.Disapproval().create(request, options)
 
-print(disapproval.read().decode('utf-8'))
+print(disapproval.body)

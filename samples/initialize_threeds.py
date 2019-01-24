@@ -88,4 +88,4 @@ request = {
 
 threeds_initialize = iyzipay.ThreedsInitialize().create(request, options)
 
-print(threeds_initialize.read().decode('utf-8'))
+print(threeds_initialize.body)

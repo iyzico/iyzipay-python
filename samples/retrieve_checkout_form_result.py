@@ -16,4 +16,4 @@ request = {
 
 checkout_form_result = iyzipay.CheckoutForm().retrieve(request, options)
 
-print(checkout_form_result.read().decode('utf-8'))
+print(checkout_form_result.body)

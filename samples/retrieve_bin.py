@@ -16,4 +16,4 @@ request = {
 
 bin_number = iyzipay.BinNumber().retrieve(request, options)
 
-print(bin_number.read().decode('utf-8'))
+print(bin_number.body)

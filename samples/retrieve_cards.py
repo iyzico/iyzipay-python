@@ -16,4 +16,4 @@ request = {
 
 card_list = iyzipay.CardList().retrieve(request, options)
 
-print(card_list.read().decode('utf-8'))
+print(card_list.body)

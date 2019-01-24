@@ -7,7 +7,7 @@ import sys
 import warnings
 
 import iyzipay
-
+from iyzipay.iyzipay_response import IyzipayResponse
 
 class IyzipayResource:
     def __init__(self):
@@ -31,7 +31,12 @@ class IyzipayResource:
             connection = http.client.HTTPSConnection(options['base_url'])
         request_json = json.dumps(request)
         connection.request(method, url, request_json, self.get_http_header(options, pki))
-        return connection.getresponse()
+        response = connection.getresponse()
+        try:
+            body = json.loads(response.read().decode('utf-8'))
+        except:
+            body = None
+        return IyzipayResponse(response.status, body)
 
     def get_http_header(self, options=None, pki_string=None):
         header = {"Accept": "application/json", "Content-type": "application/json"}
