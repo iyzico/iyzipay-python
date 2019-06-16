@@ -425,38 +425,6 @@ class BkmInitialize(IyzipayResource):
         return pki_builder.get_request_string()
 
 
-class PeccoInitialize(IyzipayResource):
-    def create(self, request, options):
-        pki = self.to_pki_string(request)
-        return self.connect('POST', '/payment/pecco/initialize', options, request, pki)
-
-    def to_pki_string(self, request):
-        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
-        pki_builder.append_price('price', request.get('price'))
-        pki_builder.append('basketId', request.get('basketId'))
-        pki_builder.append('paymentGroup', request.get('paymentGroup'))
-        pki_builder.append('buyer', self.buyer_pki(request.get('buyer')))
-        pki_builder.append('shippingAddress', self.address_pki(request.get('shippingAddress')))
-        pki_builder.append('billingAddress', self.address_pki(request.get('billingAddress')))
-        pki_builder.append_array('basketItems', self.basket_pki(request.get('basketItems')))
-        pki_builder.append('callbackUrl', request.get('callbackUrl'))
-        pki_builder.append('paymentSource', request.get('paymentSource'))
-        pki_builder.append('currency', request.get('currency'))
-        pki_builder.append_price('paidPrice', request.get('paidPrice'))
-        return pki_builder.get_request_string()
-
-
-class PeccoPayment(IyzipayResource):
-    def create(self, request, options):
-        pki = self.to_pki_string(request)
-        return self.connect('POST', '/payment/pecco/auth', options, request, pki)
-
-    def to_pki_string(self, request):
-        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
-        pki_builder.append('token', request.get('token'))
-        return pki_builder.get_request_string()
-
-
 class CheckoutFormInitializePreAuth(IyzipayResource):
     def create(self, request, options):
         pki = self.to_pki_string(request)
