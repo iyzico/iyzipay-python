@@ -1,11 +1,10 @@
 import random
 import string
 import base64
-import hashlib
+import hmac, hashlib, binascii
 import json
 import sys
 import warnings
-
 import iyzipay
 
 
@@ -15,7 +14,7 @@ class IyzipayResource:
 
     RANDOM_STRING_SIZE = 8
 
-    def connect(self, method, url, options, request=None, pki=None):
+    def connect(self, method, url, options, request=None, pki=None, hashing_version = None):
         if (2, 6) <= sys.version_info < (2, 7, 9):
             warnings.warn(
                 'Python 2.6 will not be supported in March 2018 for TLS 1.2 migration. '
@@ -29,8 +28,12 @@ class IyzipayResource:
         else:
             import http.client
             connection = http.client.HTTPSConnection(options['base_url'])
-        request_json = json.dumps(request)
-        connection.request(method, url, request_json, self.get_http_header(options, pki))
+        if(hashing_version == 'v2'):
+            header = self.get_http_header_v2(method, url, options, request)
+        else:
+            request = json.dumps(request)
+            header = self.get_http_header(options, pki)
+        connection.request(method, url, request, header)
         return connection.getresponse()
 
     def get_http_header(self, options=None, pki_string=None):
@@ -43,6 +46,25 @@ class IyzipayResource:
                 {'Authorization': self.prepare_auth_string(options, random_header_value, pki_string)})
             header.update({'x-iyzi-rnd': random_header_value})
             header.update({'x-iyzi-client-version': 'iyzipay-python-1.0.32'})
+        return header
+
+    def get_http_header_v2(self, method, url, options, request=None, pki=None):
+        random_header_value = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(self.RANDOM_STRING_SIZE))
+        startNumber =  url.find('/v2')
+        endNumber = len(url)
+        if (url.find('?') != -1):
+            endNumber = url.find('?')
+        uriPath = url[startNumber:endNumber]
+        if request is not None:
+            uriPath = uriPath + request
+        dataToEncrypt = random_header_value + uriPath
+        encrypt = hmac.new(str(options['secret_key']).encode('utf-8'), str(dataToEncrypt).encode('utf-8'), hashlib.sha256).digest()
+        encryptResult = binascii.hexlify(encrypt).decode("utf-8")
+        signature =  'apiKey:%s&randomKey:%s&signature:%s' % (options['api_key'], random_header_value, encryptResult)
+        hashString = base64.b64encode(signature.encode())
+        header = {'Accept': 'application/json', 'Content-type': 'application/json'}
+        header.update({'Authorization': 'IYZWSv2 %s' % hashString.decode("utf-8")})
+        header.update({'x-iyzi-client-version': 'iyzipay-python-1.0.32'})
         return header
 
     def get_plain_http_header(self, options):
@@ -809,3 +831,51 @@ class BasicBkmInitialize(IyzipayResource):
         pki_builder.append('posOrderId', request.get('posOrderId'))
         pki_builder.append_array('installmentDetails', self.installment_details_pki(request.get('installmentDetails')))
         return pki_builder.get_request_string()
+
+
+class RetrievePaymentDetails(IyzipayResource):
+    def retrieve(self, request, options):
+        payment_conversation_id = request.get('paymentConversationId')
+        return self.connect('GET', '/v2/reporting/payment/details?paymentConversationId='+str(payment_conversation_id), options,request = None, pki = None, hashing_version = 'v2')
+
+
+class RetrieveTransactions(IyzipayResource):
+    def retrieve(self, request, options):
+        page = request.get('page')
+        transactionDate = request.get('transactionDate')
+        return self.connect('GET', '/v2/reporting/payment/transactions?transactionDate='+str(transactionDate)+'&page='+str(page), options,request = None, pki = None, hashing_version = 'v2')
+
+
+class IyziLinkProduct(IyzipayResource):
+    def create(self, request, options):
+        iyzilink_builder = iyzipay.IyziLink()
+        url = '/v2/iyzilink/products/'
+        url = iyzilink_builder.to_string(url,request)
+        request = iyzilink_builder.create(request)
+        return self.connect('POST', url, options, request, pki = None, hashing_version = 'v2')
+
+    def delete(self, request, options):
+        iyzilink_builder = iyzipay.IyziLink()
+        url = '/v2/iyzilink/products/'+request.get('token')
+        url = iyzilink_builder.to_string(url,request)
+        request = iyzilink_builder.delete(request)
+        return self.connect('DELETE', url, options, request, pki = None, hashing_version = 'v2')
+
+    def retrieve(self, request, options):
+        iyzilink_builder = iyzipay.IyziLink()
+        url = '/v2/iyzilink/products/'+request.get('token')
+        url = iyzilink_builder.to_string(url,request)
+        return self.connect('GET', url, options, None, pki = None, hashing_version = 'v2')
+
+    def retrieve_links(self, request, options):
+        iyzilink_builder = iyzipay.IyziLink()
+        url = '/v2/iyzilink/products'
+        url = iyzilink_builder.to_string(url,request)
+        return self.connect('GET', url, options, None, pki = None, hashing_version = 'v2')
+
+    def update(self, request, options):
+        iyzilink_builder = iyzipay.IyziLink()
+        url = '/v2/iyzilink/products/'+request.get('token')
+        url = iyzilink_builder.to_string(url,request)
+        request = iyzilink_builder.update(request)
+        return self.connect('PUT', url, options, request, pki = None, hashing_version = 'v2')
