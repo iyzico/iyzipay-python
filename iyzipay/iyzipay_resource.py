@@ -852,3 +852,10 @@ class RetrievePaymentDetails(IyzipayResource):
     def retrieve(self, request, options):
         payment_conversation_id = str(request.get('paymentConversationId'))
         return self.connect('GET', '/v2/reporting/payment/details?paymentConversationId=' + payment_conversation_id, options)
+
+class RetrieveTransactions(IyzipayResource):
+    def retrieve(self, request, options):
+        page = str(request.get('page'))
+        transactionDate = str(request.get('transactionDate'))
+        query_params = 'transactionDate='+transactionDate+'&page='+page
+        return self.connect('GET', '/v2/reporting/payment/transactions?'+query_params, options)

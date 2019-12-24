@@ -47,7 +47,8 @@ from iyzipay.iyzipay_resource import (  # noqa
     BasicThreedsPayment,
     BasicBkm,
     BasicBkmInitialize,
-    RetrievePaymentDetails)
+    RetrievePaymentDetails,
+    RetrieveTransactions)
 
 from iyzipay.pki_builder import (  # noqa
     PKIBuilder)
