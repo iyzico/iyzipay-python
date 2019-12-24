@@ -1,21 +1,26 @@
 import random
 import string
+import re
 import base64
+import hmac
 import hashlib
 import json
 import sys
 import warnings
 
 import iyzipay
-
+import importlib
 
 class IyzipayResource:
-    def __init__(self):
-        pass
-
     RANDOM_STRING_SIZE = 8
+    RE_SEARCH_V2 = r'/v2/'
+    header = {
+        "Accept": "application/json", 
+        "Content-type": "application/json",
+        'x-iyzi-client-version': 'iyzipay-python-1.0.32'
+    }
 
-    def connect(self, method, url, options, request=None, pki=None):
+    def __init__(self):
         if (2, 6) <= sys.version_info < (2, 7, 9):
             warnings.warn(
                 'Python 2.6 will not be supported in March 2018 for TLS 1.2 migration. '
@@ -24,33 +29,64 @@ class IyzipayResource:
                 'contact us at integration@iyzico.com.',
                 DeprecationWarning)
         if (2, 6) <= sys.version_info < (3, 0):
-            import httplib
-            connection = httplib.HTTPSConnection(options['base_url'])
+            self.httplib = importlib.import_module('httplib')
         else:
-            import http.client
-            connection = http.client.HTTPSConnection(options['base_url'])
-        request_json = json.dumps(request)
-        connection.request(method, url, request_json, self.get_http_header(options, pki))
+            self.httplib = importlib.import_module('http.client')
+
+    def connect(self, method, url, options, request_body_dict=None, pki=None):
+        connection = self.httplib.HTTPSConnection(options['base_url'])
+        body_str = json.dumps(request_body_dict)
+        header = self.get_http_header(url, options, body_str, pki)
+        connection.request(method, url, body_str, header)
         return connection.getresponse()
 
-    def get_http_header(self, options=None, pki_string=None):
-        header = {"Accept": "application/json", "Content-type": "application/json"}
+    def get_http_header(self, url, options=None, body_str=None, pki_string=None):
+        random_str = self.generate_random_string(self.RANDOM_STRING_SIZE)
+        self.header.update({'x-iyzi-rnd': random_str})
+        if re.search(self.RE_SEARCH_V2, url, re.IGNORECASE) is not None:
+            return self.get_http_header_v2(url, options, random_str, body_str)
+        else:
+            return self.get_http_header_v1(options, pki_string, random_str)
+
+    def get_http_header_v1(self, options, pki_string, random_str=None):
         if pki_string is not None:
-            random_header_value = "".join(
-                random.SystemRandom().choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in
-                range(self.RANDOM_STRING_SIZE))
-            header.update(
-                {'Authorization': self.prepare_auth_string(options, random_header_value, pki_string)})
-            header.update({'x-iyzi-rnd': random_header_value})
-            header.update({'x-iyzi-client-version': 'iyzipay-python-1.0.32'})
-        return header
+            self.header.update(
+                {'Authorization': self.prepare_auth_string(options, random_str, pki_string)})
+        return self.header
+
+    def get_http_header_v2(self, url, options, random_str, body_str):
+        hashed_v2_str = self.generate_v2_hash(options['api_key'], url, options['secret_key'], random_str, body_str)
+        return self.header.update(
+                {'Authorization': 'IYZWSv2 %s' % (hashed_v2_str)})
+
+    def generate_v2_hash(self, api_key, url, secret_key, random_str, body_str):
+        if sys.version_info >= (3, 0):
+            secret_key = bytes(secret_key.encode('utf-8'))
+            msg = (random_str + url + body_str).encode(('utf-8'))
+        else:
+            msg = (random_str + url + body_str)
+
+        hmac_obj = hmac.new(secret_key,digestmod=hashlib.sha256)
+        hmac_obj.update(msg)
+        signature = hmac_obj.hexdigest()
+        authorization_params = [
+            'apiKey:' + api_key,
+            'randomKey:' + random_str,
+            'signature:' + signature
+        ]
+        return '&'.join(authorization_params)
 
     def get_plain_http_header(self, options):
-        return self.get_http_header(None, options)
+        return self.get_http_header_v1(None, options)
 
     def prepare_auth_string(self, options, random_str, pki_string):
         hashed = self.generate_hash(options['api_key'], options['secret_key'], random_str, pki_string)
         return self.format_header_string(options['api_key'], hashed)
+
+    def generate_random_string(self, size):
+        return "".join(
+                random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in
+                range(size))
 
     @staticmethod
     def generate_hash(api_key, secret_key, random_string, pki_string):
