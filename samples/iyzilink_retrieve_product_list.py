@@ -9,8 +9,11 @@ options = {
 }
 
 request = {
-  'transactionDate': '2019-06-25',
-  'page': '1',
+  "conversationId": "123456789",
+  "locale": "tr",
+  "page": 1,
+  "count": 1
 }
-report = iyzipay.RetrieveTransactions().retrieve(request, options)
+
+report = iyzipay.IyziLinkProduct().get(request, options)
 print(report.read().decode('utf-8'))

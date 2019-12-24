@@ -7,9 +7,9 @@ import hashlib
 import json
 import sys
 import warnings
+import importlib
 
 import iyzipay
-import importlib
 
 class IyzipayResource:
     RANDOM_STRING_SIZE = 8
@@ -76,7 +76,7 @@ class IyzipayResource:
             'randomKey:' + random_str,
             'signature:' + signature
         ]
-        return base64.b64encode('&'.join(authorization_params))
+        return base64.b64encode('&'.join(authorization_params).encode())
 
     def get_plain_http_header(self, options):
         return self.get_http_header_v1(None, options)
@@ -859,3 +859,36 @@ class RetrieveTransactions(IyzipayResource):
         transactionDate = str(request.get('transactionDate'))
         query_params = 'transactionDate='+transactionDate+'&page='+page
         return self.connect('GET', '/v2/reporting/payment/transactions?'+query_params, options)
+
+class IyziFileBase64Encoder:
+    @staticmethod
+    def encode(file_path):
+        with open(file_path, "rb") as f:
+            return base64.b64encode(f.read()).decode('utf-8')
+
+class IyziLinkProduct(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/v2/iyzilink/products/', options, request)
+    
+    def retrieve(self, request, options):
+        if request.get('token') is None:
+            raise Exception('token must be in request')
+        token = str(request.get('token'))
+        return self.connect('GET', '/v2/iyzilink/products/'+ token, options)
+
+    def get(self, request, options):
+        page = str(request.get('page') or 1)
+        count = str(request.get('count') or 10)
+        return self.connect('GET', '/v2/iyzilink/products/?page='+page+'&count='+count, options)
+
+    def update(self, request, options):
+        if request.get('token') is None:
+            raise Exception('token must be in request')
+        token = str(request.get('token'))
+        return self.connect('PUT', '/v2/iyzilink/products/'+ token, options, request)
+    
+    def delete(self, request, options):
+        if request.get('token') is None:
+            raise Exception('token must be in request')
+        token = str(request.get('token'))
+        return self.connect('DELETE', '/v2/iyzilink/products/'+ token, options)
