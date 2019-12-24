@@ -55,9 +55,11 @@ class IyzipayResource:
         return self.header
 
     def get_http_header_v2(self, url, options, random_str, body_str):
+        url = url.split('?')[0]
         hashed_v2_str = self.generate_v2_hash(options['api_key'], url, options['secret_key'], random_str, body_str)
-        return self.header.update(
+        self.header.update(
                 {'Authorization': 'IYZWSv2 %s' % (hashed_v2_str)})
+        return self.header
 
     def generate_v2_hash(self, api_key, url, secret_key, random_str, body_str):
         if sys.version_info >= (3, 0):
@@ -74,7 +76,7 @@ class IyzipayResource:
             'randomKey:' + random_str,
             'signature:' + signature
         ]
-        return '&'.join(authorization_params)
+        return base64.b64encode('&'.join(authorization_params))
 
     def get_plain_http_header(self, options):
         return self.get_http_header_v1(None, options)
@@ -845,3 +847,8 @@ class BasicBkmInitialize(IyzipayResource):
         pki_builder.append('posOrderId', request.get('posOrderId'))
         pki_builder.append_array('installmentDetails', self.installment_details_pki(request.get('installmentDetails')))
         return pki_builder.get_request_string()
+
+class RetrievePaymentDetails(IyzipayResource):
+    def retrieve(self, request, options):
+        payment_conversation_id = str(request.get('paymentConversationId'))
+        return self.connect('GET', '/v2/reporting/payment/details?paymentConversationId=' + payment_conversation_id, options)
