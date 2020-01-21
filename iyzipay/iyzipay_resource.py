@@ -17,7 +17,7 @@ class IyzipayResource:
     header = {
         "Accept": "application/json", 
         "Content-type": "application/json",
-        'x-iyzi-client-version': 'iyzipay-python-1.0.32'
+        'x-iyzi-client-version': 'iyzipay-python-1.0.34'
     }
 
     def __init__(self):
