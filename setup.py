@@ -28,7 +28,7 @@ else:
 
 setup(
     name='iyzipay',
-    version='1.0.34',
+    version='1.0.35',
     use_scm_version=True,
     setup_requires=['setuptools_scm', 'future'],
     description='iyzipay api python client',
