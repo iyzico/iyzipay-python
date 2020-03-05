@@ -76,7 +76,7 @@ class IyzipayResource:
             'randomKey:' + random_str,
             'signature:' + signature
         ]
-        return base64.b64encode('&'.join(authorization_params).encode())
+        return base64.b64encode('&'.join(authorization_params).encode()).decode()
 
     def get_plain_http_header(self, options):
         return self.get_http_header_v1(None, options)
