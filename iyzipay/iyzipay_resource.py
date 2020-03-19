@@ -917,13 +917,50 @@ class SubscriptionProduct(IyzipayResource):
         return self.connect('GET', '/v2/subscription/products/?page=' + page + '&count=' + count, options)
 
     def update(self, request, options):
-        if request.get('referenceCode') is None:
+        if request.get('pricingPlanReferenceCode') is None:
             raise Exception('productReferenceCode must be in request')
-        product_reference_code = str(request.get('referenceCode'))
-        return self.connect('PUT', '/v2/subscription/products/' + product_reference_code, options, request)
+        pricingPlanReferenceCode = str(request.get('pricingPlanReferenceCode'))
+        return self.connect('PUT', '/v2/subscription/products/' + pricingPlanReferenceCode, options, request)
 
     def delete(self, request, options):
         if request.get('referenceCode') is None:
             raise Exception('referenceCode must be in request')
         referenceCode = str(request.get('referenceCode'))
         return self.connect('DELETE', '/v2/subscription/products/' + referenceCode, options)
+
+
+class SubscriptionPlan(IyzipayResource):
+    def create(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('POST', '/v2/subscription/products/' + referenceCode + '/' + 'pricing-plans', options,
+                            request)
+
+    def retrieve(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('GET', '/v2/subscription/pricing-plans/' + referenceCode, options, request)
+
+    def get(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode')
+        referenceCode = str(request.get('referenceCode'))
+        page = str(request.get('page') or 1)
+        count = str(request.get('count') or 10)
+        return self.connect('GET',
+                            '/v2/subscription/products/' + referenceCode + '/' + 'pricing-plans?page=' + page + '&count=' + count,
+                            options)
+
+    def update(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode must be in request')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('PUT', '/v2/subscription/pricing-plans/' + referenceCode, options, request)
+
+    def delete(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode must be in request')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('DELETE', '/v2/subscription/pricing-plans/' + referenceCode, options)

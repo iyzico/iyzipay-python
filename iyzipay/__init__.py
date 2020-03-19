@@ -51,6 +51,7 @@ from iyzipay.iyzipay_resource import (  # noqa
     RetrieveTransactions,
     IyziLinkProduct,
     SubscriptionProduct,
+    SubscriptionPlan,
     IyziFileBase64Encoder)
 
 from iyzipay.pki_builder import (  # noqa
