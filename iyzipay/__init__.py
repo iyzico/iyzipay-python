@@ -5,8 +5,8 @@
 # Nurettin Bakkal <nurettin.bakkal@iyzico.com>
 
 # Configuration variables
-api_key = 'your api key'
-secret_key = 'your secret key'
+api_key = 'sandbox-FJFGQCzjOiv9KxoI2rAChbXTcpCwnKhn'
+secret_key = 'sandbox-3AlqFpeUX4d9Qy49sMokoF1YNPa7g7Gl'
 base_url = 'sandbox-api.iyzipay.com'
 
 # Resource
@@ -50,6 +50,7 @@ from iyzipay.iyzipay_resource import (  # noqa
     RetrievePaymentDetails,
     RetrieveTransactions,
     IyziLinkProduct,
+    SubscriptionProduct,
     IyziFileBase64Encoder)
 
 from iyzipay.pki_builder import (  # noqa

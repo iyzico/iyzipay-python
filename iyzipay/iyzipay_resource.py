@@ -11,11 +11,12 @@ import importlib
 
 import iyzipay
 
+
 class IyzipayResource:
     RANDOM_STRING_SIZE = 8
     RE_SEARCH_V2 = r'/v2/'
     header = {
-        "Accept": "application/json", 
+        "Accept": "application/json",
         "Content-type": "application/json",
         'x-iyzi-client-version': 'iyzipay-python-1.0.35'
     }
@@ -58,7 +59,7 @@ class IyzipayResource:
         url = url.split('?')[0]
         hashed_v2_str = self.generate_v2_hash(options['api_key'], url, options['secret_key'], random_str, body_str)
         self.header.update(
-                {'Authorization': 'IYZWSv2 %s' % (hashed_v2_str)})
+            {'Authorization': 'IYZWSv2 %s' % (hashed_v2_str)})
         return self.header
 
     def generate_v2_hash(self, api_key, url, secret_key, random_str, body_str):
@@ -68,7 +69,7 @@ class IyzipayResource:
         else:
             msg = (random_str + url + body_str)
 
-        hmac_obj = hmac.new(secret_key,digestmod=hashlib.sha256)
+        hmac_obj = hmac.new(secret_key, digestmod=hashlib.sha256)
         hmac_obj.update(msg)
         signature = hmac_obj.hexdigest()
         authorization_params = [
@@ -87,8 +88,8 @@ class IyzipayResource:
 
     def generate_random_string(self, size):
         return "".join(
-                random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in
-                range(size))
+            random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in
+            range(size))
 
     @staticmethod
     def generate_hash(api_key, secret_key, random_string, pki_string):
@@ -106,7 +107,8 @@ class IyzipayResource:
 
     @staticmethod
     def resource_pki(request):
-        return 'locale=' + request.get('locale') + (',conversationId=' + request.get('conversationId') + ',' if request.get('conversationId') else ',')
+        return 'locale=' + request.get('locale') + (
+            ',conversationId=' + request.get('conversationId') + ',' if request.get('conversationId') else ',')
 
     @staticmethod
     def buyer_pki(buyer):
@@ -848,17 +850,21 @@ class BasicBkmInitialize(IyzipayResource):
         pki_builder.append_array('installmentDetails', self.installment_details_pki(request.get('installmentDetails')))
         return pki_builder.get_request_string()
 
+
 class RetrievePaymentDetails(IyzipayResource):
     def retrieve(self, request, options):
         payment_conversation_id = str(request.get('paymentConversationId'))
-        return self.connect('GET', '/v2/reporting/payment/details?paymentConversationId=' + payment_conversation_id, options)
+        return self.connect('GET', '/v2/reporting/payment/details?paymentConversationId=' + payment_conversation_id,
+                            options)
+
 
 class RetrieveTransactions(IyzipayResource):
     def retrieve(self, request, options):
         page = str(request.get('page'))
         transactionDate = str(request.get('transactionDate'))
-        query_params = 'transactionDate='+transactionDate+'&page='+page
-        return self.connect('GET', '/v2/reporting/payment/transactions?'+query_params, options)
+        query_params = 'transactionDate=' + transactionDate + '&page=' + page
+        return self.connect('GET', '/v2/reporting/payment/transactions?' + query_params, options)
+
 
 class IyziFileBase64Encoder:
     @staticmethod
@@ -866,29 +872,58 @@ class IyziFileBase64Encoder:
         with open(file_path, "rb") as f:
             return base64.b64encode(f.read()).decode('utf-8')
 
+
 class IyziLinkProduct(IyzipayResource):
     def create(self, request, options):
         return self.connect('POST', '/v2/iyzilink/products/', options, request)
-    
+
     def retrieve(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')
         token = str(request.get('token'))
-        return self.connect('GET', '/v2/iyzilink/products/'+ token, options)
+        return self.connect('GET', '/v2/iyzilink/products/' + token, options)
 
     def get(self, request, options):
         page = str(request.get('page') or 1)
         count = str(request.get('count') or 10)
-        return self.connect('GET', '/v2/iyzilink/products/?page='+page+'&count='+count, options)
+        return self.connect('GET', '/v2/iyzilink/products/?page=' + page + '&count=' + count, options)
 
     def update(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')
         token = str(request.get('token'))
-        return self.connect('PUT', '/v2/iyzilink/products/'+ token, options, request)
-    
+        return self.connect('PUT', '/v2/iyzilink/products/' + token, options, request)
+
     def delete(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')
         token = str(request.get('token'))
-        return self.connect('DELETE', '/v2/iyzilink/products/'+ token, options)
+        return self.connect('DELETE', '/v2/iyzilink/products/' + token, options)
+
+
+class SubscriptionProduct(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/v2/subscription/products/', options, request)
+
+    def retrieve(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('GET', '/v2/subscription/products/' + referenceCode, options, request)
+
+    def get(self, request, options):
+        page = str(request.get('page') or 1)
+        count = str(request.get('count') or 10)
+        return self.connect('GET', '/v2/subscription/products/?page=' + page + '&count=' + count, options)
+
+    def update(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('productReferenceCode must be in request')
+        product_reference_code = str(request.get('referenceCode'))
+        return self.connect('PUT', '/v2/subscription/products/' + product_reference_code, options, request)
+
+    def delete(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode must be in request')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('DELETE', '/v2/subscription/products/' + referenceCode, options)
