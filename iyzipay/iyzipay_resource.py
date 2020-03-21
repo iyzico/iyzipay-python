@@ -991,7 +991,26 @@ class SubscriptionCustomer(IyzipayResource):
         return self.connect('PUT', '/v2/subscription/customers/' + customerReferenceCode, options, request)
 
     def delete(self, request, options):
-        if request.get('referenceCode') is None:
-            raise Exception('referenceCode must be in request')
-        referenceCode = str(request.get('referenceCode'))
-        return self.connect('DELETE', '/v2/subscription/customers/' + referenceCode, options)
+        if request.get('customerReferenceCode') is None:
+            raise Exception('customerReferenceCode must be in request')
+        customerReferenceCode = str(request.get('customerReferenceCode'))
+        return self.connect('DELETE', '/v2/subscription/customers/' + customerReferenceCode, options)
+
+
+class SubscriptionCheckoutForm(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/v2/subscription/checkoutform/initialize', options, request)
+
+    def get(self, request, options):
+        if request.get('token') is None:
+            raise Exception('token must be in request')
+        return self.connect('POST', '/v2/subscription/checkoutform/', options, request)
+
+class SubscriptionCheckoutDirect(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/v2/subscription/initialize', options, request)
+
+    def get(self, request, options):
+        if request.get('token') is None:
+            raise Exception('token must be in request')
+        return self.connect('POST', '/v2/subscription/checkoutform/', options, request)
