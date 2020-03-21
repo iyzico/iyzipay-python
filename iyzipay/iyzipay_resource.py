@@ -964,3 +964,34 @@ class SubscriptionPlan(IyzipayResource):
             raise Exception('referenceCode must be in request')
         referenceCode = str(request.get('referenceCode'))
         return self.connect('DELETE', '/v2/subscription/pricing-plans/' + referenceCode, options)
+
+
+class SubscriptionCustomer(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/v2/subscription/customers', options,
+                            request)
+
+    def retrieve(self, request, options):
+        if request.get('customerReferenceCode') is None:
+            raise Exception('customerReferenceCode')
+        customerReferenceCode = str(request.get('customerReferenceCode'))
+        return self.connect('GET', '/v2/subscription/customers/' + customerReferenceCode, options, request)
+
+    def get(self, request, options):
+        page = str(request.get('page') or 1)
+        count = str(request.get('count') or 10)
+        return self.connect('GET',
+                            '/v2/subscription/customers/?page=' + page + '&count=' + count,
+                            options)
+
+    def update(self, request, options):
+        if request.get('customerReferenceCode') is None:
+            raise Exception('customerReferenceCode must be in request')
+        customerReferenceCode = str(request.get('customerReferenceCode'))
+        return self.connect('PUT', '/v2/subscription/customers/' + customerReferenceCode, options, request)
+
+    def delete(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode must be in request')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('DELETE', '/v2/subscription/customers/' + referenceCode, options)
