@@ -27,8 +27,6 @@ from iyzipay.iyzipay_resource import (  # noqa
     CardList,
     Bkm,
     BkmInitialize,
-    PeccoInitialize,
-    PeccoPayment,
     CheckoutFormInitializePreAuth,
     PaymentPreAuth,
     PaymentPostAuth,
