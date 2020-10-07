@@ -53,5 +53,6 @@ from iyzipay.iyzipay_resource import (  # noqa
     IyziFileBase64Encoder)
 
 from iyzipay.pki_builder import (  # noqa
-    PKIBuilder)
+    PKIBuilder,
+)
 
