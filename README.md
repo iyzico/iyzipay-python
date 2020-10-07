@@ -8,7 +8,7 @@ You can sign up for an iyzico account at https://iyzico.com
 
 ~~Python 2.7 (will be deprecated in 2020)~~ (_Deprecated_)
 
-Python 3+
+Python 3.6+
 
 ### Note
 
