@@ -1,13 +1,11 @@
-import random
-import string
-import re
 import base64
-import hmac
 import hashlib
-import json
-import sys
-import warnings
+import hmac
 import importlib
+import json
+import random
+import re
+import string
 
 import iyzipay
 
@@ -18,21 +16,11 @@ class IyzipayResource:
     header = {
         "Accept": "application/json",
         "Content-type": "application/json",
-        'x-iyzi-client-version': 'iyzipay-python-1.0.35'
+        'x-iyzi-client-version': 'iyzipay-python-1.0.38'
     }
 
     def __init__(self):
-        if (2, 6) <= sys.version_info < (2, 7, 9):
-            warnings.warn(
-                'Python 2.6 will not be supported in March 2018 for TLS 1.2 migration. '
-                'Please upgrade your Python version to minimum 2.7.9. '
-                'If you have any questions, please open an issue on Github or '
-                'contact us at integration@iyzico.com.',
-                DeprecationWarning)
-        if (2, 6) <= sys.version_info < (3, 0):
-            self.httplib = importlib.import_module('httplib')
-        else:
-            self.httplib = importlib.import_module('http.client')
+        self.httplib = importlib.import_module('http.client')
 
     def connect(self, method, url, options, request_body_dict=None, pki=None):
         connection = self.httplib.HTTPSConnection(options['base_url'])
@@ -58,16 +46,12 @@ class IyzipayResource:
     def get_http_header_v2(self, url, options, random_str, body_str):
         url = url.split('?')[0]
         hashed_v2_str = self.generate_v2_hash(options['api_key'], url, options['secret_key'], random_str, body_str)
-        self.header.update(
-            {'Authorization': 'IYZWSv2 %s' % (hashed_v2_str)})
+        self.header.update({'Authorization': 'IYZWSv2 %s' % hashed_v2_str})
         return self.header
 
     def generate_v2_hash(self, api_key, url, secret_key, random_str, body_str):
-        if sys.version_info >= (3, 0):
-            secret_key = bytes(secret_key.encode('utf-8'))
-            msg = (random_str + url + body_str).encode(('utf-8'))
-        else:
-            msg = (random_str + url + body_str)
+        secret_key = bytes(secret_key.encode('utf-8'))
+        msg = (random_str + url + body_str).encode('utf-8')
 
         hmac_obj = hmac.new(secret_key, digestmod=hashlib.sha256)
         hmac_obj.update(msg)
@@ -94,10 +78,8 @@ class IyzipayResource:
     @staticmethod
     def generate_hash(api_key, secret_key, random_string, pki_string):
         hash_str = api_key + random_string + secret_key + pki_string
-        if sys.version_info < (3, 0):
-            hex_dig = hashlib.sha1(hash_str).digest()
-        else:
-            hex_dig = hashlib.sha1(hash_str.encode()).digest()
+        hex_dig = hashlib.sha1(hash_str.encode()).digest()
+
         return base64.b64encode(hex_dig)
 
     @staticmethod
@@ -858,11 +840,12 @@ class RetrievePaymentDetails(IyzipayResource):
                             options)
 
 
+
 class RetrieveTransactions(IyzipayResource):
     def retrieve(self, request, options):
         page = str(request.get('page'))
-        transactionDate = str(request.get('transactionDate'))
-        query_params = 'transactionDate=' + transactionDate + '&page=' + page
+        transaction_date = str(request.get('transactionDate'))
+        query_params = 'transactionDate=' + transaction_date + '&page=' + page
         return self.connect('GET', '/v2/reporting/payment/transactions?' + query_params, options)
 
 
@@ -1014,3 +997,4 @@ class SubscriptionCheckoutDirect(IyzipayResource):
         if request.get('token') is None:
             raise Exception('token must be in request')
         return self.connect('POST', '/v2/subscription/checkoutform/', options, request)
+
