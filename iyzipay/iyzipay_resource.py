@@ -1,15 +1,14 @@
-import random
-import string
-import re
 import base64
-import hmac
 import hashlib
-import json
-import sys
-import warnings
+import hmac
 import importlib
+import json
+import random
+import re
+import string
 
 import iyzipay
+
 
 class IyzipayResource:
     RANDOM_STRING_SIZE = 8
@@ -17,21 +16,11 @@ class IyzipayResource:
     header = {
         "Accept": "application/json", 
         "Content-type": "application/json",
-        'x-iyzi-client-version': 'iyzipay-python-1.0.37'
+        'x-iyzi-client-version': 'iyzipay-python-1.1'
     }
 
     def __init__(self):
-        if (2, 6) <= sys.version_info < (2, 7, 9):
-            warnings.warn(
-                'Python 2.6 will not be supported in March 2018 for TLS 1.2 migration. '
-                'Please upgrade your Python version to minimum 2.7.9. '
-                'If you have any questions, please open an issue on Github or '
-                'contact us at integration@iyzico.com.',
-                DeprecationWarning)
-        if (2, 6) <= sys.version_info < (3, 0):
-            self.httplib = importlib.import_module('httplib')
-        else:
-            self.httplib = importlib.import_module('http.client')
+        self.httplib = importlib.import_module('http.client')
 
     def connect(self, method, url, options, request_body_dict=None, pki=None):
         connection = self.httplib.HTTPSConnection(options['base_url'])
@@ -57,18 +46,14 @@ class IyzipayResource:
     def get_http_header_v2(self, url, options, random_str, body_str):
         url = url.split('?')[0]
         hashed_v2_str = self.generate_v2_hash(options['api_key'], url, options['secret_key'], random_str, body_str)
-        self.header.update(
-                {'Authorization': 'IYZWSv2 %s' % (hashed_v2_str)})
+        self.header.update({'Authorization': 'IYZWSv2 %s' % hashed_v2_str})
         return self.header
 
     def generate_v2_hash(self, api_key, url, secret_key, random_str, body_str):
-        if sys.version_info >= (3, 0):
-            secret_key = bytes(secret_key.encode('utf-8'))
-            msg = (random_str + url + body_str).encode(('utf-8'))
-        else:
-            msg = (random_str + url + body_str)
+        secret_key = bytes(secret_key.encode('utf-8'))
+        msg = (random_str + url + body_str).encode('utf-8')
 
-        hmac_obj = hmac.new(secret_key,digestmod=hashlib.sha256)
+        hmac_obj = hmac.new(secret_key, digestmod=hashlib.sha256)
         hmac_obj.update(msg)
         signature = hmac_obj.hexdigest()
         authorization_params = [
@@ -93,10 +78,8 @@ class IyzipayResource:
     @staticmethod
     def generate_hash(api_key, secret_key, random_string, pki_string):
         hash_str = api_key + random_string + secret_key + pki_string
-        if sys.version_info < (3, 0):
-            hex_dig = hashlib.sha1(hash_str).digest()
-        else:
-            hex_dig = hashlib.sha1(hash_str.encode()).digest()
+        hex_dig = hashlib.sha1(hash_str.encode()).digest()
+
         return base64.b64encode(hex_dig)
 
     @staticmethod
@@ -848,23 +831,27 @@ class BasicBkmInitialize(IyzipayResource):
         pki_builder.append_array('installmentDetails', self.installment_details_pki(request.get('installmentDetails')))
         return pki_builder.get_request_string()
 
+
 class RetrievePaymentDetails(IyzipayResource):
     def retrieve(self, request, options):
         payment_conversation_id = str(request.get('paymentConversationId'))
         return self.connect('GET', '/v2/reporting/payment/details?paymentConversationId=' + payment_conversation_id, options)
 
+
 class RetrieveTransactions(IyzipayResource):
     def retrieve(self, request, options):
         page = str(request.get('page'))
-        transactionDate = str(request.get('transactionDate'))
-        query_params = 'transactionDate='+transactionDate+'&page='+page
-        return self.connect('GET', '/v2/reporting/payment/transactions?'+query_params, options)
+        transaction_date = str(request.get('transactionDate'))
+        query_params = 'transactionDate=' + transaction_date + '&page=' + page
+        return self.connect('GET', '/v2/reporting/payment/transactions?' + query_params, options)
+
 
 class IyziFileBase64Encoder:
     @staticmethod
     def encode(file_path):
         with open(file_path, "rb") as f:
             return base64.b64encode(f.read()).decode('utf-8')
+
 
 class IyziLinkProduct(IyzipayResource):
     def create(self, request, options):
@@ -874,21 +861,21 @@ class IyziLinkProduct(IyzipayResource):
         if request.get('token') is None:
             raise Exception('token must be in request')
         token = str(request.get('token'))
-        return self.connect('GET', '/v2/iyzilink/products/'+ token, options)
+        return self.connect('GET', '/v2/iyzilink/products/' + token, options)
 
     def get(self, request, options):
         page = str(request.get('page') or 1)
         count = str(request.get('count') or 10)
-        return self.connect('GET', '/v2/iyzilink/products/?page='+page+'&count='+count, options)
+        return self.connect('GET', '/v2/iyzilink/products/?page=' + page + '&count=' + count, options)
 
     def update(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')
         token = str(request.get('token'))
-        return self.connect('PUT', '/v2/iyzilink/products/'+ token, options, request)
+        return self.connect('PUT', '/v2/iyzilink/products/' + token, options, request)
     
     def delete(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')
         token = str(request.get('token'))
-        return self.connect('DELETE', '/v2/iyzilink/products/'+ token, options)
+        return self.connect('DELETE', '/v2/iyzilink/products/' + token, options)
