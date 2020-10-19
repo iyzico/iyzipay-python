@@ -14,7 +14,7 @@ class IyzipayResource:
     RANDOM_STRING_SIZE = 8
     RE_SEARCH_V2 = r'/v2/'
     header = {
-        "Accept": "application/json", 
+        "Accept": "application/json",
         "Content-type": "application/json",
         'x-iyzi-client-version': 'iyzipay-python-1.0.38'
     }
@@ -72,8 +72,8 @@ class IyzipayResource:
 
     def generate_random_string(self, size):
         return "".join(
-                random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in
-                range(size))
+            random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in
+            range(size))
 
     @staticmethod
     def generate_hash(api_key, secret_key, random_string, pki_string):
@@ -89,7 +89,8 @@ class IyzipayResource:
 
     @staticmethod
     def resource_pki(request):
-        return 'locale=' + request.get('locale') + (',conversationId=' + request.get('conversationId') + ',' if request.get('conversationId') else ',')
+        return 'locale=' + request.get('locale') + (
+            ',conversationId=' + request.get('conversationId') + ',' if request.get('conversationId') else ',')
 
     @staticmethod
     def buyer_pki(buyer):
@@ -835,7 +836,9 @@ class BasicBkmInitialize(IyzipayResource):
 class RetrievePaymentDetails(IyzipayResource):
     def retrieve(self, request, options):
         payment_conversation_id = str(request.get('paymentConversationId'))
-        return self.connect('GET', '/v2/reporting/payment/details?paymentConversationId=' + payment_conversation_id, options)
+        return self.connect('GET', '/v2/reporting/payment/details?paymentConversationId=' + payment_conversation_id,
+                            options)
+
 
 
 class RetrieveTransactions(IyzipayResource):
@@ -856,7 +859,7 @@ class IyziFileBase64Encoder:
 class IyziLinkProduct(IyzipayResource):
     def create(self, request, options):
         return self.connect('POST', '/v2/iyzilink/products/', options, request)
-    
+
     def retrieve(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')
@@ -873,9 +876,125 @@ class IyziLinkProduct(IyzipayResource):
             raise Exception('token must be in request')
         token = str(request.get('token'))
         return self.connect('PUT', '/v2/iyzilink/products/' + token, options, request)
-    
+
     def delete(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')
         token = str(request.get('token'))
         return self.connect('DELETE', '/v2/iyzilink/products/' + token, options)
+
+
+class SubscriptionProduct(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/v2/subscription/products/', options, request)
+
+    def retrieve(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('GET', '/v2/subscription/products/' + referenceCode, options, request)
+
+    def get(self, request, options):
+        page = str(request.get('page') or 1)
+        count = str(request.get('count') or 10)
+        return self.connect('GET', '/v2/subscription/products/?page=' + page + '&count=' + count, options)
+
+    def update(self, request, options):
+        if request.get('pricingPlanReferenceCode') is None:
+            raise Exception('productReferenceCode must be in request')
+        pricingPlanReferenceCode = str(request.get('pricingPlanReferenceCode'))
+        return self.connect('PUT', '/v2/subscription/products/' + pricingPlanReferenceCode, options, request)
+
+    def delete(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode must be in request')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('DELETE', '/v2/subscription/products/' + referenceCode, options)
+
+
+class SubscriptionPlan(IyzipayResource):
+    def create(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('POST', '/v2/subscription/products/' + referenceCode + '/' + 'pricing-plans', options,
+                            request)
+
+    def retrieve(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('GET', '/v2/subscription/pricing-plans/' + referenceCode, options, request)
+
+    def get(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode')
+        referenceCode = str(request.get('referenceCode'))
+        page = str(request.get('page') or 1)
+        count = str(request.get('count') or 10)
+        return self.connect('GET',
+                            '/v2/subscription/products/' + referenceCode + '/' + 'pricing-plans?page=' + page + '&count=' + count,
+                            options)
+
+    def update(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode must be in request')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('PUT', '/v2/subscription/pricing-plans/' + referenceCode, options, request)
+
+    def delete(self, request, options):
+        if request.get('referenceCode') is None:
+            raise Exception('referenceCode must be in request')
+        referenceCode = str(request.get('referenceCode'))
+        return self.connect('DELETE', '/v2/subscription/pricing-plans/' + referenceCode, options)
+
+
+class SubscriptionCustomer(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/v2/subscription/customers', options,
+                            request)
+
+    def retrieve(self, request, options):
+        if request.get('customerReferenceCode') is None:
+            raise Exception('customerReferenceCode')
+        customerReferenceCode = str(request.get('customerReferenceCode'))
+        return self.connect('GET', '/v2/subscription/customers/' + customerReferenceCode, options, request)
+
+    def get(self, request, options):
+        page = str(request.get('page') or 1)
+        count = str(request.get('count') or 10)
+        return self.connect('GET',
+                            '/v2/subscription/customers/?page=' + page + '&count=' + count,
+                            options)
+
+    def update(self, request, options):
+        if request.get('customerReferenceCode') is None:
+            raise Exception('customerReferenceCode must be in request')
+        customerReferenceCode = str(request.get('customerReferenceCode'))
+        return self.connect('PUT', '/v2/subscription/customers/' + customerReferenceCode, options, request)
+
+    def delete(self, request, options):
+        if request.get('customerReferenceCode') is None:
+            raise Exception('customerReferenceCode must be in request')
+        customerReferenceCode = str(request.get('customerReferenceCode'))
+        return self.connect('DELETE', '/v2/subscription/customers/' + customerReferenceCode, options)
+
+
+class SubscriptionCheckoutForm(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/v2/subscription/checkoutform/initialize', options, request)
+
+    def get(self, request, options):
+        if request.get('token') is None:
+            raise Exception('token must be in request')
+        return self.connect('POST', '/v2/subscription/checkoutform/', options, request)
+
+class SubscriptionCheckoutDirect(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/v2/subscription/initialize', options, request)
+
+    def get(self, request, options):
+        if request.get('token') is None:
+            raise Exception('token must be in request')
+        return self.connect('POST', '/v2/subscription/checkoutform/', options, request)
+
