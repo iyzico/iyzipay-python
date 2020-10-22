@@ -1,4 +1,6 @@
 import iyzipay
+import base64
+import json
 
 options = {
     'api_key': iyzipay.api_key,
@@ -85,5 +87,8 @@ request = {
 }
 
 threeds_initialize = iyzipay.ThreedsInitialize().create(request, options)
+threeds_initialize_response = json.loads(threeds_initialize.read().decode('utf-8'))
 
-print(threeds_initialize.read().decode('utf-8'))
+print("Response: ",threeds_initialize_response)
+
+print("HTML Content: ",base64.b64decode(threeds_initialize_response['threeDSHtmlContent']).decode('utf-8'))
