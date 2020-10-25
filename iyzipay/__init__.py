@@ -50,7 +50,8 @@ from iyzipay.iyzipay_resource import (  # noqa
     RetrievePaymentDetails,
     RetrieveTransactions,
     IyziLinkProduct,
-    IyziFileBase64Encoder)
+    IyziFileBase64Encoder,
+    SubscriptionInitialize)
 
 from iyzipay.pki_builder import (  # noqa
     PKIBuilder,

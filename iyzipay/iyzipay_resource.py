@@ -147,6 +147,7 @@ class IyzipayResource:
         pki_builder.append('cardAlias', payment_card.get('cardAlias'))
         pki_builder.append('cardToken', payment_card.get('cardToken'))
         pki_builder.append('cardUserKey', payment_card.get('cardUserKey'))
+        pki_builder.append('registerConsumerCard', payment_card.get('registerConsumerCard'))
         return pki_builder.get_request_string()
 
     @staticmethod
@@ -178,6 +179,18 @@ class IyzipayResource:
         pki_builder.append('expireYear', card.get('expireYear'))
         pki_builder.append('expireMonth', card.get('expireMonth'))
         pki_builder.append('cardHolderName', card.get('cardHolderName'))
+        return pki_builder.get_request_string()
+
+    @staticmethod
+    def customer_pki(customer):
+        pki_builder = iyzipay.PKIBuilder('')
+        pki_builder.append('name', customer.get('name'))
+        pki_builder.append('surname', customer.get('surname'))
+        pki_builder.append('identityNumber', customer.get('identityNumber'))
+        pki_builder.append('email', customer.get('email'))
+        pki_builder.append('gsmNumber', customer.get('gsmNumber'))
+        pki_builder.append('billingAddress', IyzipayResource.address_pki(customer.get('billingAddress')))
+        pki_builder.append('shippingAddress', IyzipayResource.address_pki(customer.get('shippingAddress')))
         return pki_builder.get_request_string()
 
 
@@ -879,3 +892,17 @@ class IyziLinkProduct(IyzipayResource):
             raise Exception('token must be in request')
         token = str(request.get('token'))
         return self.connect('DELETE', '/v2/iyzilink/products/' + token, options)
+
+
+class SubscriptionInitialize(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string_create(request)
+        return self.connect('POST', '/v2/subscription/initialize', options, request, pki)
+
+    def to_pki_string_create(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('pricingPlanReferenceCode', request.get('pricingPlanReferenceCode'))
+        pki_builder.append('subscriptionInitialStatus', request.get('subscriptionInitialStatus'))
+        pki_builder.append('paymentCard', self.payment_card_pki(request.get('paymentCard')))
+        pki_builder.append('customer', self.customer_pki(request.get('customer')))
+        return pki_builder.get_request_string()
