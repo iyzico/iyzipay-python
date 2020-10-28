@@ -894,10 +894,13 @@ class IyziLinkProduct(IyzipayResource):
         return self.connect('DELETE', '/v2/iyzilink/products/' + token, options)
 
 
-class SubscriptionInitialize(IyzipayResource):
+class Subscription(IyzipayResource):
     def create(self, request, options):
         pki = self.to_pki_string_create(request)
         return self.connect('POST', '/v2/subscription/initialize', options, request, pki)
+
+    def retrieve(self, request, options):
+        return self.connect('GET', '/v2/subscription/subscriptions/' + request.get('subscriptionReferenceCode'), options, request)
 
     def to_pki_string_create(self, request):
         pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))

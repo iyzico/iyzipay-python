@@ -42,6 +42,6 @@ request = {
     'paymentCard': payment_card
 }
 
-subscription_initialize = iyzipay.SubscriptionInitialize().create(request, options)
+subscription_initialize = iyzipay.Subscription().create(request, options)
 
 print(subscription_initialize.read().decode('utf-8'))
