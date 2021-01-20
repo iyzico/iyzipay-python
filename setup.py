@@ -19,7 +19,7 @@ setup(
     name='iyzipay',
     version='1.0.38',
     use_scm_version=True,
-    setup_requires=['setuptools_scm', 'future'],
+    setup_requires=['setuptools_scm', 'future', 'wheel'],
     description='iyzipay api python client',
     long_description=README,
     author='iyzico',
