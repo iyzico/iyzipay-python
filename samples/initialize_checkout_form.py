@@ -71,7 +71,7 @@ request = {
     'shippingAddress': address,
     'billingAddress': address,
     'basketItems': basket_items,
-    'debitCardAllowed': True
+    # 'debitCardAllowed': True  # What is this? per #47 the invalid signature is fixed when this is not inside the request.
 }
 
 checkout_form_initialize = iyzipay.CheckoutFormInitialize().create(request, options)
