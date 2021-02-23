@@ -24,7 +24,7 @@ setup(
     long_description=README,
     author='iyzico',
     author_email='iyzico-ci@iyzico.com',
-    url='https://github.com/iyzico/iyzipay-python',
+    url='https://github.com/fyilmazz/iyzipay-python',
     license=LICENSE,
     packages=find_packages(exclude='tests'),
     classifiers=[
