@@ -5,8 +5,8 @@
 # Nurettin Bakkal <nurettin.bakkal@iyzico.com>
 
 # Configuration variables
-api_key = ''
-secret_key = ''
+api_key = 'your api key'
+secret_key = 'your secret key'
 base_url = 'sandbox-api.iyzipay.com'
 
 # Resource
