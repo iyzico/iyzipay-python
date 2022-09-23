@@ -180,6 +180,18 @@ class IyzipayResource:
         pki_builder.append('cardHolderName', card.get('cardHolderName'))
         return pki_builder.get_request_string()
 
+    @staticmethod
+    def customer_pki(buyer):
+        pki_builder = iyzipay.PKIBuilder('')
+        pki_builder.append('name', buyer.get('name'))
+        pki_builder.append('surname', buyer.get('surname'))
+        pki_builder.append('identityNumber', buyer.get('identityNumber'))
+        pki_builder.append('email', buyer.get('email'))
+        pki_builder.append('gsmNumber', buyer.get('gsmNumber'))
+        pki_builder.append('billingAddress',
+                                     IyzipayResource.address_pki(buyer.get('billingAddress')))
+        return pki_builder.get_request_string()
+
 
 class ApiTest(IyzipayResource):
     def retrieve(self, options):
@@ -879,3 +891,16 @@ class IyziLinkProduct(IyzipayResource):
             raise Exception('token must be in request')
         token = str(request.get('token'))
         return self.connect('DELETE', '/v2/iyzilink/products/' + token, options)
+
+class SubscriptionCheckoutFormInitialize(IyzipayResource):
+    def create(self, request, options):
+        pki = self.to_pki_string(request)
+        return self.connect('POST', '/v2/subscription/checkoutform/initialize', options, request, pki)
+
+    def to_pki_string(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('pricingPlanReferenceCode', request.get('pricingPlanReferenceCode'))
+        pki_builder.append('subscriptionInitialStatus', request.get('subscriptionInitialStatus'))
+        pki_builder.append('customer', self.customer_pki(request.get('customer')))
+        pki_builder.append('callbackUrl', request.get('callbackUrl'))
+        return pki_builder.get_request_string()
