@@ -1,7 +1,5 @@
 # iyzipay-python
 
-[![Build Status](https://travis-ci.org/iyzico/iyzipay-python.svg?branch=master)](https://travis-ci.org/iyzico/iyzipay-python)
-
 You can sign up for an iyzico account at https://iyzico.com
 
 # Requirements
