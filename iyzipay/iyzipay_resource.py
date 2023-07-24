@@ -180,6 +180,12 @@ class IyzipayResource:
         pki_builder.append('cardHolderName', card.get('cardHolderName'))
         return pki_builder.get_request_string()
 
+    @staticmethod
+    def reward_usage_pki(reward_usage):
+        pki_builder = iyzipay.PKIBuilder('')
+        pki_builder.append('rewardAmount', reward_usage.get('rewardAmount'))
+        pki_builder.append('rewardUsage', reward_usage.get('rewardUsage'))
+        return pki_builder.get_request_string()
 
 class ApiTest(IyzipayResource):
     def retrieve(self, options):
@@ -294,6 +300,7 @@ class Payment(IyzipayResource):
         pki_builder.append('currency', request.get('currency'))
         pki_builder.append('posOrderId', request.get('posOrderId'))
         pki_builder.append('connectorName', request.get('connectorName'))
+        pki_builder.append('plusInstallmentUsage', request.get('plusInstallmentUsage'))
         pki_builder.append('callbackUrl', request.get('callbackUrl'))
         return pki_builder.get_request_string()
 
@@ -324,6 +331,9 @@ class ThreedsInitialize(IyzipayResource):
         pki_builder.append_array('basketItems', self.basket_pki(request.get('basketItems')))
         pki_builder.append('paymentSource', request.get('paymentSource'))
         pki_builder.append('currency', request.get('currency'))
+        pki_builder.append('posOrderId', request.get('posOrderId'))
+        pki_builder.append('connectorName', request.get('connectorName'))
+        pki_builder.append('plusInstallmentUsage', request.get('plusInstallmentUsage'))
         pki_builder.append('callbackUrl', request.get('callbackUrl'))
         return pki_builder.get_request_string()
 
@@ -879,3 +889,15 @@ class IyziLinkProduct(IyzipayResource):
             raise Exception('token must be in request')
         token = str(request.get('token'))
         return self.connect('DELETE', '/v2/iyzilink/products/' + token, options)
+
+
+class RetrieveLoyalty(IyzipayResource):
+    def retrieve(self, request, options):
+        pki = self.to_pki_string_create(request)
+        return self.connect('POST', '/payment/loyalty/inquire', options, request, pki)
+
+    def to_pki_string_create(self, request):
+        pki_builder = iyzipay.PKIBuilder(self.resource_pki(request))
+        pki_builder.append('paymentCard', self.payment_card_pki(request.get('paymentCard')))
+        pki_builder.append('currency', request.get('currency'))
+        return pki_builder.get_request_string()
