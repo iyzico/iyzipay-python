@@ -1,0 +1,52 @@
+name: Update Release Workflow
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Update Release Number
+        run: |
+          set -e
+          
+          # Retrieve the current release number
+          current_release=$(cat VERSION)
+          
+          # If major version required uncomment below row
+          # current_release='<major_version_number>'
+
+          # Increment the release number
+          new_release=$(echo $current_release | awk -F. -v OFS=. '{$NF++;print}')
+
+          # Set the new release number as an environment variable
+          echo "NEW_RELEASE=${new_release}" >> $GITHUB_ENV
+          
+          # Change version number on files
+          sed -i -e 's/'$current_release'/'$new_release'/g' setup.py iyzipay/iyzipay_resource.py VERSION
+
+      - name: Github Tasks
+        run: |
+          set -e
+          git config user.name "iyzico-ci"
+          git config user.email iyzico-ci@iyzico.com
+          git add .
+          git commit -m "Automatic commit by iyzico-ci v${{env.NEW_RELEASE}}"
+          git push origin master
+          git tag -a v${{env.NEW_RELEASE}} -m "Automatic tag by iyzico-ci v${{env.NEW_RELEASE}}"
+          git push origin v${{env.NEW_RELEASE}}
+          
+      - name: Github Release
+        run: |
+          # Use the new release version in release creation step
+          echo "Creating release ${{env.NEW_RELEASE}}..."
+          result=$( curl -# -XPOST -H "Authorization: token ${{secrets.TOKEN_GITHUB}}" -H "Content-Type: application/json" -H "Accept:application/json" --data-binary '{"tag_name": "v${{env.NEW_RELEASE}}","target_commitish": "master","name": "iyzipay-python ${{env.NEW_RELEASE}}","body": "version ${{env.NEW_RELEASE}}","draft": false,"prerelease": false}' https://api.github.com/repos/iyzico/iyzipay-python/releases )
+          echo $result
+          echo "GitHub release ${{env.NEW_RELEASE}} created!"
+          
