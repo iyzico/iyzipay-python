@@ -8,9 +8,12 @@
 
 name: Upload Python Package
 
+#on:
+#  release:
+#    types: [published]
 on:
-  release:
-    types: [published]
+  push:
+    branches: [ "master" ]
 
 permissions:
   contents: read
