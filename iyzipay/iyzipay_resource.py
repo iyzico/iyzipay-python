@@ -775,7 +775,6 @@ class BasicThreedsInitialize(IyzipayResource):
         pki_builder.append('paymentCard', self.payment_card_pki(request.get('paymentCard')))
         pki_builder.append('currency', request.get('currency'))
         pki_builder.append('connectorName', request.get('connectorName'))
-        pki_builder.append('callbackUrl', request.get('callbackUrl'))
         return pki_builder.get_request_string()
 
 
