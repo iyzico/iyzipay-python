@@ -301,7 +301,6 @@ class Payment(IyzipayResource):
         pki_builder.append('posOrderId', request.get('posOrderId'))
         pki_builder.append('connectorName', request.get('connectorName'))
         pki_builder.append('plusInstallmentUsage', request.get('plusInstallmentUsage'))
-        pki_builder.append('callbackUrl', request.get('callbackUrl'))
         return pki_builder.get_request_string()
 
     def to_pki_string_retrieve(self, request):
