@@ -8,7 +8,7 @@ class PKIBuilder:
         return self
 
     def append_price(self, key, value=None):
-        if value is not None and value is not "":
+        if value is not None and value != "":
             self.append_key_value(key, str(round(float(value), 2)))
         return self
 
@@ -22,7 +22,7 @@ class PKIBuilder:
         return self
 
     def append_key_value(self, key, value=None):
-        if value is not None and value is not "":
+        if value is not None and value != "":
             self.request_string = self.request_string + key + "=" + str(value) + ","
 
     def remove_trailing_comma(self):
