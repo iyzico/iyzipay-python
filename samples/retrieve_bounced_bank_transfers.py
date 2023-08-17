@@ -14,4 +14,4 @@ request = {
 
 bounced_bank_transfer_list = iyzipay.BouncedBankTransferList().retrieve(request, options)
 
-print(bounced_bank_transfer_list.read().decode('utf-8'))
+print(bounced_bank_transfer_list.body)

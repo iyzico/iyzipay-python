@@ -17,4 +17,4 @@ request = {
 
 cancel = iyzipay.Cancel().create(request, options)
 
-print(cancel.read().decode('utf-8'))
+print(cancel.body)

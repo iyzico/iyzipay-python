@@ -14,4 +14,4 @@ request = {
 
 bkm = iyzipay.Bkm().retrieve(request, options)
 
-print(bkm.read().decode('utf-8'))
+print(bkm.body)

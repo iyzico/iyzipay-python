@@ -14,4 +14,4 @@ request = {
 
 approval = iyzipay.Approval().create(request, options)
 
-print(approval.read().decode('utf-8'))
+print(approval.body)

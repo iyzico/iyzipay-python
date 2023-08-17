@@ -15,4 +15,4 @@ request = {
 
 threeds_payment = iyzipay.ThreedsPayment().create(request, options)
 
-print(threeds_payment.read().decode('utf-8'))
+print(threeds_payment.body)

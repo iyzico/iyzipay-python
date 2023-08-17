@@ -6,4 +6,4 @@ options = {
 
 api_test = iyzipay.ApiTest().retrieve(options)
 
-print(api_test.read().decode('utf-8'))
+print(api_test.body)

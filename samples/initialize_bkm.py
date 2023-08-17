@@ -73,4 +73,4 @@ request = {
 
 bkm_initialize = iyzipay.BkmInitialize().create(request, options)
 
-print(bkm_initialize.read().decode('utf-8'))
+print(bkm_initialize.body)
