@@ -19,6 +19,10 @@ class IyzipayResource:
     def __init__(self):
         self.httplib = importlib.import_module('http.client')
 
+    def strip_zero(self, number):
+        has_zero = number.endswith('.0')
+        return number.replace('.0', '') if has_zero else number
+
     def calculate_hmac_sha256_signature(self, params, secret_key):
         secret_key = bytes(secret_key.encode('utf-8'))
         msg = ':'.join(params).encode('utf-8')

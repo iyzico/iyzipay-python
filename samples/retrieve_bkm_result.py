@@ -1,3 +1,4 @@
+import json
 import iyzipay
 
 options = {
@@ -9,9 +10,23 @@ options = {
 request = {
     'locale': 'tr',
     'conversationId': '123456789',
-    'token': 'token'
+    'token': 'mockToken_1727280290715'
 }
 
-bkm = iyzipay.Bkm().retrieve(request, options)
+bkm = iyzipay.Bkm()
+bkm_retrieve_result = bkm.retrieve(request, options)
+bkm_retrieve_response = json.load(bkm_retrieve_result)
+print('response:', bkm_retrieve_response)
 
-print(bkm.read().decode('utf-8'))
+if bkm_retrieve_response['status'] == 'success':
+    secret_key = options['secret_key']
+    paymentId = bkm_retrieve_response['paymentId']
+    paymentStatus = bkm_retrieve_response['paymentStatus']
+    basketId = bkm_retrieve_response['basketId']
+    conversationId = bkm_retrieve_response['conversationId']
+    currency = bkm_retrieve_response['currency']
+    paidPrice = str(bkm_retrieve_response['paidPrice'])
+    price = str(bkm_retrieve_response['price'])
+    token = bkm_retrieve_response['token']
+    signature = bkm_retrieve_response['signature']
+    bkm.verify_signature([paymentId, paymentStatus, basketId, conversationId, currency, paidPrice, price, token], secret_key, signature)

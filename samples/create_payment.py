@@ -1,3 +1,4 @@
+import json
 import iyzipay
 
 options = {
@@ -83,6 +84,18 @@ request = {
     'basketItems': basket_items
 }
 
-payment = iyzipay.Payment().create(request, options)
+payment = iyzipay.Payment()
+payment_result = payment.create(request, options)
+payment_result_response = json.load(payment_result)
+print('response:', payment_result_response)
 
-print(payment.read().decode('utf-8'))
+if payment_result_response['status'] == 'success':
+    secret_key = options['secret_key']
+    paymentId = payment_result_response['paymentId']
+    currency = payment_result_response['currency']
+    basketId = payment_result_response['basketId']
+    conversationId = payment_result_response['conversationId']
+    paidPrice = payment.strip_zero(str(payment_result_response['paidPrice']))
+    price = payment.strip_zero(str(payment_result_response['price']))
+    signature = payment_result_response['signature']
+    payment.verify_signature([paymentId, currency, basketId, conversationId, paidPrice, price],secret_key, signature)
