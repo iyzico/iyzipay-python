@@ -25,8 +25,8 @@ if bkm_retrieve_response['status'] == 'success':
     basketId = bkm_retrieve_response['basketId']
     conversationId = bkm_retrieve_response['conversationId']
     currency = bkm_retrieve_response['currency']
-    paidPrice = str(bkm_retrieve_response['paidPrice'])
-    price = str(bkm_retrieve_response['price'])
+    paidPrice = bkm.strip_zero(str(bkm_retrieve_response['paidPrice']))
+    price = bkm.strip_zero(str(bkm_retrieve_response['price']))
     token = bkm_retrieve_response['token']
     signature = bkm_retrieve_response['signature']
     bkm.verify_signature([paymentId, paymentStatus, basketId, conversationId, currency, paidPrice, price, token], secret_key, signature)

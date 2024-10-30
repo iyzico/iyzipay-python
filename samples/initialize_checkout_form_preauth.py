@@ -73,7 +73,7 @@ request = {
     'basketItems': basket_items
 }
 
-checkout_form_preauth_initialize = iyzipay.CheckoutFormInitialize()
+checkout_form_preauth_initialize = iyzipay.CheckoutFormInitializePreAuth()
 checkout_form_preauth_initialize_result = checkout_form_preauth_initialize.create(request, options)
 checkout_form_preauth_initialize_response = json.load(checkout_form_preauth_initialize_result)
 print('response:', checkout_form_preauth_initialize_response)

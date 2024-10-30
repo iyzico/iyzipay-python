@@ -25,8 +25,8 @@ if checkout_form_retrieve_response['status'] == 'success':
     currency = checkout_form_retrieve_response['currency']
     basketId = checkout_form_retrieve_response['basketId']
     conversationId = checkout_form_retrieve_response['conversationId']
-    paidPrice = str(checkout_form_retrieve_response['paidPrice'])
-    price = str(checkout_form_retrieve_response['price'])
+    paidPrice = checkout_form_retrieve.strip_zero(str(checkout_form_retrieve_response['paidPrice']))
+    price = checkout_form_retrieve.strip_zero(str(checkout_form_retrieve_response['price']))
     token = checkout_form_retrieve_response['token']
     signature = checkout_form_retrieve_response['signature']
     checkout_form_retrieve.verify_signature([paymentStatus, paymentId, currency, basketId, conversationId, paidPrice, price, token], secret_key, signature)

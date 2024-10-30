@@ -11,7 +11,7 @@ request = {
     'locale': 'tr',
     'conversationId': '123456789',
     'paymentId': '1',
-    'conversationData': 'conversation data'
+    'conversationData': ''
 }
 
 threeds_payment = iyzipay.ThreedsPayment()
@@ -25,7 +25,7 @@ if threeds_payment_response['status'] == 'success':
     currency = threeds_payment_response['currency']
     basketId = threeds_payment_response['basketId']
     conversationId = threeds_payment_response['conversationId']
-    paidPrice = str(threeds_payment_response['paidPrice'])
-    price = str(threeds_payment_response['price'])
+    paidPrice = threeds_payment.strip_zero(str(threeds_payment_response['paidPrice']))
+    price = threeds_payment.strip_zero(str(threeds_payment_response['price']))
     signature = threeds_payment_response['signature']
     threeds_payment.verify_signature([paymentId, currency, basketId, conversationId, paidPrice, price],secret_key, signature)
