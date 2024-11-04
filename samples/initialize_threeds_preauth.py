@@ -7,6 +7,15 @@ options = {
     'base_url': iyzipay.base_url
 }
 
+payment_card = {
+    'cardHolderName': 'John Doe',
+    'cardNumber': '5528790000000008',
+    'expireMonth': '12',
+    'expireYear': '2030',
+    'cvc': '123',
+    'registerCard': '0'
+}
+
 buyer = {
     'id': 'BY789',
     'name': 'John',
@@ -64,24 +73,26 @@ request = {
     'price': '1',
     'paidPrice': '1.2',
     'currency': 'TRY',
+    'installment': '1',
     'basketId': 'B67832',
+    'paymentChannel': 'WEB',
     'paymentGroup': 'PRODUCT',
     "callbackUrl": "https://www.merchant.com/callback",
-    "enabledInstallments": ['2', '3', '6', '9'],
+    'paymentCard': payment_card,
     'buyer': buyer,
     'shippingAddress': address,
     'billingAddress': address,
     'basketItems': basket_items
 }
 
-checkout_form_initialize = iyzipay.CheckoutFormInitialize()
-checkout_form_initialize_result = checkout_form_initialize.create(request, options)
-checkout_form_initialize_response = json.load(checkout_form_initialize_result)
-print('response:', checkout_form_initialize_response)
+threeds_initialize_preauth = iyzipay.ThreedsInitializePreAuth()
+threeds_initialize_preauth_result = threeds_initialize_preauth.create(request, options)
+threeds_initialize_preauth_response = json.load(threeds_initialize_preauth_result)
+print('response:', threeds_initialize_preauth_response)
 
-if checkout_form_initialize_response['status'] == 'success':
+if threeds_initialize_preauth_response['status'] == 'success':
     secret_key = options['secret_key']
-    conversationId = checkout_form_initialize_response['conversationId']
-    token = checkout_form_initialize_response['token']
-    signature = checkout_form_initialize_response['signature']
-    checkout_form_initialize.verify_signature([conversationId, token], secret_key, signature)
+    paymentId = threeds_initialize_preauth_response['paymentId']
+    conversationId = threeds_initialize_preauth_response['conversationId']
+    signature = threeds_initialize_preauth_response['signature']
+    threeds_initialize_preauth.verify_signature([paymentId , conversationId], secret_key, signature)

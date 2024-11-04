@@ -1,3 +1,4 @@
+import json
 import iyzipay
 
 options = {
@@ -71,6 +72,14 @@ request = {
     'basketItems': basket_items
 }
 
-bkm_initialize = iyzipay.BkmInitialize().create(request, options)
+bkm_initialize = iyzipay.BkmInitialize()
+bkm_initialize_result = bkm_initialize.create(request, options)
+bkm_initialize_response = json.load(bkm_initialize_result)
+print('response:', bkm_initialize_response)
 
-print(bkm_initialize.read().decode('utf-8'))
+if bkm_initialize_response['status'] == 'success':
+    secret_key = options['secret_key']
+    conversationId = bkm_initialize_response['conversationId']
+    token = bkm_initialize_response['token']
+    signature = bkm_initialize_response['signature']
+    bkm_initialize.verify_signature([token, conversationId], secret_key, signature)

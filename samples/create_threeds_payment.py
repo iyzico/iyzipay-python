@@ -1,3 +1,4 @@
+import json
 import iyzipay
 
 options = {
@@ -10,9 +11,21 @@ request = {
     'locale': 'tr',
     'conversationId': '123456789',
     'paymentId': '1',
-    'conversationData': 'conversation data'
+    'conversationData': ''
 }
 
-threeds_payment = iyzipay.ThreedsPayment().create(request, options)
+threeds_payment = iyzipay.ThreedsPayment()
+threeds_payment_result = threeds_payment.create(request, options)
+threeds_payment_response = json.load(threeds_payment_result)
+print('response:', threeds_payment_response)
 
-print(threeds_payment.read().decode('utf-8'))
+if threeds_payment_response['status'] == 'success':
+    secret_key = options['secret_key']
+    paymentId = threeds_payment_response['paymentId']
+    currency = threeds_payment_response['currency']
+    basketId = threeds_payment_response['basketId']
+    conversationId = threeds_payment_response['conversationId']
+    paidPrice = threeds_payment.strip_zero(str(threeds_payment_response['paidPrice']))
+    price = threeds_payment.strip_zero(str(threeds_payment_response['price']))
+    signature = threeds_payment_response['signature']
+    threeds_payment.verify_signature([paymentId, currency, basketId, conversationId, paidPrice, price],secret_key, signature)

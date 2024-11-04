@@ -4,15 +4,12 @@ import hmac
 import importlib
 import json
 import random
-import re
 import string
 
 import iyzipay
 
-
 class IyzipayResource:
     RANDOM_STRING_SIZE = 8
-    RE_SEARCH_V2 = r'/v2/'
     header = {
         "Accept": "application/json", 
         "Content-type": "application/json",
@@ -21,6 +18,23 @@ class IyzipayResource:
 
     def __init__(self):
         self.httplib = importlib.import_module('http.client')
+
+    def strip_zero(self, number):
+        has_zero = number.endswith('.0')
+        return number.replace('.0', '') if has_zero else number
+
+    def calculate_hmac_sha256_signature(self, params, secret_key):
+        secret_key = bytes(secret_key.encode('utf-8'))
+        msg = ':'.join(params).encode('utf-8')
+
+        hmac_obj = hmac.new(secret_key, digestmod=hashlib.sha256)
+        hmac_obj.update(msg)
+        return hmac_obj.hexdigest()
+
+    def verify_signature(self, params, secret_key, signature):
+        calculated_signature = self.calculate_hmac_sha256_signature(params, secret_key)
+        verified = signature == calculated_signature
+        print('Signature verified:', verified)
 
     def connect(self, method, url, options, request_body_dict=None, pki=None):
         connection = self.httplib.HTTPSConnection(options['base_url'])
@@ -32,15 +46,13 @@ class IyzipayResource:
     def get_http_header(self, url, options=None, body_str=None, pki_string=None):
         random_str = self.generate_random_string(self.RANDOM_STRING_SIZE)
         self.header.update({'x-iyzi-rnd': random_str})
-        if re.search(self.RE_SEARCH_V2, url, re.IGNORECASE) is not None:
-            return self.get_http_header_v2(url, options, random_str, body_str)
-        else:
-            return self.get_http_header_v1(options, pki_string, random_str)
+        self.get_http_header_v1(options, pki_string, random_str)
+        return self.get_http_header_v2(url, options, random_str, body_str)
 
     def get_http_header_v1(self, options, pki_string, random_str=None):
         if pki_string is not None:
             self.header.update(
-                {'Authorization': self.prepare_auth_string(options, random_str, pki_string)})
+                {'Authorization_Fallback': self.prepare_auth_string(options, random_str, pki_string)})
         return self.header
 
     def get_http_header_v2(self, url, options, random_str, body_str):

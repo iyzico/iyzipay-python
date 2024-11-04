@@ -67,21 +67,20 @@ request = {
     'basketId': 'B67832',
     'paymentGroup': 'PRODUCT',
     "callbackUrl": "https://www.merchant.com/callback",
-    "enabledInstallments": ['2', '3', '6', '9'],
     'buyer': buyer,
     'shippingAddress': address,
     'billingAddress': address,
     'basketItems': basket_items
 }
 
-checkout_form_initialize = iyzipay.CheckoutFormInitialize()
-checkout_form_initialize_result = checkout_form_initialize.create(request, options)
-checkout_form_initialize_response = json.load(checkout_form_initialize_result)
-print('response:', checkout_form_initialize_response)
+checkout_form_preauth_initialize = iyzipay.CheckoutFormInitializePreAuth()
+checkout_form_preauth_initialize_result = checkout_form_preauth_initialize.create(request, options)
+checkout_form_preauth_initialize_response = json.load(checkout_form_preauth_initialize_result)
+print('response:', checkout_form_preauth_initialize_response)
 
-if checkout_form_initialize_response['status'] == 'success':
+if checkout_form_preauth_initialize_response['status'] == 'success':
     secret_key = options['secret_key']
-    conversationId = checkout_form_initialize_response['conversationId']
-    token = checkout_form_initialize_response['token']
-    signature = checkout_form_initialize_response['signature']
-    checkout_form_initialize.verify_signature([conversationId, token], secret_key, signature)
+    conversationId = checkout_form_preauth_initialize_response['conversationId']
+    token = checkout_form_preauth_initialize_response['token']
+    signature = checkout_form_preauth_initialize_response['signature']
+    checkout_form_preauth_initialize.verify_signature([conversationId, token], secret_key, signature)
