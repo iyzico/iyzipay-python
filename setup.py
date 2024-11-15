@@ -17,7 +17,7 @@ install_requires = [
 
 setup(
     name='iyzipay',
-    version='1.0.45',
+    version='1.0.46',
     use_scm_version=True,
     setup_requires=['setuptools_scm', 'future'],
     description='iyzipay api python client',
