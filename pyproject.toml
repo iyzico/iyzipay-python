@@ -1,7 +1,7 @@
 [project]
 name = "iyzipay"
 version = "1.0.43"
-dynamic = ["description", "readme", "license", "authors", "classifiers"]
+dynamic = ["classifiers"]
 description = "iyzipay api python client"
 readme = { file = "README.md", content-type = "text/markdown" }
 license = {text = "MIT"}
