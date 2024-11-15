@@ -17,10 +17,10 @@ install_requires = [
 
 setup(
     name='iyzipay',
-    version='1.0.48',
+    version='1.0.43',
     use_scm_version=True,
     setup_requires=['setuptools_scm', 'future'],
-    description='iyzipay api python client',
+#    description='iyzipay api python client',
 #    long_description=README,
     long_description="Test Description",
     author='iyzico',
