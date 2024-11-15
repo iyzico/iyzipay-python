@@ -29,6 +29,7 @@ setup(
 #    license=LICENSE,
     license="MIT",
     packages=find_packages(exclude='tests'),
+    install_requires=install_requires,
     classifiers=[
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
