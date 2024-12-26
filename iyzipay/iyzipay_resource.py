@@ -144,6 +144,7 @@ class IyzipayResource:
             pki_builder.append('itemType', item.get('itemType'))
             pki_builder.append('subMerchantKey', item.get('subMerchantKey'))
             pki_builder.append_price('subMerchantPrice', item.get('subMerchantPrice'))
+            pki_builder.append_price('withholdingTax', item.get('withholdingTax'))
             basket_items_pki.append(pki_builder.get_request_string())
         return basket_items_pki
 
