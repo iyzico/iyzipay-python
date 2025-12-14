@@ -11,7 +11,7 @@ request = {
   "conversationId": "123456789",
   "currencyCode": "TRY",
   "description": "iyzi product name",
-  "encodedImageFile": iyzipay.IyziFileBase64Encoder.encode("image.png"),
+  "encodedImageFile": iyzipay.IyziFileBase64Encoder.encode("./images/image.png"),
   "installmentRequested": False,
   "locale": "tr",
   "name": "iyzi product",
