@@ -140,11 +140,13 @@ class ThreedsPayment(IyzipayResource):
     def retrieve(self, request, options):
         return self.connect('POST', '/payment/detail', options, request)
 
+class ThreedsV2Payment(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/payment/v2/3dsecure/auth', options, request)
 
 class Cancel(IyzipayResource):
     def create(self, request, options):
         return self.connect('POST', '/payment/cancel', options, request)
-
 
 class Refund(IyzipayResource):
     def create(self, request, options):

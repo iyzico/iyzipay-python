@@ -21,6 +21,7 @@ from iyzipay.iyzipay_resource import (  # noqa
     Payment,
     ThreedsInitialize,
     ThreedsPayment,
+    ThreedsV2Payment,
     Cancel,
     Refund,
     Card,
