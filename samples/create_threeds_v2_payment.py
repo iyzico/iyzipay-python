@@ -10,9 +10,9 @@ options = {
 request = {
     'locale': 'tr',
     'conversationId': '123456789',
-    'paymentId': 'paymentId',
+    'paymentId': '1',
     'paidPrice': 1.2,
-    'basketId': 'basketId',
+    'basketId': 'B67832',
     'currency': 'TRY'
 }
 
