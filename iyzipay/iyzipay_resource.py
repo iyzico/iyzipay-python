@@ -332,6 +332,15 @@ class IyziLinkProduct(IyzipayResource):
         token = str(request.get('token'))
         return self.connect('PUT', '/v2/iyzilink/products/' + token, options, request)
 
+    def update_product_status(self, request, options):
+        if request.get('token') is None:
+            raise Exception('token must be in request')
+        token = str(request.get('token'))
+        if request.get('status') is None:
+            raise Exception('status must be in request')
+        status = str(request.get('status'))
+        return self.connect('PATCH', '/v2/iyzilink/products/' + token + '/status/' + status, options)
+
     def delete(self, request, options):
         if request.get('token') is None:
             raise Exception('token must be in request')
