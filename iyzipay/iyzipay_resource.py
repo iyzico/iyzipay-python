@@ -309,7 +309,11 @@ class IyziFileBase64Encoder:
 
 class IyziLinkProduct(IyzipayResource):
     def create(self, request, options):
-        return self.connect('POST', '/v2/iyzilink/products/', options, request)
+        return self.connect('POST', '/v2/iyzilink/products', options, request)
+
+    def fast_link(self, request, options):
+        locale = str(request.get('locale', 'tr'))
+        return self.connect('POST', '/v2/iyzilink/fast-link/products?locale=' + locale, options, request)
 
     def retrieve(self, request, options):
         if request.get('token') is None:
