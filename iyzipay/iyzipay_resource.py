@@ -231,6 +231,9 @@ class SubMerchant(IyzipayResource):
     def update(self, request, options):
         return self.connect('PUT', '/onboarding/submerchant', options, request)
 
+    def update_item(self, request, options):
+        return self.connect('PUT', '/payment/item', options, request)
+
     def retrieve(self, request, options):
         return self.connect('POST', '/onboarding/submerchant/detail', options, request)
 
