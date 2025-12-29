@@ -127,6 +127,9 @@ class Payment(IyzipayResource):
     def retrieve(self, request, options):
         return self.connect('POST', '/payment/detail', options, request)
 
+    def refund(self, request, options):
+        return self.connect('POST', '/v2/payment/refund', options, request)
+
 
 class ThreedsInitialize(IyzipayResource):
     def create(self, request, options):
