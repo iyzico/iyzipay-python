@@ -364,3 +364,8 @@ class RetrieveLoyalty(IyzipayResource):
         pki_builder.append('paymentCard', self.payment_card_pki(request.get('paymentCard')))
         pki_builder.append('currency', request.get('currency'))
         return pki_builder.get_request_string()
+
+
+class PayWithIyzico(IyzipayResource):
+    def create(self, request, options):
+        return self.connect('POST', '/payment/pay-with-iyzico/initialize', options, request)
