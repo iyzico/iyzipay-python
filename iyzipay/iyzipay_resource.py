@@ -312,6 +312,16 @@ class RetrieveTransactions(IyzipayResource):
         return self.connect('GET', '/v2/reporting/payment/transactions?' + query_params, options)
 
 
+class ReportingScrollTransaction(IyzipayResource):
+    def retrieve(self, request, options):
+        transaction_date = request.get('transactionDate')
+        document_scrolling_vo_sort_order = request.get('documentScrollVoSortingOrder')
+        last_id = request.get('lastId')
+        conversation_id = request.get('conversationId')
+        params = 'transactionDate=' + transaction_date + '&documentScrollVoSortingOrder=' + document_scrolling_vo_sort_order + '&lastId=' + last_id + '&conversationId=' + conversation_id
+        return self.connect('GET', '/v2/reporting/payment/scroll-transactions?' + params, options)
+
+
 class IyziFileBase64Encoder:
     @staticmethod
     def encode(file_path):

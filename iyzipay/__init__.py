@@ -50,6 +50,7 @@ from iyzipay.iyzipay_resource import (  # noqa
     BasicBkmInitialize,
     RetrievePaymentDetails,
     RetrieveTransactions,
+    ReportingScrollTransaction,
     IyziLinkProduct,
     IyziFileBase64Encoder,
     RetrieveLoyalty)
