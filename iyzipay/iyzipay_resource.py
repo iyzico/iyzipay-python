@@ -143,13 +143,16 @@ class ThreedsPayment(IyzipayResource):
     def retrieve(self, request, options):
         return self.connect('POST', '/payment/detail', options, request)
 
+
 class ThreedsV2Payment(IyzipayResource):
     def create(self, request, options):
         return self.connect('POST', '/payment/v2/3dsecure/auth', options, request)
 
+
 class Cancel(IyzipayResource):
     def create(self, request, options):
         return self.connect('POST', '/payment/cancel', options, request)
+
 
 class Refund(IyzipayResource):
     def create(self, request, options):
@@ -293,9 +296,12 @@ class BasicBkmInitialize(IyzipayResource):
 
 class RetrievePaymentDetails(IyzipayResource):
     def retrieve(self, request, options):
+        payment_id = str(request.get('paymentId'))
         payment_conversation_id = str(request.get('paymentConversationId'))
-        return self.connect('GET', '/v2/reporting/payment/details?paymentConversationId=' + payment_conversation_id,
-                            options)
+        param_name = 'paymentId' if payment_id else 'paymentConversationId'
+        param_value = payment_id if payment_id else payment_conversation_id
+        param = param_name + '=' + param_value
+        return self.connect('GET', '/v2/reporting/payment/details?' + param, options)
 
 
 class RetrieveTransactions(IyzipayResource):
