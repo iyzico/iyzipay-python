@@ -423,3 +423,7 @@ class SubscriptionPricingPlan(IyzipayResource):
     def update(self, request, options):
         pricing_plan_reference_code = str(request.get('pricing_plan_reference_code'))
         return self.connect('POST', self.pricing_plan_url + pricing_plan_reference_code, options, request)
+
+    def retrieve(self, request, options):
+        pricing_plan_reference_code = str(request.get('pricing_plan_reference_code'))
+        return self.connect('GET', self.pricing_plan_url + pricing_plan_reference_code, options)
