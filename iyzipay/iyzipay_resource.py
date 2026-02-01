@@ -398,3 +398,7 @@ class SubscriptionProduct(IyzipayResource):
     def retrieve(self, request, options):
         product_reference_code = str(request.get('product_reference_code'))
         return self.connect('GET', self.url + '/' +product_reference_code, options)
+
+    def delete(self, request, options):
+        product_reference_code = str(request.get('product_reference_code'))
+        return self.connect('DELETE', self.url + '/' +product_reference_code, options)
