@@ -26,7 +26,6 @@ class IyzipayResource:
         print('Signature verified:', verified)
 
     def connect(self, method, url, options, request_body_dict=None):
-        # , pki=None
         connection = self.httplib.HTTPSConnection(options['base_url'])
         body_str = json.dumps(request_body_dict)
         header = self.get_http_header(url, options, body_str)
@@ -83,6 +82,20 @@ class IyzipayResource:
     def resource_pki(request):
         return 'locale=' + request.get('locale') + (
             ',conversationId=' + request.get('conversationId') + ',' if request.get('conversationId') else ',')
+
+    @staticmethod
+    def payment_card_pki(payment_card):
+        pki_builder = iyzipay.PKIBuilder('')
+        pki_builder.append('cardHolderName', payment_card.get('cardHolderName'))
+        pki_builder.append('cardNumber', payment_card.get('cardNumber'))
+        pki_builder.append('expireYear', payment_card.get('expireYear'))
+        pki_builder.append('expireMonth', payment_card.get('expireMonth'))
+        pki_builder.append('cvc', payment_card.get('cvc'))
+        pki_builder.append('registerCard', payment_card.get('registerCard'))
+        pki_builder.append('cardAlias', payment_card.get('cardAlias'))
+        pki_builder.append('cardToken', payment_card.get('cardToken'))
+        pki_builder.append('cardUserKey', payment_card.get('cardUserKey'))
+        return pki_builder.get_request_string()
 
 
 class ApiTest(IyzipayResource):
