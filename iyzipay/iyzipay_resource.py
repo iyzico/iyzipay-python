@@ -415,3 +415,7 @@ class SubscriptionPricingPlan(IyzipayResource):
     def create(self, request, options):
         product_reference_code = str(request.get('product_reference_code'))
         return self.connect('POST', self.product_url + '/' + product_reference_code + '/pricing-plans', options, request)
+
+    def list(self, request, options):
+        product_reference_code = str(request.get('product_reference_code'))
+        return self.connect('GET', self.product_url + '/' + product_reference_code + '/pricing-plans', options)
