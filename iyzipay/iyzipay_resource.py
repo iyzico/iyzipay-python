@@ -372,7 +372,6 @@ class IyziLinkProduct(IyzipayResource):
 
 class RetrieveLoyalty(IyzipayResource):
     def retrieve(self, request, options):
-        pki = self.to_pki_string_create(request)
         return self.connect('POST', '/payment/loyalty/inquire', options, request)
 
     def to_pki_string_create(self, request):
@@ -395,3 +394,7 @@ class SubscriptionProduct(IyzipayResource):
 
     def list(self, options):
         return self.connect('GET', self.url, options)
+
+    def retrieve(self, request, options):
+        product_reference_code = str(request.get('product_reference_code'))
+        return self.connect('GET', self.url + '/' +product_reference_code, options)
