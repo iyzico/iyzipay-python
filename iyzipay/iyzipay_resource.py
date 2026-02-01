@@ -5,6 +5,7 @@ import importlib
 import json
 import random
 import string
+from urllib.parse import urlencode
 
 import iyzipay
 
@@ -468,3 +469,10 @@ class Subscription(IyzipayResource):
 
     def initialize_with_customer(self, request, options):
         return self.connect('POST', self.url + '/initialize/with-customer', options, request)
+
+    def list(self, request, options):
+        query = urlencode({k: v for k, v in (request or {}).items() if v is not None}, doseq=True)
+        list_url = self.url + '/subscriptions'
+        if query:
+            list_url += '?' + query
+        return self.connect('GET', list_url, options)
