@@ -10,6 +10,6 @@ request = {
     'product_reference_code': '9f7cbae3-bb85-4649-981c-707ac034ca4d'
 }
 
-subscription_product = iyzipay.SubscriptionProduct().delete(request, options)
+subscription_product_delete = iyzipay.SubscriptionProduct().delete(request, options)
 
-print(subscription_product.read().decode('utf-8'))
+print(subscription_product_delete.read().decode('utf-8'))

@@ -12,6 +12,6 @@ request = {
     'pricing_plan_reference_code': 'e0b8e566-5c6c-430f-8b6e-281c44215bbf'
 }
 
-subscription_product = iyzipay.SubscriptionPricingPlan().update(request, options)
+subscription_pricing_plan = iyzipay.SubscriptionPricingPlan().update(request, options)
 
-print(subscription_product.read().decode('utf-8'))
+print(subscription_pricing_plan.read().decode('utf-8'))
