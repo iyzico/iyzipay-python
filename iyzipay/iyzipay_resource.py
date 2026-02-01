@@ -402,3 +402,7 @@ class SubscriptionProduct(IyzipayResource):
     def delete(self, request, options):
         product_reference_code = str(request.get('product_reference_code'))
         return self.connect('DELETE', self.url + '/' +product_reference_code, options)
+
+    def update(self, request, options):
+        product_reference_code = str(request.get('product_reference_code'))
+        return self.connect('PUT', self.url + '/' +product_reference_code, options, request)
