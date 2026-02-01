@@ -442,3 +442,10 @@ class SubscriptionCheckoutForm(IyzipayResource):
     def retrieve(self, request, options):
         token = str(request.get('token'))
         return self.connect('GET', self.url + '/' + token, options, request)
+
+
+class Subscription(IyzipayResource):
+    url = '/v2/subscription/subscriptions'
+
+    def retrieve(self, options):
+        return self.connect('GET', self.url, options)
