@@ -409,13 +409,17 @@ class SubscriptionProduct(IyzipayResource):
 
 
 class SubscriptionPricingPlan(IyzipayResource):
-    product_url = '/v2/subscription/products'
-    pricing_plan_url = '/v2/subscription/pricing-plans'
+    product_url = '/v2/subscription/products/'
+    pricing_plan_url = '/v2/subscription/pricing-plans/'
 
     def create(self, request, options):
         product_reference_code = str(request.get('product_reference_code'))
-        return self.connect('POST', self.product_url + '/' + product_reference_code + '/pricing-plans', options, request)
+        return self.connect('POST', self.product_url + product_reference_code + '/pricing-plans', options, request)
 
     def list(self, request, options):
         product_reference_code = str(request.get('product_reference_code'))
-        return self.connect('GET', self.product_url + '/' + product_reference_code + '/pricing-plans', options)
+        return self.connect('GET', self.product_url + product_reference_code + '/pricing-plans', options)
+
+    def update(self, request, options):
+        pricing_plan_reference_code = str(request.get('pricing_plan_reference_code'))
+        return self.connect('POST', self.pricing_plan_url + pricing_plan_reference_code, options, request)
