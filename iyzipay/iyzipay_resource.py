@@ -397,12 +397,21 @@ class SubscriptionProduct(IyzipayResource):
 
     def retrieve(self, request, options):
         product_reference_code = str(request.get('product_reference_code'))
-        return self.connect('GET', self.url + '/' +product_reference_code, options)
+        return self.connect('GET', self.url + '/' + product_reference_code, options)
 
     def delete(self, request, options):
         product_reference_code = str(request.get('product_reference_code'))
-        return self.connect('DELETE', self.url + '/' +product_reference_code, options)
+        return self.connect('DELETE', self.url + '/' + product_reference_code, options)
 
     def update(self, request, options):
         product_reference_code = str(request.get('product_reference_code'))
-        return self.connect('PUT', self.url + '/' +product_reference_code, options, request)
+        return self.connect('PUT', self.url + '/' + product_reference_code, options, request)
+
+
+class SubscriptionPricingPlan(IyzipayResource):
+    product_url = '/v2/subscription/products'
+    pricing_plan_url = '/v2/subscription/pricing-plans'
+
+    def create(self, request, options):
+        product_reference_code = str(request.get('product_reference_code'))
+        return self.connect('POST', self.product_url + '/' + product_reference_code + '/pricing-plans', options, request)

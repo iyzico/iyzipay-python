@@ -55,6 +55,7 @@ from iyzipay.iyzipay_resource import (  # noqa
     IyziFileBase64Encoder,
     RetrieveLoyalty,
     SubscriptionProduct,
+    SubscriptionPricingPlan
 )
 
 from iyzipay.pki_builder import (  # noqa
