@@ -445,7 +445,10 @@ class SubscriptionCheckoutForm(IyzipayResource):
 
 
 class Subscription(IyzipayResource):
-    url = '/v2/subscription/subscriptions'
+    url = '/v2/subscription'
 
     def retrieve(self, options):
-        return self.connect('GET', self.url, options)
+        return self.connect('GET', self.url + '/subscriptions', options)
+
+    def initialize(self, request, options):
+        return self.connect('POST', self.url + '/initialize', options, request)
