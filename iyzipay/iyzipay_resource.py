@@ -438,3 +438,7 @@ class SubscriptionCheckoutForm(IyzipayResource):
 
     def create(self, request, options):
         return self.connect('POST', self.url + '/initialize', options, request)
+
+    def retrieve(self, request, options):
+        token = str(request.get('token'))
+        return self.connect('GET', self.url + '/' + token, options, request)
