@@ -385,3 +385,10 @@ class RetrieveLoyalty(IyzipayResource):
 class PayWithIyzico(IyzipayResource):
     def create(self, request, options):
         return self.connect('POST', '/payment/pay-with-iyzico/initialize', options, request)
+
+
+class SubscriptionProduct(IyzipayResource):
+    url = '/v2/subscription/products'
+
+    def create(self, request, options):
+        return self.connect('POST', self.url, options, request)
