@@ -427,3 +427,7 @@ class SubscriptionPricingPlan(IyzipayResource):
     def retrieve(self, request, options):
         pricing_plan_reference_code = str(request.get('pricing_plan_reference_code'))
         return self.connect('GET', self.pricing_plan_url + pricing_plan_reference_code, options)
+
+    def delete(self, request, options):
+        pricing_plan_reference_code = str(request.get('pricing_plan_reference_code'))
+        return self.connect('DELETE', self.pricing_plan_url + pricing_plan_reference_code, options)
