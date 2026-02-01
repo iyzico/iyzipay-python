@@ -392,3 +392,6 @@ class SubscriptionProduct(IyzipayResource):
 
     def create(self, request, options):
         return self.connect('POST', self.url, options, request)
+
+    def list(self, options):
+        return self.connect('GET', self.url, options)
