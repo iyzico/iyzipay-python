@@ -452,3 +452,6 @@ class Subscription(IyzipayResource):
 
     def initialize(self, request, options):
         return self.connect('POST', self.url + '/initialize', options, request)
+
+    def initialize_with_customer(self, request, options):
+        return self.connect('POST', self.url + '/initialize/with-customer', options, request)
