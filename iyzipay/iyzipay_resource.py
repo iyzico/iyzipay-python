@@ -494,3 +494,13 @@ class Subscription(IyzipayResource):
         subscription_reference_code = str(request.get('subscriptionReferenceCode'))
         upgrade_url = '/subscriptions/' + subscription_reference_code + '/upgrade'
         return self.connect('POST', self.url + upgrade_url, options, request)
+
+
+class SubscriptionCardUpdate(IyzipayResource):
+    url = "/v2/subscription/card-update/checkoutform/initialize"
+
+    def initialize(self, request, options):
+        return self.connect('POST', self.url, options, request)
+
+    def initialize_with_subscription(self, request, options):
+        return self.connect('POST', self.url + '/with-subscription', options, request)

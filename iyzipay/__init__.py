@@ -57,7 +57,8 @@ from iyzipay.iyzipay_resource import (  # noqa
     SubscriptionProduct,
     SubscriptionPricingPlan,
     SubscriptionCheckoutForm,
-    Subscription
+    Subscription,
+    SubscriptionCardUpdate
 )
 
 from iyzipay.pki_builder import (  # noqa
