@@ -476,3 +476,8 @@ class Subscription(IyzipayResource):
         if query:
             list_url += '?' + query
         return self.connect('GET', list_url, options)
+
+    def activate(self, request, options):
+        subscription_reference_code = str(request.get('referenceCode'))
+        activate_url = '/subscriptions/' + subscription_reference_code + '/activate'
+        return self.connect('POST', self.url + activate_url, options, request)
