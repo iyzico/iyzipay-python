@@ -523,3 +523,10 @@ class SubscriptionCustomer(IyzipayResource):
     def delete(self, request, options):
         customer_reference_code = str(request.get('customerReferenceCode'))
         return self.connect('POST', self.url + '/delete/' + customer_reference_code, options)
+
+    def list(self, request, options):
+        query = urlencode({k: v for k, v in (request or {}).items() if v is not None}, doseq=True)
+        list_url = self.url
+        if query:
+            list_url += '?' + query
+        return self.connect('GET', list_url, options)
