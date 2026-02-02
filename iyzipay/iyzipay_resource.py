@@ -489,3 +489,8 @@ class Subscription(IyzipayResource):
         subscription_reference_code = str(request.get('subscriptionReferenceCode'))
         cancel_url = '/subscriptions/' + subscription_reference_code + '/cancel'
         return self.connect('POST', self.url + cancel_url, options, request)
+
+    def upgrade(self, request, options):
+        subscription_reference_code = str(request.get('subscriptionReferenceCode'))
+        upgrade_url = '/subscriptions/' + subscription_reference_code + '/upgrade'
+        return self.connect('POST', self.url + upgrade_url, options, request)
