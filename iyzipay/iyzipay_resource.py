@@ -484,3 +484,8 @@ class Subscription(IyzipayResource):
 
     def retry(self, request, options):
         return self.connect('POST', self.url + '/operation/retry', options, request)
+
+    def cancel(self, request, options):
+        subscription_reference_code = str(request.get('subscriptionReferenceCode'))
+        cancel_url = '/subscriptions/' + subscription_reference_code + '/cancel'
+        return self.connect('POST', self.url + cancel_url, options, request)
