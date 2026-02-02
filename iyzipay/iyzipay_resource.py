@@ -511,3 +511,7 @@ class SubscriptionCustomer(IyzipayResource):
 
     def create(self, request, options):
         return self.connect('POST', self.url, options, request)
+
+    def update(self, request, options):
+        customer_reference_code = str(request.get('customerReferenceCode'))
+        return self.connect('POST', self.url + '/' + customer_reference_code, options, request)
