@@ -519,3 +519,7 @@ class SubscriptionCustomer(IyzipayResource):
     def retrieve(self, request, options):
         customer_reference_code = str(request.get('customerReferenceCode'))
         return self.connect('GET', self.url + '/' + customer_reference_code, options)
+
+    def delete(self, request, options):
+        customer_reference_code = str(request.get('customerReferenceCode'))
+        return self.connect('POST', self.url + '/delete/' + customer_reference_code, options)
