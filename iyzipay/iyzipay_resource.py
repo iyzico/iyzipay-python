@@ -504,3 +504,10 @@ class SubscriptionCardUpdate(IyzipayResource):
 
     def initialize_with_subscription(self, request, options):
         return self.connect('POST', self.url + '/with-subscription', options, request)
+
+
+class SubscriptionCustomer(IyzipayResource):
+    url = "/v2/subscription/customers"
+
+    def create(self, request, options):
+        return self.connect('POST', self.url, options, request)
