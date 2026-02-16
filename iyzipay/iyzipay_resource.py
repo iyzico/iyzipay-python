@@ -415,8 +415,6 @@ class SubscriptionProduct(IyzipayResource):
 
     def delete(self, request, options):
         product_reference_code = str(request.get('product_reference_code'))
-        url = self.url + '/' + product_reference_code
-        print('url:',url)
         return self.connect('DELETE', self.url + '/' + product_reference_code, options)
 
     def update(self, request, options):
