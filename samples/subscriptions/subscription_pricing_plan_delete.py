@@ -1,5 +1,4 @@
 import iyzipay
-from samples.subscriptions.subscription_product_delete import subscription_product_delete
 
 options = {
     'api_key': iyzipay.api_key,
@@ -13,4 +12,4 @@ request = {
 
 subscription_pricing_plan_delete = iyzipay.SubscriptionPricingPlan().delete(request, options)
 
-print(subscription_product_delete.read().decode('utf-8'))
+print(subscription_pricing_plan_delete.read().decode('utf-8'))
