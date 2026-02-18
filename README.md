@@ -4,12 +4,13 @@ You can sign up for an iyzico account at https://iyzico.com
 
 # Requirements
 
-Python 3.6+
+Python 3.9+
 
 ### Deprecation Notes
 
 - Python 2.7 will not be maintained past 2020. As we iyzico, we will not support of that python version at March of 2020. If you have any questions, please open an issue on Github or contact us at integration@iyzico.com.
 - Python 3.2, 3.3, 3.4 and 3.5 supports are dropped after v1.0.37.
+- Python 3.7, 3.8 supports are dropped after v1.0.46.
 
 # Installation
 
