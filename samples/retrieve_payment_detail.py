@@ -7,8 +7,10 @@ options = {
 }
 
 request = {
-    'paymentConversationId': '123456s789'
+    'paymentConversationId': '123456s789',
+    'paymentId': 1
 }
+# Both parameters are not mandatory; one of two is enough
+
 report = iyzipay.RetrievePaymentDetails().retrieve(request, options)
 print(report.read().decode('utf-8'))
-
