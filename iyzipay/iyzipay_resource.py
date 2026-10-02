@@ -23,26 +23,30 @@ class IyzipayResource:
 
     def verify_signature(self, params, secret_key, signature):
         calculated_signature = self.calculate_hmac_sha256_signature(params, secret_key)
-        verified = signature == calculated_signature
+        verified = hmac.compare_digest(str(signature), str(calculated_signature))
         print('Signature verified:', verified)
+        return verified
 
     def connect(self, method, url, options, request_body_dict=None):
-        connection = self.httplib.HTTPSConnection(options['base_url'])
-        body_str = json.dumps(request_body_dict)
-        header = self.get_http_header(url, options, body_str)
+        base_url = options.get('base_url', '') if options else ''
+        host = base_url.replace('https://', '').replace('http://', '').split('/')[0]
+        connection = self.httplib.HTTPSConnection(host)
+        body_str = json.dumps(request_body_dict) if request_body_dict is not None else None
+        header = self.get_http_header(url, options, body_str if body_str is not None else '')
         connection.request(method, url, body_str, header)
         return connection.getresponse()
 
     def get_http_header(self, url, options=None, body_str=None):
         random_str = self.generate_random_string(self.RANDOM_STRING_SIZE)
-        self.header.update({'x-iyzi-rnd': random_str})
         return self.get_http_header_v2(url, options, random_str, body_str)
 
     def get_http_header_v2(self, url, options, random_str, body_str):
         url = url.split('?')[0]
         hashed_v2_str = self.generate_v2_hash(options['api_key'], url, options['secret_key'], random_str, body_str)
-        self.header.update({'Authorization': 'IYZWSv2 %s' % hashed_v2_str})
-        return self.header
+        header = self.header.copy()
+        header['x-iyzi-rnd'] = random_str
+        header['Authorization'] = 'IYZWSv2 %s' % hashed_v2_str
+        return header
 
     @staticmethod
     def strip_zero(number):
@@ -52,7 +56,7 @@ class IyzipayResource:
     @staticmethod
     def calculate_hmac_sha256_signature(params, secret_key):
         secret_key = bytes(secret_key.encode('utf-8'))
-        msg = ':'.join(params).encode('utf-8')
+        msg = ':'.join("" if p is None else str(p) for p in params).encode('utf-8')
 
         hmac_obj = hmac.new(secret_key, digestmod=hashlib.sha256)
         hmac_obj.update(msg)
@@ -61,7 +65,7 @@ class IyzipayResource:
     @staticmethod
     def generate_v2_hash(api_key, url, secret_key, random_str, body_str):
         secret_key = bytes(secret_key.encode('utf-8'))
-        msg = (random_str + url + body_str).encode('utf-8')
+        msg = (random_str + url + (body_str or '')).encode('utf-8')
 
         hmac_obj = hmac.new(secret_key, digestmod=hashlib.sha256)
         hmac_obj.update(msg)
